@@ -1,0 +1,274 @@
+// ── SWIPE ENGINE ──────────────────────────────────────────────────────────────
+const SWIPE = {
+  dragging:   false,
+  startX:     0,
+  startY:     0,
+  currentX:   0,
+  currentY:   0,
+  cardEl:     null,
+  submitting: false,
+
+  THRESHOLD_X: 80,   // px to trigger love/pass
+  THRESHOLD_Y: -70,  // px upward to trigger maybe
+
+  render() {
+    this.updateProgress();
+    this.renderCard();
+  },
+
+  updateProgress() {
+    const total   = STATE.deck.length;
+    const done    = Object.keys(STATE.myVotes).length;
+    const pct     = total > 0 ? Math.round((done / total) * 100) : 0;
+    const matches = STATE.shortlist.filter(s => !s.is_custom).length;
+
+    const countEl    = document.getElementById('swipe-count');
+    const progressEl = document.getElementById('swipe-progress');
+    const matchEl    = document.getElementById('match-count');
+
+    if (countEl)    countEl.textContent    = done > 0 ? `${done} rated` : 'Start swiping!';
+    if (progressEl) progressEl.style.width = pct + '%';
+    if (matchEl)    matchEl.textContent    = matches === 1 ? '1 match ❤️' : `${matches} matches ❤️`;
+  },
+
+  renderCard() {
+    const stage = document.getElementById('card-stage');
+    if (!stage) return;
+
+    const idx  = STATE.deckIndex;
+    const name = STATE.deck[idx];
+
+    if (!name) {
+      // All names voted
+      stage.innerHTML = '';
+      document.getElementById('vote-buttons').style.display = 'none';
+      stage.innerHTML = `
+        <div class="swipe-done">
+          <div class="big-icon">🎉</div>
+          <h3>You've seen all the names!</h3>
+          <p>Check your shortlist for matches, or ask your partner if they've finished too.</p>
+          <button class="btn btn-primary" onclick="showMainScreen('shortlist-screen')" style="margin-top:8px">
+            View Shortlist ⭐
+          </button>
+        </div>`;
+      return;
+    }
+
+    document.getElementById('vote-buttons').style.display = '';
+
+    const originText  = (name.origin || []).map(capitalize).join(' · ');
+    const styleText   = (name.style  || []).map(capitalize).join(', ');
+    const sylDots     = Array.from({ length: Math.min(name.syllables, 5) }, (_, i) =>
+      `<div class="syl-dot filled"></div>`
+    ).join('');
+
+    stage.innerHTML = `
+      <div class="name-card" id="swipe-card">
+        <div class="card-vote-label love-label"  id="label-love">LOVE</div>
+        <div class="card-vote-label pass-label"  id="label-pass">PASS</div>
+        <div class="card-vote-label maybe-label" id="label-maybe">MAYBE</div>
+        <div class="card-name">${name.name}</div>
+        <div class="card-origin">${originText}</div>
+        ${name.meaning ? `
+        <div class="card-meaning-section">
+          <div class="card-meaning-label">meaning</div>
+          <div class="card-meaning">${name.meaning}</div>
+        </div>` : ''}
+        <div class="card-tags">
+          ${styleText ? `<span class="card-tag">${styleText}</span>` : ''}
+          ${(name.tradition || []).map(t => `<span class="card-tag">${capitalize(t)}</span>`).join('')}
+        </div>
+        <div class="card-syllables">
+          ${sylDots}
+          <span class="card-syl-label">${name.syllables} syl.</span>
+        </div>
+      </div>`;
+
+    this.cardEl = document.getElementById('swipe-card');
+    this.attachDrag();
+  },
+
+  attachDrag() {
+    const card = this.cardEl;
+    if (!card) return;
+
+    // Touch
+    card.addEventListener('touchstart', e => this.onDragStart(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
+    card.addEventListener('touchmove',  e => { e.preventDefault(); this.onDragMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: false });
+    card.addEventListener('touchend',   () => this.onDragEnd());
+
+    // Mouse (for desktop testing)
+    card.addEventListener('mousedown', e => { this.onDragStart(e.clientX, e.clientY); });
+    window.addEventListener('mousemove', e => { if (this.dragging) this.onDragMove(e.clientX, e.clientY); });
+    window.addEventListener('mouseup', () => { if (this.dragging) this.onDragEnd(); });
+  },
+
+  onDragStart(x, y) {
+    if (this.submitting) return;
+    this.dragging = true;
+    this.startX   = x;
+    this.startY   = y;
+    this.currentX = 0;
+    this.currentY = 0;
+    if (this.cardEl) {
+      this.cardEl.style.transition = 'none';
+    }
+  },
+
+  onDragMove(x, y) {
+    if (!this.dragging || !this.cardEl) return;
+    this.currentX = x - this.startX;
+    this.currentY = y - this.startY;
+
+    const rot = this.currentX * 0.08;
+    this.cardEl.style.transform = `translate(${this.currentX}px, ${this.currentY}px) rotate(${rot}deg)`;
+
+    const absX = Math.abs(this.currentX);
+    const loveEl  = document.getElementById('label-love');
+    const passEl  = document.getElementById('label-pass');
+    const maybeEl = document.getElementById('label-maybe');
+
+    if (this.currentX > 40) {
+      loveEl  && loveEl.classList.add('visible');
+      passEl  && passEl.classList.remove('visible');
+      maybeEl && maybeEl.classList.remove('visible');
+    } else if (this.currentX < -40) {
+      passEl  && passEl.classList.add('visible');
+      loveEl  && loveEl.classList.remove('visible');
+      maybeEl && maybeEl.classList.remove('visible');
+    } else if (this.currentY < -50) {
+      maybeEl && maybeEl.classList.add('visible');
+      loveEl  && loveEl.classList.remove('visible');
+      passEl  && passEl.classList.remove('visible');
+    } else {
+      loveEl  && loveEl.classList.remove('visible');
+      passEl  && passEl.classList.remove('visible');
+      maybeEl && maybeEl.classList.remove('visible');
+    }
+  },
+
+  onDragEnd() {
+    if (!this.dragging) return;
+    this.dragging = false;
+
+    if (!this.cardEl) return;
+
+    if (this.currentX > this.THRESHOLD_X) {
+      castVote('love');
+    } else if (this.currentX < -this.THRESHOLD_X) {
+      castVote('pass');
+    } else if (this.currentY < this.THRESHOLD_Y) {
+      castVote('maybe');
+    } else {
+      // Spring back to center
+      this.cardEl.style.transition = 'transform .4s cubic-bezier(.25,.46,.45,.94)';
+      this.cardEl.style.transform  = 'translate(0,0) rotate(0deg)';
+      ['label-love','label-pass','label-maybe'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('visible');
+      });
+    }
+  },
+
+  flyOut(direction) {
+    if (!this.cardEl) return;
+    this.cardEl.style.transition = 'transform .35s ease, opacity .35s ease';
+    if (direction === 'love') {
+      this.cardEl.style.transform = 'translate(160%, -20px) rotate(25deg)';
+    } else if (direction === 'pass') {
+      this.cardEl.style.transform = 'translate(-160%, -20px) rotate(-25deg)';
+    } else {
+      this.cardEl.style.transform = 'translate(0, -160%)';
+    }
+    this.cardEl.style.opacity = '0';
+  }
+};
+
+// ── CAST VOTE (called from buttons and SWIPE.onDragEnd) ──────────────────────
+async function castVote(voteType) {
+  if (SWIPE.submitting) return;
+  const idx  = STATE.deckIndex;
+  const name = STATE.deck[idx];
+  if (!name) return;
+
+  SWIPE.submitting = true;
+
+  // Animate card out
+  SWIPE.flyOut(voteType);
+
+  // Optimistically advance UI
+  STATE.myVotes[name.name] = voteType;
+  STATE.deckIndex++;
+  while (STATE.deckIndex < STATE.deck.length &&
+         STATE.myVotes[STATE.deck[STATE.deckIndex].name]) {
+    STATE.deckIndex++;
+  }
+
+  // Save to DB
+  try {
+    await STATE.db.from('votes').upsert({
+      room_id: STATE.room.id,
+      user_id: STATE.user.id,
+      name:    name.name,
+      vote:    voteType
+    }, { onConflict: 'room_id,user_id,name' });
+
+    // Check for new matches (only on love/maybe — pass can't produce a match)
+    if (voteType !== 'pass') {
+      await checkForNewMatches();
+    }
+  } catch (err) {
+    console.error('Vote save failed:', err);
+  }
+
+  // Wait for fly-out animation then show next card
+  setTimeout(() => {
+    SWIPE.submitting = false;
+    SWIPE.updateProgress();
+    SWIPE.renderCard();
+  }, 350);
+}
+
+async function checkForNewMatches() {
+  const { data, error } = await STATE.db.rpc('get_matches', { p_room_id: STATE.room.id });
+  if (error || !data) return;
+
+  const matchedNames = data.map(r => r.matched_name || r);
+  const knownNames   = new Set(STATE.shortlist.map(s => s.name));
+  const newMatches   = matchedNames.filter(n => !knownNames.has(n));
+
+  if (newMatches.length === 0) return;
+
+  // Upsert new matches into shortlist
+  const rows = newMatches.map(n => ({
+    room_id:   STATE.room.id,
+    name:      n,
+    is_custom: false
+  }));
+
+  const { data: inserted } = await STATE.db
+    .from('shortlist')
+    .upsert(rows, { onConflict: 'room_id,name' })
+    .select();
+
+  if (inserted) {
+    STATE.shortlist = [...inserted, ...STATE.shortlist.filter(s => !newMatches.includes(s.name))];
+  }
+
+  // Celebrate each new match
+  const nameObjs = newMatches.map(n => STATE.deck.find(d => d.name === n) || { name: n, meaning: '' });
+
+  nameObjs.forEach((obj, i) => {
+    if (i === 0) {
+      celebrateMatch(obj);
+    } else {
+      STATE.matchQueue.push(obj);
+    }
+  });
+
+  SWIPE.updateProgress();
+}
+
+function capitalize(str) {
+  return str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+}

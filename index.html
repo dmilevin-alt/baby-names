@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Baby Names</title>
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <meta name="theme-color" content="#E8705A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Baby Names">
+
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+<div class="auth-wrap">
+
+  <div class="auth-logo">
+    <div class="icon">❤️</div>
+    <h1>Baby Names</h1>
+    <p>Find the perfect name together,<br>one swipe at a time.</p>
+  </div>
+
+  <div class="auth-tabs">
+    <button class="auth-tab active" id="tab-login"  onclick="switchTab('login')">Log in</button>
+    <button class="auth-tab"        id="tab-signup" onclick="switchTab('signup')">Sign up</button>
+  </div>
+
+  <!-- LOG IN FORM -->
+  <form class="auth-form" id="login-form" onsubmit="handleLogin(event)">
+    <div id="login-error" class="auth-error"></div>
+
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="login-email" placeholder="you@example.com" required autocomplete="email">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="login-password" placeholder="Your password" required autocomplete="current-password">
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="login-btn">
+      Log in
+    </button>
+  </form>
+
+  <!-- SIGN UP FORM -->
+  <form class="auth-form" id="signup-form" style="display:none" onsubmit="handleSignup(event)">
+    <div id="signup-error"   class="auth-error"></div>
+    <div id="signup-success" class="auth-success"></div>
+
+    <div class="field">
+      <label>Your name</label>
+      <input type="text" id="signup-name" placeholder="e.g. Dmitry" required autocomplete="given-name">
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="signup-email" placeholder="you@example.com" required autocomplete="email">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="signup-password" placeholder="At least 6 characters" required minlength="6" autocomplete="new-password">
+    </div>
+
+    <button type="submit" class="btn btn-primary" id="signup-btn">
+      Create account
+    </button>
+  </form>
+
+</div><!-- /auth-wrap -->
+
+<!-- Scripts -->
+<script src="./config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="./js/auth.js"></script>
+
+</body>
+</html>

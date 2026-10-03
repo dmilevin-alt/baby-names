@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+.vscode/
+.idea/
+
+# Env files — never commit real secrets
+.env
+.env.*
+*.env
+
+# Supabase local dev
+.branches/
+.temp/
+supabase/.temp/

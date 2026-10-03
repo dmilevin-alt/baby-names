@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Baby Names</title>
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <meta name="theme-color" content="#E8705A">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Baby Names">
+
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+<!-- ── LOADING ─────────────────────────────────────────────────────── -->
+<div class="screen active" id="loading-screen">
+  <div class="big-icon">❤️</div>
+  <p>Loading…</p>
+</div>
+
+<!-- ── ROOM SETUP ──────────────────────────────────────────────────── -->
+<div class="screen" id="room-screen">
+  <!-- content injected by room.js -->
+</div>
+
+<!-- ── WAITING FOR PARTNER TO FINISH QUIZ ─────────────────────────── -->
+<div class="screen" id="waiting-screen">
+  <div style="display:flex;justify-content:flex-end;padding:16px 16px 0">
+    <button class="btn-logout-sm" onclick="PROFILE.logout()">Log out</button>
+  </div>
+  <div class="big-icon">⏳</div>
+  <h2>Almost there!</h2>
+  <p>Waiting for your partner to complete their quiz…</p>
+  <div class="dots-loader">
+    <span></span><span></span><span></span>
+  </div>
+</div>
+
+<!-- ── QUIZ ────────────────────────────────────────────────────────── -->
+<div class="screen" id="quiz-screen">
+  <!-- content injected by quiz.js -->
+</div>
+
+<!-- ── SWIPE ───────────────────────────────────────────────────────── -->
+<div class="screen" id="swipe-screen">
+  <div class="swipe-header">
+    <div class="swipe-header-row">
+      <span class="swipe-count" id="swipe-count">Start swiping!</span>
+      <button class="btn-logout-sm" onclick="PROFILE.logout()">Log out</button>
+    </div>
+    <div class="swipe-progress-bar">
+      <div class="swipe-progress-fill" id="swipe-progress" style="width:0%"></div>
+    </div>
+    <div style="text-align:right;font-size:12px;font-weight:700;color:var(--text-muted);margin-top:3px" id="match-count">0 matches ❤️</div>
+  </div>
+
+  <div class="card-stage" id="card-stage">
+    <!-- Name card injected by swipe.js -->
+  </div>
+
+  <div class="vote-buttons" id="vote-buttons">
+    <button class="vote-btn btn-pass" onclick="castVote('pass')">
+      <div class="circle">✕</div>
+      <span class="label">Pass</span>
+    </button>
+    <button class="vote-btn btn-maybe" onclick="castVote('maybe')">
+      <div class="circle">🤔</div>
+      <span class="label">Maybe</span>
+    </button>
+    <button class="vote-btn btn-love" onclick="castVote('love')">
+      <div class="circle">❤️</div>
+      <span class="label">Love</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── SHORTLIST ──────────────────────────────────────────────────── -->
+<div class="screen" id="shortlist-screen">
+  <div class="page-header">
+    <h2>Our Shortlist</h2>
+    <div style="display:flex;gap:8px;align-items:center">
+      <button class="btn btn-ghost" id="add-custom-btn" onclick="SHORTLIST.toggleAddForm()">+ Add</button>
+      <button class="btn-logout-sm" onclick="PROFILE.logout()">Log out</button>
+    </div>
+  </div>
+
+  <div class="shortlist-add-row">
+    <div class="shortlist-add-form" id="add-form">
+      <input class="quiz-input" id="custom-name-input" placeholder="Name" maxlength="40">
+      <input class="quiz-input" id="custom-note-input" placeholder="Why you love it (optional)">
+      <div style="display:flex;gap:8px">
+        <button class="btn btn-primary" style="flex:1" onclick="SHORTLIST.addCustom()">Add to shortlist</button>
+        <button class="btn btn-secondary" onclick="SHORTLIST.toggleAddForm()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="shortlist-body">
+    <!-- injected by shortlist.js -->
+  </div>
+</div>
+
+<!-- ── PROFILE ────────────────────────────────────────────────────── -->
+<div class="screen" id="profile-screen">
+  <div class="profile-header">
+    <div class="profile-avatar">😊</div>
+    <h2 id="profile-name">Loading…</h2>
+    <p id="profile-email"></p>
+  </div>
+
+  <div class="profile-section">
+    <div class="profile-row" onclick="PROFILE.shareCode()">
+      <div class="profile-row-left">
+        <div class="profile-row-icon">🔗</div>
+        <div>
+          <div class="profile-row-label">Room invite code</div>
+          <div class="profile-row-sub" id="profile-code">—</div>
+        </div>
+      </div>
+      <span class="profile-row-arrow">›</span>
+    </div>
+    <div class="profile-row" onclick="PROFILE.retakeQuiz()">
+      <div class="profile-row-left">
+        <div class="profile-row-icon">✏️</div>
+        <div>
+          <div class="profile-row-label">Redo my quiz</div>
+          <div class="profile-row-sub">Update your preferences</div>
+        </div>
+      </div>
+      <span class="profile-row-arrow">›</span>
+    </div>
+  </div>
+
+  <div class="profile-section" style="margin-top:12px">
+    <div class="profile-row" onclick="PROFILE.logout()">
+      <div class="profile-row-left">
+        <div class="profile-row-icon">🚪</div>
+        <div><div class="profile-row-label" style="color:#C33">Log out</div></div>
+      </div>
+      <span class="profile-row-arrow">›</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── BOTTOM NAV ─────────────────────────────────────────────────── -->
+<nav class="bottom-nav" id="bottom-nav">
+  <button class="nav-btn active" data-screen="swipe-screen" onclick="showMainScreen('swipe-screen')">
+    <span class="nav-icon">💝</span>
+    <span>Swipe</span>
+  </button>
+  <button class="nav-btn" data-screen="shortlist-screen" onclick="showMainScreen('shortlist-screen')">
+    <span class="nav-icon">⭐</span>
+    <span>Shortlist</span>
+  </button>
+  <button class="nav-btn" data-screen="profile-screen" onclick="showMainScreen('profile-screen')">
+    <span class="nav-icon">👤</span>
+    <span>Profile</span>
+  </button>
+</nav>
+
+<!-- ── MATCH CELEBRATION OVERLAY ─────────────────────────────────── -->
+<div class="match-overlay" id="match-overlay">
+  <div class="match-card">
+    <div class="match-hearts">❤️</div>
+    <h2>It's a Match!</h2>
+    <div class="match-name" id="match-name">—</div>
+    <div class="match-subtitle" id="match-subtitle"></div>
+    <div class="match-actions">
+      <button class="btn btn-primary" onclick="closeMatch(); showMainScreen('shortlist-screen')">
+        View Shortlist
+      </button>
+      <button class="btn btn-ghost" onclick="closeMatch()">Keep Swiping</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST ──────────────────────────────────────────────────────── -->
+<div class="toast" id="toast"></div>
+
+<!-- Scripts — order matters -->
+<script src="./config.js"></script>
+<script src="./names.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="./js/app.js"></script>
+<script src="./js/room.js"></script>
+<script src="./js/quiz.js"></script>
+<script src="./js/deck.js"></script>
+<script src="./js/swipe.js"></script>
+<script src="./js/shortlist.js"></script>
+
+</body>
+</html>
