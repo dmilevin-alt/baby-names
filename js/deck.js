@@ -1,5 +1,5 @@
 // ── DECK BUILDER ─────────────────────────────────────────────────────────────
-// Combines two preference sets into a scored, sorted name list.
+// Combines two preference sets into a scored, randomized name list.
 
 const DECK = {
 
@@ -77,8 +77,18 @@ const DECK = {
       return { ...n, score };
     });
 
-    // ── 5. Sort: high score first, then alphabetically ───────────────────────
-    pool.sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
+    // ── 5. Sort by score, then shuffle names with equal scores ───────────────
+    pool.sort((a, b) => b.score - a.score);
+    for (let start = 0; start < pool.length;) {
+      let end = start + 1;
+      while (end < pool.length && pool[end].score === pool[start].score) end++;
+
+      for (let i = end - 1; i > start; i--) {
+        const j = start + Math.floor(Math.random() * (i - start + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+      }
+      start = end;
+    }
 
     return pool;
   }
