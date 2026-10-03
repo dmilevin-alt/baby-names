@@ -110,12 +110,8 @@ async function enterMainApp() {
 
   // Build deck
   STATE.deck = DECK.build(STATE.myPrefs, STATE.partnerPrefs);
-  STATE.deckIndex = Object.keys(STATE.myVotes).length;
-  // Advance past already-voted names
-  while (STATE.deckIndex < STATE.deck.length &&
-         STATE.myVotes[STATE.deck[STATE.deckIndex].name]) {
-    STATE.deckIndex++;
-  }
+  STATE.deckIndex = STATE.deck.findIndex(name => !STATE.myVotes[name.name]);
+  if (STATE.deckIndex === -1) STATE.deckIndex = STATE.deck.length;
 
   // Load shortlist
   const { data: sl } = await STATE.db
