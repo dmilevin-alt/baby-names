@@ -187,7 +187,7 @@ The `icon.svg` file is used as the app icon. For the best iOS home screen experi
 | `config.js` | **Edit this.** Your Supabase URL + key |
 | `index.html` | Login / Sign-up page |
 | `app.html` | Main app (all screens in one page) |
-| `names.js` | 340+ name database |
+| `names.js` | 1,000+ name database |
 | `css/style.css` | All visual styles |
 | `js/app.js` | Global state + screen routing |
 | `js/auth.js` | Login / sign-up logic |

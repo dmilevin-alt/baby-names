@@ -1,4 +1,4 @@
-// Baby name database — 340+ names
+// Baby name database — 1,000+ names
 // Fields: name, gender ('girl'|'boy'|'either'), origin[], tradition[], style[], meaning, syllables
 const NAMES = [
 
@@ -351,7 +351,6 @@ const NAMES = [
   { name:"Cameron",   gender:"either", origin:["scottish"],        tradition:["secular"],                      style:["modern"],           meaning:"crooked nose",                   syllables:3 },
   { name:"Charlie",   gender:"either", origin:["english"],         tradition:["secular"],                      style:["modern","classic"],  meaning:"free man",                       syllables:2 },
   { name:"Dakota",    gender:"either", origin:["native american"], tradition:["secular"],                      style:["unique"],           meaning:"allies, friends",                syllables:3 },
-  { name:"Eli",       gender:"either", origin:["hebrew"],          tradition:["jewish","secular"],             style:["classic"],          meaning:"my God, ascend",                 syllables:2 },
   { name:"Finley",    gender:"either", origin:["irish"],           tradition:["secular"],                      style:["modern"],           meaning:"fair warrior",                   syllables:2 },
   { name:"Jordan",    gender:"either", origin:["hebrew"],          tradition:["jewish","christian","secular"], style:["modern"],           meaning:"flow down",                      syllables:2 },
   { name:"Kai",       gender:"either", origin:["scandinavian","hawaiian"], tradition:["secular"],              style:["modern"],           meaning:"sea",                            syllables:1 },
@@ -551,3 +550,222 @@ const NAMES = [
   { name:"Ishaan",    gender:"boy",  origin:["sanskrit"],           tradition:["hindu","secular"],              style:["modern"],            meaning:"sun, bringing prosperity",       syllables:3 },
   { name:"Kiran",     gender:"either", origin:["sanskrit","hindi"], tradition:["hindu","secular"],              style:["modern"],            meaning:"ray of light",                   syllables:2 },
 ];
+
+const ADDITIONAL_NAME_GROUPS = [
+  { gender:"girl", origin:["english"], tradition:["secular"], style:["classic"], names:[
+    ["Adelaide",3], ["Agnes",2], ["Alice",2], ["Alma",2], ["Audrey",2],
+    ["Beatrice",3], ["Bernadette",3], ["Cecilia",4], ["Clara",2], ["Cora",2],
+    ["Dorothy",3], ["Edith",2], ["Eleanor",3], ["Estelle",2], ["Florence",2],
+    ["Frances",2], ["Harriet",2], ["Louisa",3], ["Matilda",3], ["Winifred",3],
+  ]},
+  { gender:"girl", origin:["english"], tradition:["secular"], style:["modern","unique"], names:[
+    ["Ainsley",2], ["Briar",2], ["Callie",2], ["Cleo",2], ["Delaney",3],
+    ["Ember",2], ["Everly",3], ["Hadley",2], ["Harlow",2], ["Indigo",3],
+    ["Jovie",2], ["Lennon",2], ["Marlowe",2], ["Maisie",2], ["Oakley",2],
+    ["Paisley",2], ["Rory",2], ["Saylor",2], ["Tatum",2], ["Waverly",3],
+  ]},
+  { gender:"boy", origin:["english"], tradition:["secular"], style:["classic"], names:[
+    ["Alfred",2], ["Arthur",2], ["Clarence",2], ["Clifford",2], ["Clyde",1],
+    ["Edmund",2], ["Franklin",2], ["Frederick",2], ["Harold",2], ["Hugh",1],
+    ["Lawrence",2], ["Leonard",2], ["Malcolm",2], ["Nelson",2], ["Percival",3],
+    ["Philip",2], ["Quentin",2], ["Reginald",3], ["Stanley",2], ["Walter",2],
+  ]},
+  { gender:"boy", origin:["english"], tradition:["secular"], style:["modern","unique"], names:[
+    ["Archer",2], ["Asher",2], ["Beckett",2], ["Bodhi",2], ["Colson",2],
+    ["Crew",1], ["Dashiell",3], ["Ford",1], ["Grady",2], ["Hendrix",2],
+    ["Jensen",2], ["Judson",2], ["Keaton",2], ["Kellan",2], ["Lachlan",2],
+    ["Ledger",2], ["Maddox",2], ["Sullivan",3], ["Wilder",2], ["Zane",1],
+  ]},
+  { gender:"girl", origin:["hebrew"], tradition:["jewish","secular"], style:["classic"], names:[
+    ["Adina",3], ["Aliza",3], ["Aviva",3], ["Batya",2], ["Chana",2],
+    ["Dalia",3], ["Devorah",3], ["Esther",2], ["Hadassah",3], ["Ilana",3],
+    ["Liora",3], ["Miriam",3], ["Naomi",3], ["Rachel",2], ["Rivka",2],
+    ["Shira",2], ["Talia",3], ["Yael",2], ["Yaffa",2], ["Ziva",2],
+  ]},
+  { gender:"boy", origin:["hebrew"], tradition:["jewish","secular"], style:["classic"], names:[
+    ["Aharon",3], ["Asa",2], ["Baruch",2], ["Boaz",2], ["Eitan",2],
+    ["Ephraim",2], ["Eyal",2], ["Hillel",2], ["Hiram",2], ["Jair",2],
+    ["Lazar",2], ["Malachi",3], ["Mordecai",3], ["Nachum",2], ["Nadav",2],
+    ["Natan",2], ["Rafael",3], ["Reuben",2], ["Shai",1], ["Zev",1],
+  ]},
+  { gender:"girl", origin:["irish","scandinavian"], tradition:["secular"], style:["vintage","unique"], names:[
+    ["Aisling",2], ["Aoife",2], ["Brigid",2], ["Catriona",3], ["Deirdre",2],
+    ["Eilidh",2], ["Enya",2], ["Fiona",3], ["Greer",1], ["Iona",3],
+    ["Isolde",2], ["Keira",2], ["Maeve",1], ["Mairead",2], ["Niamh",1],
+    ["Orla",2], ["Roisin",2], ["Saoirse",2], ["Sinead",2], ["Una",2],
+  ]},
+  { gender:"boy", origin:["irish","scandinavian"], tradition:["secular"], style:["classic","vintage"], names:[
+    ["Aidan",2], ["Callum",2], ["Ciaran",2], ["Conall",2], ["Cormac",2],
+    ["Declan",2], ["Duncan",2], ["Eamon",2], ["Fergus",2], ["Finnegan",3],
+    ["Gareth",2], ["Kieran",2], ["Lorcan",2], ["Niall",1], ["Oscar",2],
+    ["Ronan",2], ["Seamus",2], ["Torin",2], ["Tristan",2], ["Cormac",2],
+  ]},
+  { gender:"girl", origin:["english","scandinavian"], tradition:["secular"], style:["modern","nature"], names:[
+    ["Anemone",4], ["Autumn",2], ["Bluebell",2], ["Clover",2], ["Dawn",1],
+    ["Dove",1], ["Fern",1], ["Holly",2], ["Juniper",3], ["Laurel",2],
+    ["Meadow",2], ["Olive",2], ["Pearl",1], ["Poppy",2], ["Robin",2],
+    ["Saffron",2], ["Sky",1], ["Summer",2], ["Wren",1], ["Zinnia",3],
+  ]},
+  { gender:"boy", origin:["english","scandinavian"], tradition:["secular"], style:["modern","nature"], names:[
+    ["Alder",2], ["Ash",1], ["Bear",1], ["Birch",1], ["Cedar",2],
+    ["Cove",1], ["Fox",1], ["Heath",1], ["Hollis",2], ["Linden",2],
+    ["Moss",1], ["Orion",3], ["Peregrine",3], ["Phoenix",2], ["Reed",1],
+    ["River",2], ["Rowan",2], ["Stone",1], ["Vale",1], ["Wells",1],
+  ]},
+  { gender:"girl", origin:["french"], tradition:["secular"], style:["classic","vintage"], names:[
+    ["Adele",2], ["Aline",2], ["Anais",2], ["Berenice",3], ["Brigitte",2],
+    ["Camille",2], ["Delphine",2], ["Eugenie",3], ["Fabienne",3], ["Genevieve",3],
+    ["Georgette",2], ["Helene",2], ["Jacqueline",3], ["Lucille",2], ["Manon",2],
+    ["Marceline",3], ["Odette",2], ["Sabine",2], ["Simone",2], ["Yvette",2],
+  ]},
+  { gender:"boy", origin:["french"], tradition:["secular"], style:["classic","vintage"], names:[
+    ["Alain",2], ["Anatole",3], ["Bastien",2], ["Bertrand",2], ["Cedric",2],
+    ["Claude",1], ["Damien",2], ["Etienne",2], ["Fabien",2], ["Gaston",2],
+    ["Gilles",1], ["Laurent",2], ["Lucien",2], ["Marcel",2], ["Pascal",2],
+    ["Remy",2], ["Rene",2], ["Thierry",2], ["Yannick",2], ["Yves",1],
+  ]},
+  { gender:"girl", origin:["spanish"], tradition:["christian","secular"], style:["classic"], names:[
+    ["Adela",3], ["Alba",2], ["Alma",2], ["Amparo",3], ["Beatriz",2],
+    ["Blanca",2], ["Camila",3], ["Carolina",4], ["Cayetana",4], ["Consuelo",3],
+    ["Dolores",3], ["Esperanza",4], ["Inmaculada",5], ["Jimena",3], ["Lourdes",2],
+    ["Marisol",3], ["Paloma",3], ["Pilar",2], ["Soledad",3], ["Veronica",4],
+  ]},
+  { gender:"boy", origin:["spanish"], tradition:["christian","secular"], style:["classic"], names:[
+    ["Alonso",3], ["Andres",2], ["Arturo",3], ["Cesar",2], ["Cristobal",3],
+    ["Damian",3], ["Diego",2], ["Esteban",3], ["Felipe",3], ["Francisco",3],
+    ["Ignacio",3], ["Javier",2], ["Joaquin",2], ["Lorenzo",3], ["Manuel",2],
+    ["Mateo",3], ["Ramon",2], ["Santiago",3], ["Tomas",2], ["Vicente",3],
+  ]},
+  { gender:"girl", origin:["italian"], tradition:["christian","secular"], style:["classic","vintage"], names:[
+    ["Alessandra",4], ["Alessia",4], ["Antonia",4], ["Bianca",2], ["Carlotta",3],
+    ["Caterina",4], ["Claudia",3], ["Donatella",4], ["Eleonora",5], ["Federica",4],
+    ["Francesca",3], ["Ginevra",3], ["Isabella",4], ["Lucia",3], ["Luciana",4],
+    ["Marina",3], ["Serena",3], ["Stefania",4], ["Valentina",4], ["Vittoria",4],
+  ]},
+  { gender:"boy", origin:["italian"], tradition:["christian","secular"], style:["classic","vintage"], names:[
+    ["Alessandro",4], ["Angelo",3], ["Antonio",4], ["Carlo",2], ["Dante",2],
+    ["Domenico",4], ["Enrico",3], ["Federico",4], ["Filippo",3], ["Giacomo",3],
+    ["Giorgio",3], ["Giovanni",3], ["Leonardo",4], ["Luca",2], ["Matteo",3],
+    ["Niccolo",3], ["Paolo",2], ["Raffaele",3], ["Salvatore",4], ["Vincenzo",3],
+  ]},
+  { gender:"girl", origin:["german","scandinavian"], tradition:["secular"], style:["classic","vintage"], names:[
+    ["Anika",3], ["Astrid",2], ["Dagmar",2], ["Elsa",2], ["Freya",2],
+    ["Greta",2], ["Hannelore",3], ["Klara",2], ["Lotte",2], ["Maren",2],
+    ["Marta",2], ["Nadine",2], ["Petra",2], ["Sigrid",2], ["Solveig",2],
+    ["Thea",2], ["Thora",2], ["Ursula",3], ["Wilhelmina",4], ["Willa",2],
+  ]},
+  { gender:"boy", origin:["german","scandinavian"], tradition:["secular"], style:["classic","vintage"], names:[
+    ["Alaric",3], ["Ansel",2], ["Arvid",2], ["Bastian",2], ["Bjorn",1],
+    ["Caspar",2], ["Dietrich",2], ["Erik",2], ["Felix",2], ["Gunnar",2],
+    ["Henrik",2], ["Johan",2], ["Leif",1], ["Magnus",2], ["Otto",2],
+    ["Ragnar",2], ["Rolf",1], ["Soren",2], ["Stellan",2], ["Viggo",2],
+  ]},
+  { gender:"girl", origin:["arabic"], tradition:["muslim","secular"], style:["classic"], names:[
+    ["Aisha",2], ["Amal",2], ["Amani",3], ["Farah",2], ["Fatima",3],
+    ["Hala",2], ["Hana",2], ["Jamila",3], ["Layla",2], ["Leila",2],
+    ["Maha",2], ["Malika",3], ["Nadia",3], ["Nura",2], ["Rania",3],
+    ["Salma",2], ["Samira",3], ["Soraya",3], ["Yasmin",2], ["Zahra",2],
+  ]},
+  { gender:"boy", origin:["arabic"], tradition:["muslim","secular"], style:["classic"], names:[
+    ["Adil",2], ["Ahmed",2], ["Amir",2], ["Anwar",2], ["Bilal",2],
+    ["Faisal",2], ["Farid",2], ["Hamza",2], ["Haris",2], ["Idris",2],
+    ["Imran",2], ["Jamal",2], ["Kareem",2], ["Malik",2], ["Mustafa",3],
+    ["Nabil",2], ["Rashid",2], ["Samir",2], ["Yusuf",2], ["Zaid",1],
+  ]},
+  { gender:"girl", origin:["hindi","sanskrit"], tradition:["hindu","secular"], style:["classic"], names:[
+    ["Aditi",3], ["Amrita",3], ["Bhavna",2], ["Chandra",2], ["Gauri",2],
+    ["Indira",3], ["Ira",2], ["Kavita",3], ["Lakshmi",2], ["Madhavi",3],
+    ["Nandita",3], ["Pallavi",3], ["Radhika",3], ["Ritu",2], ["Saanvi",2],
+    ["Shreya",2], ["Sita",2], ["Tara",2], ["Uma",2], ["Vidya",2],
+  ]},
+  { gender:"boy", origin:["hindi","sanskrit"], tradition:["hindu","secular"], style:["classic"], names:[
+    ["Aditya",3], ["Amit",2], ["Anil",2], ["Ashwin",2], ["Devendra",3],
+    ["Gautam",2], ["Hari",2], ["Kunal",2], ["Mohan",2], ["Nikhil",2],
+    ["Pranav",2], ["Rahul",2], ["Rajiv",2], ["Sameer",2], ["Sanjay",2],
+    ["Shankar",2], ["Surya",2], ["Varun",2], ["Vikram",2], ["Vivek",2],
+  ]},
+  { gender:"girl", origin:["japanese"], tradition:["secular"], style:["modern","unique"], names:[
+    ["Aiko",2], ["Akari",3], ["Akiko",3], ["Asami",3], ["Ayaka",3],
+    ["Chie",2], ["Emi",2], ["Hanae",3], ["Haruka",3], ["Hikari",3],
+    ["Kaori",3], ["Keiko",2], ["Kiko",2], ["Maki",2], ["Mariko",3],
+    ["Mayumi",3], ["Misaki",3], ["Rei",1], ["Sakura",3], ["Yuna",2],
+  ]},
+  { gender:"boy", origin:["japanese"], tradition:["secular"], style:["modern","unique"], names:[
+    ["Akira",3], ["Daichi",2], ["Daisuke",3], ["Haruki",3], ["Hiro",2],
+    ["Hiroshi",3], ["Isamu",3], ["Itsuki",3], ["Kaito",2], ["Kenji",2],
+    ["Makoto",3], ["Naoki",2], ["Ren",1], ["Riku",2], ["Ryo",1],
+    ["Satoshi",3], ["Shinji",2], ["Takumi",3], ["Taro",2], ["Yoshi",2],
+  ]},
+  { gender:"girl", origin:["russian","ukrainian","slavic"], tradition:["orthodox","secular"], style:["classic"], names:[
+    ["Agata",3], ["Alina",3], ["Anastasiya",5], ["Darya",2], ["Ekaterina",5],
+    ["Elena",3], ["Irina",3], ["Ksenia",3], ["Larisa",3], ["Ludmila",3],
+    ["Marina",3], ["Milena",3], ["Nadezhda",3], ["Nina",2], ["Polina",3],
+    ["Svetlana",3], ["Tatiana",3], ["Valentina",4], ["Vera",2], ["Yulia",3],
+  ]},
+  { gender:"boy", origin:["russian","ukrainian","slavic"], tradition:["orthodox","secular"], style:["classic"], names:[
+    ["Alexei",3], ["Anatoly",4], ["Boris",2], ["Dmitri",2], ["Evgeny",3],
+    ["Fyodor",2], ["Igor",2], ["Ivan",2], ["Kirill",2], ["Leonid",3],
+    ["Maksim",2], ["Mikhail",2], ["Nikolai",3], ["Oleg",2], ["Pavel",2],
+    ["Roman",2], ["Sergei",2], ["Stanislav",3], ["Vasily",3], ["Yuri",2],
+  ]},
+  { gender:"either", origin:["english","irish"], tradition:["secular"], style:["modern","unique"], names:[
+    ["Avery",2], ["Bailey",2], ["Blake",1], ["Casey",2], ["Drew",1],
+    ["Ellis",2], ["Emerson",3], ["Finley",2], ["Gray",1], ["Jamie",2],
+    ["Jesse",2], ["Jordan",2], ["Kai",1], ["Lane",1], ["Morgan",2],
+    ["Parker",2], ["Quinn",1], ["Remy",2], ["Shiloh",2], ["Taylor",2],
+  ]},
+  { gender:"girl", origin:["greek","latin"], tradition:["christian","secular"], style:["classic"], names:[
+    ["Alexandra",4], ["Antigone",4], ["Ariadne",4], ["Athena",3], ["Calliope",4],
+    ["Daphne",2], ["Eleni",3], ["Evangeline",4], ["Helena",3], ["Irene",2],
+    ["Lydia",3], ["Melina",3], ["Phoebe",2], ["Selene",2], ["Sofia",3],
+    ["Thalia",3], ["Theodora",4], ["Xanthe",2], ["Zoe",2], ["Diana",3],
+  ]},
+  { gender:"boy", origin:["greek","latin"], tradition:["christian","secular"], style:["classic"], names:[
+    ["Achilles",3], ["Aeneas",3], ["Alexander",4], ["Andreas",3], ["Aristotle",4],
+    ["Basil",2], ["Constantine",3], ["Dorian",3], ["Evangelos",4], ["Gregory",3],
+    ["Hector",2], ["Jason",2], ["Leonidas",4], ["Nicolas",3], ["Orlando",3],
+    ["Ptolemy",3], ["Sebastian",4], ["Theodore",3], ["Timothy",3], ["Xavier",3],
+  ]},
+  { gender:"girl", origin:["irish"], tradition:["secular"], style:["vintage","unique"], names:[
+    ["Arianwen",3], ["Bethan",2], ["Blodwen",2], ["Branwen",2], ["Cerys",2],
+    ["Dilys",2], ["Eira",2], ["Ffion",2], ["Gladys",2], ["Gwen",1],
+    ["Gwenllian",3], ["Lowri",2], ["Mabli",2], ["Nerys",2], ["Olwen",2],
+    ["Seren",2], ["Sian",1], ["Tesni",2], ["Tegan",2], ["Eluned",3],
+  ]},
+  { gender:"boy", origin:["irish"], tradition:["secular"], style:["vintage","unique"], names:[
+    ["Aneirin",3], ["Bedwyr",2], ["Caradoc",3], ["Dafydd",2], ["Dewi",2],
+    ["Emrys",2], ["Gethin",2], ["Glyn",1], ["Gruffydd",2], ["Iolo",3],
+    ["Llywelyn",3], ["Llyr",1], ["Madoc",2], ["Meirion",3], ["Rhodri",2],
+    ["Taliesin",3], ["Talfryn",2], ["Trystan",2], ["Wyn",1], ["Ieuan",2],
+  ]},
+  { gender:"girl", origin:["english"], tradition:["secular"], style:["classic","vintage"], names:[
+    ["Abbie",2], ["Annabel",3], ["Annette",2], ["Anthea",3], ["Barbara",3],
+    ["Blythe",1], ["Candace",2], ["Cassandra",3], ["Cecily",3], ["Charity",3],
+    ["Christine",2], ["Cynthia",2], ["Elaine",2], ["Felicity",4], ["Georgina",4],
+    ["Gwendolyn",3], ["Jeanette",2], ["Judith",2], ["Justine",2], ["Kathleen",2],
+  ]},
+  { gender:"boy", origin:["english"], tradition:["secular"], style:["classic","vintage"], names:[
+    ["Ambrose",2], ["Anthony",3], ["Benedict",3], ["Bernard",2], ["Bruce",1],
+    ["Byron",2], ["Chester",2], ["Desmond",2], ["Dominic",3], ["Douglas",2],
+    ["Ernest",2], ["Eugene",2], ["Graham",1], ["Howard",2], ["Jerome",2],
+    ["Martin",2], ["Morris",2], ["Murray",2], ["Neil",1], ["Norman",2],
+  ]},
+];
+
+const seenNameKeys = new Set(NAMES.map(({ name }) => name.toLowerCase()));
+for (const group of ADDITIONAL_NAME_GROUPS) {
+  for (const [name, syllables] of group.names) {
+    const nameKey = name.toLowerCase();
+    if (seenNameKeys.has(nameKey)) continue;
+    seenNameKeys.add(nameKey);
+    NAMES.push({
+      name,
+      gender: group.gender,
+      origin: group.origin,
+      tradition: group.tradition,
+      style: group.style,
+      meaning: "",
+      syllables,
+    });
+  }
+}
