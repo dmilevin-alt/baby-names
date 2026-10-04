@@ -750,6 +750,56 @@ a { color: var(--primary); text-decoration: none; }
   line-height: 1.45;
 }
 
+.card-match {
+  padding: 10px 0;
+  margin-bottom: 12px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.card-match-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.card-match-title {
+  color: var(--primary);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.card-match-head strong {
+  color: var(--text);
+  font-size: 12px;
+}
+
+.card-match-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px 10px;
+}
+
+.card-match-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.card-match-item.is-match { color: var(--match); }
+.card-match-item.is-miss { color: var(--text-muted); }
+
+.card-match-empty {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
 .card-origin {
   font-size: 14px;
   font-weight: 700;

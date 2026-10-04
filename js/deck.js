@@ -40,14 +40,6 @@ const DECK = {
       parseLetters(p2.include_letters)
     ).map(l => l.toUpperCase());
 
-    const checkLength = (pref, syllables) => {
-      if (!pref || pref === 'any') return true;
-      if (pref === 'short')  return syllables <= 2;
-      if (pref === 'medium') return syllables >= 2 && syllables <= 3;
-      if (pref === 'long')   return syllables >= 3;
-      return true;
-    };
-
     pool = pool.map(n => {
       let score = 0;
 
@@ -65,7 +57,7 @@ const DECK = {
       }
 
       // Length (+1 if either person's preference is matched)
-      if (checkLength(p1.length_pref, n.syllables) || checkLength(p2.length_pref, n.syllables)) {
+      if (checkNameLength(p1.length_pref, n.syllables) || checkNameLength(p2.length_pref, n.syllables)) {
         score += 1;
       }
 
@@ -91,6 +83,51 @@ const DECK = {
     }
 
     return pool;
+  },
+
+  partnerMatch(name, prefs) {
+    const criteria = [];
+    const backgrounds = prefs.backgrounds || [];
+    const styles = prefs.styles || [];
+    const traditions = prefs.tradition || [];
+    const includeLetters = parseLetters(prefs.include_letters).map(l => l.toUpperCase());
+
+    if (backgrounds.length > 0) {
+      criteria.push({
+        label: 'Background',
+        matches: (name.origin || []).some(origin => backgrounds.includes(origin))
+      });
+    }
+    if (styles.length > 0) {
+      criteria.push({
+        label: 'Style',
+        matches: (name.style || []).some(style => styles.includes(style))
+      });
+    }
+    if (traditions.length > 0) {
+      criteria.push({
+        label: 'Tradition',
+        matches: (name.tradition || []).some(tradition => traditions.includes(tradition))
+      });
+    }
+    if (prefs.length_pref && prefs.length_pref !== 'any') {
+      criteria.push({
+        label: 'Length',
+        matches: checkNameLength(prefs.length_pref, name.syllables)
+      });
+    }
+    if (includeLetters.length > 0) {
+      criteria.push({
+        label: 'Starting letter',
+        matches: includeLetters.includes(name.name[0].toUpperCase())
+      });
+    }
+
+    return {
+      matched: criteria.filter(criterion => criterion.matches).length,
+      total: criteria.length,
+      criteria
+    };
   }
 };
 
@@ -102,4 +139,12 @@ function parseLetters(str) {
 
 function union(a, b) {
   return [...new Set([...a, ...b])];
+}
+
+function checkNameLength(pref, syllables) {
+  if (!pref || pref === 'any') return true;
+  if (pref === 'short')  return syllables <= 2;
+  if (pref === 'medium') return syllables >= 2 && syllables <= 3;
+  if (pref === 'long')   return syllables >= 3;
+  return true;
 }

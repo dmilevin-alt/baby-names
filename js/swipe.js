@@ -58,8 +58,15 @@ const SWIPE = {
 
     const originText  = (name.origin || []).map(capitalize).join(' · ');
     const styleText   = (name.style  || []).map(capitalize).join(', ');
+    const partnerMatch = DECK.partnerMatch(name, STATE.partnerPrefs);
     const sylDots     = Array.from({ length: Math.min(name.syllables, 5) }, (_, i) =>
       `<div class="syl-dot filled"></div>`
+    ).join('');
+    const matchDetails = partnerMatch.criteria.map(criterion => `
+      <span class="card-match-item ${criterion.matches ? 'is-match' : 'is-miss'}"
+        aria-label="${criterion.matches ? 'Matches' : 'Does not match'} Jasmine's ${criterion.label.toLowerCase()} preference">
+        <span aria-hidden="true">${criterion.matches ? '✓' : '–'}</span>${criterion.label}
+      </span>`
     ).join('');
 
     stage.innerHTML = `
@@ -74,6 +81,17 @@ const SWIPE = {
           <div class="card-meaning-label">meaning</div>
           <div class="card-meaning">${name.meaning}</div>
         </div>` : ''}
+        <div class="card-match">
+          <div class="card-match-head">
+            <span class="card-match-title">Jasmine's match</span>
+            ${partnerMatch.total
+              ? `<strong>${partnerMatch.matched} of ${partnerMatch.total} preferences</strong>`
+              : ''}
+          </div>
+          ${partnerMatch.total
+            ? `<div class="card-match-list">${matchDetails}</div>`
+            : '<div class="card-match-empty">No optional preferences selected</div>'}
+        </div>
         <div class="card-tags">
           ${styleText ? `<span class="card-tag">${styleText}</span>` : ''}
           ${(name.tradition || []).map(t => `<span class="card-tag">${capitalize(t)}</span>`).join('')}
