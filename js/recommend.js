@@ -1,15 +1,57 @@
 // ── RECOMMENDATION ENGINE ─────────────────────────────────────────────────────
 const RECOMMEND = {
 
-  // Score every unvoted name against the user's taste profile.
+  // Derive the same hard filters the deck uses, from quiz prefs.
+  _buildFilters() {
+    const p1 = STATE.myPrefs      || {};
+    const p2 = STATE.partnerPrefs || {};
+
+    // Gender — mirror deck.js logic exactly
+    let genderFilter = 'all';
+    if (p1.gender_pref && p2.gender_pref) {
+      if (p1.gender_pref === p2.gender_pref) {
+        genderFilter = p1.gender_pref;
+      } else if (p1.gender_pref === 'either') {
+        genderFilter = p2.gender_pref;
+      } else if (p2.gender_pref === 'either') {
+        genderFilter = p1.gender_pref;
+      }
+      // If they chose opposite genders, genderFilter stays 'all'
+    } else if (p1.gender_pref && p1.gender_pref !== 'either') {
+      genderFilter = p1.gender_pref; // partner prefs not yet loaded → use mine
+    }
+
+    // Avoid letters — union of both
+    const avoidSet = new Set();
+    parseLetters(p1.avoid_letters).forEach(l => avoidSet.add(l.toUpperCase()));
+    parseLetters(p2.avoid_letters).forEach(l => avoidSet.add(l.toUpperCase()));
+
+    // Quiz-derived soft boosts
+    const quizOrigins   = union(p1.backgrounds || [], p2.backgrounds || []);
+    const quizStyles    = union(p1.styles       || [], p2.styles       || []);
+    const quizTrad      = union(p1.tradition    || [], p2.tradition    || []);
+    const includeLetters = union(
+      parseLetters(p1.include_letters),
+      parseLetters(p2.include_letters)
+    ).map(l => l.toUpperCase());
+
+    return { genderFilter, avoidSet, quizOrigins, quizStyles, quizTrad, includeLetters,
+             lengthPref1: p1.length_pref, lengthPref2: p2.length_pref };
+  },
+
+  // Score every unvoted name against the user's taste profile + quiz answers.
   _score() {
-    const votes = STATE.myVotes;
-    const loveNames  = Object.entries(votes).filter(([, v]) => v === 'love').map(([n]) => n);
-    const maybeNames = Object.entries(votes).filter(([, v]) => v === 'maybe').map(([n]) => n);
-    const positive   = [...loveNames, ...maybeNames];
+    const votes     = STATE.myVotes;
+    const loveNames = Object.entries(votes).filter(([, v]) => v === 'love').map(([n]) => n);
+    const maybeNames= Object.entries(votes).filter(([, v]) => v === 'maybe').map(([n]) => n);
+    const positive  = [...loveNames, ...maybeNames];
     if (positive.length === 0) return null;
 
-    // Build weighted frequency maps (love counts 2×, maybe counts 1×)
+    const filters = this._buildFilters();
+    const { genderFilter, avoidSet, quizOrigins, quizStyles, quizTrad,
+            includeLetters, lengthPref1, lengthPref2 } = filters;
+
+    // Build vote-derived frequency maps (love = 2×, maybe = 1×)
     const originFreq = new Map(), styleFreq = new Map(), tradFreq = new Map();
     let sylSum = 0, sylCount = 0;
 
@@ -25,18 +67,36 @@ const RECOMMEND = {
 
     const prefSyllables = sylCount ? Math.round(sylSum / sylCount) : null;
 
-    // Score candidates: unvoted names not already on shortlist
-    const voted         = new Set(Object.keys(votes));
-    const shortlisted   = new Set(STATE.shortlist.map(s => s.name));
+    // Candidates: unvoted, not shortlisted, pass hard filters
+    const voted       = new Set(Object.keys(votes));
+    const shortlisted = new Set(STATE.shortlist.map(s => s.name));
 
     const scored = NAMES
-      .filter(n => !voted.has(n.name) && !shortlisted.has(n.name))
+      .filter(n => {
+        if (voted.has(n.name) || shortlisted.has(n.name)) return false;
+        // ── Hard filter: gender ──────────────────────────────────────────────
+        if (genderFilter !== 'all' && genderFilter !== 'either' &&
+            n.gender !== 'either' && n.gender !== genderFilter) return false;
+        // ── Hard filter: avoid letters ───────────────────────────────────────
+        if (avoidSet.size > 0 && avoidSet.has(n.name[0].toUpperCase())) return false;
+        return true;
+      })
       .map(n => {
         let score = 0;
-        score += (n.origin    || []).reduce((s, o) => s + (originFreq.get(o) || 0) * 3, 0);
+
+        // Vote-pattern signal (primary)
+        score += (n.origin    || []).reduce((s, o)  => s + (originFreq.get(o)  || 0) * 3, 0);
         score += (n.style     || []).reduce((s, st) => s + (styleFreq.get(st)  || 0) * 2, 0);
-        score += (n.tradition || []).reduce((s, t) => s + (tradFreq.get(t)     || 0),     0);
+        score += (n.tradition || []).reduce((s, t)  => s + (tradFreq.get(t)    || 0),     0);
         if (prefSyllables && n.syllables === prefSyllables) score += 3;
+
+        // Quiz-answer boosts (secondary — break ties toward quiz preferences)
+        if (quizOrigins.length  && (n.origin    || []).some(o => quizOrigins.includes(o)))  score += 2;
+        if (quizStyles.length   && (n.style     || []).some(s => quizStyles.includes(s)))   score += 2;
+        if (quizTrad.length === 0 || (n.tradition || []).some(t => quizTrad.includes(t)))    score += 1;
+        if (checkNameLength(lengthPref1, n.syllables) || checkNameLength(lengthPref2, n.syllables)) score += 1;
+        if (includeLetters.length && includeLetters.includes(n.name[0].toUpperCase()))       score += 1;
+
         return { n, score };
       })
       .filter(({ score }) => score > 0)
@@ -45,7 +105,8 @@ const RECOMMEND = {
     const topOrigins = [...originFreq.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3).map(([o]) => o);
     const topStyles  = [...styleFreq.entries()].sort((a, b) => b[1] - a[1]).slice(0, 2).map(([s]) => s);
 
-    return { scored, topOrigins, topStyles, prefSyllables, loveCount: loveNames.length, maybeCount: maybeNames.length };
+    return { scored, topOrigins, topStyles, prefSyllables, genderFilter,
+             loveCount: loveNames.length, maybeCount: maybeNames.length };
   },
 
   render(body) {
@@ -75,7 +136,7 @@ const RECOMMEND = {
       return;
     }
 
-    const { scored, topOrigins, topStyles, prefSyllables, loveCount, maybeCount } = result;
+    const { scored, topOrigins, topStyles, prefSyllables, genderFilter, loveCount, maybeCount } = result;
     const top10 = scored.slice(0, 10);
 
     const tagStr = [...topOrigins, ...topStyles]
@@ -83,12 +144,14 @@ const RECOMMEND = {
       .map(t => t.charAt(0).toUpperCase() + t.slice(1))
       .join(' · ');
 
-    const sylNote = prefSyllables ? ` · ${prefSyllables}-syllable` : '';
+    const sylNote    = prefSyllables ? ` · ${prefSyllables}-syllable` : '';
+    const genderNote = genderFilter === 'girl' ? ' · Girls only'
+                     : genderFilter === 'boy'  ? ' · Boys only' : '';
 
     body.innerHTML = `
       <div class="recommend-intro">
         <div class="recommend-intro-label">Personalised picks</div>
-        <div class="recommend-intro-tags">${tagStr}${sylNote}</div>
+        <div class="recommend-intro-tags">${tagStr}${sylNote}${genderNote}</div>
         <div class="recommend-intro-sub">Based on your ${loveCount} ❤️ loves and ${maybeCount} 🤔 maybes</div>
       </div>
       <div class="shortlist-list">
@@ -97,16 +160,16 @@ const RECOMMEND = {
   },
 
   _renderCard(n) {
-    const origin  = (n.origin || []).map(o => o.charAt(0).toUpperCase() + o.slice(1)).join(' · ');
-    const ranks   = (n.popularIn || []).map(r => `${r.jurisdiction} #${r.position}`).join(' · ');
-    const sub     = [origin, ranks].filter(Boolean).join(' · ');
+    const origin = (n.origin || []).map(o => o.charAt(0).toUpperCase() + o.slice(1)).join(' · ');
+    const ranks  = (n.popularIn || []).map(r => `${r.jurisdiction} #${r.position}`).join(' · ');
+    const sub    = [origin, ranks].filter(Boolean).join(' · ');
 
     return `
       <div class="shortlist-item recommend-item" id="rec-${n.name.replace(/\s/g,'_')}">
         <div class="shortlist-item-head">
           <div style="flex:1;min-width:0">
             <div class="shortlist-item-name">${n.name}</div>
-            ${sub     ? `<div class="shortlist-item-sub">${sub}</div>` : ''}
+            ${sub      ? `<div class="shortlist-item-sub">${sub}</div>` : ''}
             ${n.meaning ? `<div class="shortlist-item-sub recommend-meaning">"${n.meaning}"</div>` : ''}
           </div>
           <div class="recommend-actions">
@@ -121,7 +184,7 @@ const RECOMMEND = {
   async quickVote(nameStr, voteType) {
     STATE.myVotes[nameStr] = voteType;
 
-    // Advance deckIndex past this name if it's still unvoted in the deck
+    // Advance deckIndex past this name if it's still pending in the deck
     while (STATE.deckIndex < STATE.deck.length &&
            STATE.myVotes[STATE.deck[STATE.deckIndex].name]) {
       STATE.deckIndex++;
@@ -143,7 +206,6 @@ const RECOMMEND = {
     const label = voteType === 'love' ? '❤️' : voteType === 'maybe' ? '🤔' : '✕';
     showToast(`${nameStr} ${label}`);
 
-    // Fade out and re-render
     const el = document.getElementById('rec-' + nameStr.replace(/\s/g,'_'));
     if (el) {
       el.style.transition = 'opacity .25s';
