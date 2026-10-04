@@ -123,8 +123,8 @@ const RECOMMEND = {
       const { data, error } = await STATE.db.functions.invoke('recommend', {
         body: {
           candidates:   candidates.map(({ name, gender, origin, style, meaning }) => ({ name, gender, origin, style, meaning })),
-          loveExamples: this._voteExamples('love'),
-          maybeExamples:this._voteExamples('maybe'),
+          loveExamples: this._voteExamples('love', 30),
+          maybeExamples:this._voteExamples('maybe', 50),
           quizContext,
         },
       });

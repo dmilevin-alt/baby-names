@@ -29,7 +29,10 @@ Deno.serve(async (req) => {
   const { candidates = [], loveExamples = [], maybeExamples = [], quizContext = {} } = body;
 
   const fmtNames = (arr) =>
-    arr.map((n) => `${n.name} (${(n.origin || []).join("/")}${n.meaning ? ` — "${n.meaning}"` : ""})`).join(", ");
+    arr.map((n) => {
+      const tags = [(n.origin || []).join("/"), (n.style || []).join("/")].filter(Boolean).join("; ");
+      return `${n.name} (${tags}${n.meaning ? ` — "${n.meaning}"` : ""})`;
+    }).join(", ");
 
   const candLines = candidates
     .map((n) => `${n.name} | ${n.gender} | ${(n.origin || []).join("/")} | ${(n.style || []).join("/")} | ${n.meaning || ""}`)
@@ -45,12 +48,14 @@ THEIR QUIZ PREFERENCES:
 - Length preference: ${quizContext.length || "any"}${quizContext.includeLetters ? `\n- Prefer names starting with: ${quizContext.includeLetters}` : ""}${quizContext.avoidLetters ? `\n- Avoid names starting with: ${quizContext.avoidLetters}` : ""}
 
 NAMES THEY LOVED: ${fmtNames(loveExamples) || "none yet"}
-NAMES THEY MAYBE'D: ${fmtNames(maybeExamples) || "none yet"}
+NAMES ON THEIR MAYBE LIST: ${fmtNames(maybeExamples) || "none yet"}
+
+The maybe list holds names they're drawn to but haven't committed to. Treat it as a real signal of taste, weaker than loved names but stronger than quiz answers alone. Look for patterns across the maybe list (sounds, origins, styles, meanings, length) and recommend candidates that share what the maybe names have in common, especially where that overlaps with the loved names. A good pick could feel like a stronger version of names on their maybe list.
 
 CANDIDATE NAMES (name | gender | origin | style | meaning):
 ${candLines}
 
-Pick the 10 candidates that best match their taste and quiz preferences. Prioritise gender. Give varied picks.
+Pick the 10 candidates that best match their loved names, maybe list and quiz preferences. Prioritise gender. Give varied picks. When a pick is inspired by maybe-list names, the reason may mention one of them.
 
 Return ONLY a valid JSON array — no explanation, no markdown. Each element:
 {"name":"<name>","reason":"<one sentence max 12 words explaining why this fits>"}`;
