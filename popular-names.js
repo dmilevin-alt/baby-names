@@ -83,7 +83,7 @@ const namesByKey = new Map(NAMES.map(name => [name.name.toLowerCase(), name]));
 
 for (const ranking of OFFICIAL_NAME_RANKINGS) {
   for (const gender of ['girls', 'boys']) {
-    for (const sourceName of ranking[gender].split('|')) {
+    for (const [index, sourceName] of ranking[gender].split('|').entries()) {
       const name = sourceName.normalize('NFC');
       const key = name.toLowerCase();
       let entry = namesByKey.get(key);
@@ -105,8 +105,12 @@ for (const ranking of OFFICIAL_NAME_RANKINGS) {
       }
 
       entry.popularIn = entry.popularIn || [];
-      const jurisdiction = `${ranking.jurisdiction} (${ranking.year})`;
-      if (!entry.popularIn.includes(jurisdiction)) entry.popularIn.push(jurisdiction);
+      entry.popularIn.push({
+        jurisdiction: ranking.jurisdiction,
+        year: ranking.year,
+        gender,
+        position: index + 1
+      });
     }
   }
 }

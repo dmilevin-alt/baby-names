@@ -58,26 +58,13 @@ const SWIPE = {
 
     const originText  = (name.origin || []).map(capitalize).join(' · ');
     const styleText   = (name.style  || []).map(capitalize).join(', ');
-    const partnerMatch = DECK.partnerMatch(name, STATE.partnerPrefs);
     const knownSyllables = Number.isFinite(name.syllables);
-    const popularityText = (name.popularIn || []).length
-      ? `Top 100 · ${(name.popularIn || []).join(' · ')}`
-      : '';
+    const popularityItems = (name.popularIn || []).map(item =>
+      `<span class="card-trending-rank">${item.jurisdiction} #${item.position} · ${item.gender} · ${item.year}</span>`
+    ).join('');
     const sylDots     = Array.from({ length: knownSyllables ? Math.min(name.syllables, 5) : 0 }, () =>
       `<div class="syl-dot filled"></div>`
     ).join('');
-    const matchDetails = partnerMatch.criteria.map(criterion => {
-      const isUnknown = criterion.matches === null;
-      const status = isUnknown ? 'is-unknown' : criterion.matches ? 'is-match' : 'is-miss';
-      const indicator = isUnknown ? '?' : criterion.matches ? '✓' : '–';
-      const description = isUnknown
-        ? `Could not verify Jasmine's ${criterion.label.toLowerCase()} preference`
-        : `${criterion.matches ? 'Matches' : 'Does not match'} Jasmine's ${criterion.label.toLowerCase()} preference`;
-      return `
-      <span class="card-match-item ${status}" aria-label="${description}">
-        <span aria-hidden="true">${indicator}</span>${criterion.label}${isUnknown ? ' (unknown)' : ''}
-      </span>`;
-    }).join('');
 
     stage.innerHTML = `
       <div class="name-card" id="swipe-card">
@@ -86,25 +73,15 @@ const SWIPE = {
         <div class="card-vote-label maybe-label" id="label-maybe">MAYBE</div>
         <div class="card-name">${name.name}</div>
         ${originText ? `<div class="card-origin">${originText}</div>` : ''}
-        ${popularityText ? `<div class="card-popularity">${popularityText}</div>` : ''}
+        <div class="card-trending">
+          <div class="card-trending-label">2025 top 100 rankings</div>
+          <div class="card-trending-list">${popularityItems || '<span class="card-trending-none">Not in tracked top 100s</span>'}</div>
+        </div>
         ${name.meaning ? `
         <div class="card-meaning-section">
           <div class="card-meaning-label">meaning</div>
           <div class="card-meaning">${name.meaning}</div>
         </div>` : ''}
-        <div class="card-match">
-          <div class="card-match-head">
-            <span class="card-match-title">Jasmine's match</span>
-            ${partnerMatch.total
-              ? `<strong>${partnerMatch.matched} of ${partnerMatch.total} ${partnerMatch.unknown ? 'known ' : ''}preferences${partnerMatch.unknown ? ` · ${partnerMatch.unknown} unknown` : ''}</strong>`
-              : partnerMatch.unknown
-                ? `<strong>${partnerMatch.unknown} preferences unknown</strong>`
-              : ''}
-          </div>
-          ${partnerMatch.total
-            ? `<div class="card-match-list">${matchDetails}</div>`
-            : '<div class="card-match-empty">No optional preferences selected</div>'}
-        </div>
         <div class="card-tags">
           ${styleText ? `<span class="card-tag">${styleText}</span>` : ''}
           ${(name.tradition || []).map(t => `<span class="card-tag">${capitalize(t)}</span>`).join('')}

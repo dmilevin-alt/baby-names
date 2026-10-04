@@ -83,63 +83,6 @@ const DECK = {
     }
 
     return pool;
-  },
-
-  partnerMatch(name, prefs) {
-    const criteria = [];
-    const backgrounds = prefs.backgrounds || [];
-    const styles = prefs.styles || [];
-    const traditions = prefs.tradition || [];
-    const includeLetters = parseLetters(prefs.include_letters).map(l => l.toUpperCase());
-
-    if (backgrounds.length > 0) {
-      const origins = name.origin || [];
-      criteria.push({
-        label: 'Background',
-        matches: origins.length
-          ? origins.some(origin => backgrounds.includes(origin))
-          : null
-      });
-    }
-    if (styles.length > 0) {
-      const nameStyles = name.style || [];
-      criteria.push({
-        label: 'Style',
-        matches: nameStyles.length
-          ? nameStyles.some(style => styles.includes(style))
-          : null
-      });
-    }
-    if (traditions.length > 0) {
-      const nameTraditions = name.tradition || [];
-      criteria.push({
-        label: 'Tradition',
-        matches: nameTraditions.length
-          ? nameTraditions.some(tradition => traditions.includes(tradition))
-          : null
-      });
-    }
-    if (prefs.length_pref && prefs.length_pref !== 'any') {
-      criteria.push({
-        label: 'Length',
-        matches: Number.isFinite(name.syllables)
-          ? checkNameLength(prefs.length_pref, name.syllables)
-          : null
-      });
-    }
-    if (includeLetters.length > 0) {
-      criteria.push({
-        label: 'Starting letter',
-        matches: includeLetters.includes(name.name[0].toUpperCase())
-      });
-    }
-
-    return {
-      matched: criteria.filter(criterion => criterion.matches === true).length,
-      total: criteria.filter(criterion => criterion.matches !== null).length,
-      unknown: criteria.filter(criterion => criterion.matches === null).length,
-      criteria
-    };
   }
 };
 

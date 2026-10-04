@@ -188,7 +188,7 @@ The `icon.svg` file is used as the app icon. For the best iOS home screen experi
 | `index.html` | Login / Sign-up page |
 | `app.html` | Main app (all screens in one page) |
 | `names.js` | 1,400+ name database |
-| `popular-names.js` | Official 2025 baby-name rankings for Canada, UK jurisdictions, France, Ireland, New Zealand, and Australian states |
+| `popular-names.js` | Official 2025 baby-name rankings for Canada, UK jurisdictions, France, Ireland, New Zealand, and Australian states; swipe cards show each name's position in the published list (tied ranks appear at consecutive list positions) |
 | `official-baby-names-top-100.json` | Source ranks, counts, and URLs for Canada, France, Ireland, Northern Ireland, New Zealand, Scotland, and England and Wales |
 | `css/style.css` | All visual styles |
 | `js/app.js` | Global state + screen routing |
@@ -197,7 +197,7 @@ The `icon.svg` file is used as the app icon. For the best iOS home screen experi
 | `js/quiz.js` | Preferences quiz |
 | `js/deck.js` | Name scoring + sorting |
 | `js/swipe.js` | Swipe card + voting |
-| `js/shortlist.js` | Mutual matches screen |
+| `js/shortlist.js` | Matches and personal Maybe list |
 | `supabase/schema.sql` | Paste into Supabase SQL Editor |
 | `manifest.json` | Makes app installable |
 | `icon.svg` | App icon |

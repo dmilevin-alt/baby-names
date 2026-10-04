@@ -1,9 +1,29 @@
 // ── SHORTLIST ─────────────────────────────────────────────────────────────────
 const SHORTLIST = {
+  view: 'matches',
 
   render() {
     const body = document.getElementById('shortlist-body');
     if (!body) return;
+
+    const matchesTab = document.getElementById('matches-tab');
+    const maybesTab = document.getElementById('maybes-tab');
+    const maybeCount = Object.values(STATE.myVotes).filter(vote => vote === 'maybe').length;
+    if (matchesTab) matchesTab.textContent = `❤️ Matches (${STATE.shortlist.length})`;
+    if (maybesTab) maybesTab.textContent = `🤔 Maybes (${maybeCount})`;
+    if (matchesTab) {
+      matchesTab.classList.toggle('active', this.view === 'matches');
+      matchesTab.setAttribute('aria-selected', String(this.view === 'matches'));
+    }
+    if (maybesTab) {
+      maybesTab.classList.toggle('active', this.view === 'maybes');
+      maybesTab.setAttribute('aria-selected', String(this.view === 'maybes'));
+    }
+
+    if (this.view === 'maybes') {
+      this.renderMaybes(body);
+      return;
+    }
 
     const items = STATE.shortlist;
 
@@ -20,6 +40,58 @@ const SHORTLIST = {
     body.innerHTML = `
       <div class="shortlist-list">
         ${items.map(item => this.renderItem(item)).join('')}
+      </div>`;
+  },
+
+  setView(view) {
+    this.view = view;
+    this.render();
+  },
+
+  renderMaybes(body) {
+    const deckPositions = new Map(STATE.deck.map((name, index) => [name.name, index]));
+    const names = Object.entries(STATE.myVotes)
+      .filter(([, vote]) => vote === 'maybe')
+      .map(([name]) => name)
+      .sort((a, b) => (deckPositions.get(a) ?? Infinity) - (deckPositions.get(b) ?? Infinity));
+
+    if (names.length === 0) {
+      body.innerHTML = `
+        <div class="shortlist-empty">
+          <div class="big-icon">🤔</div>
+          <h3>No maybe names yet</h3>
+          <p>Names you mark Maybe while swiping will appear here.</p>
+        </div>`;
+      return;
+    }
+
+    body.innerHTML = `
+      <div class="shortlist-list">
+        ${names.map(name => this.renderMaybeItem(name)).join('')}
+      </div>`;
+  },
+
+  renderMaybeItem(name) {
+    const nameObj = STATE.deck.find(item => item.name === name) ||
+      NAMES.find(item => item.name === name);
+    const origin = nameObj ? (nameObj.origin || []).map(capitalize).join(' · ') : '';
+    const rankings = nameObj?.popularIn || [];
+    const rankingText = rankings.length
+      ? rankings.map(item => `${item.jurisdiction} #${item.position}`).join(' · ')
+      : 'Not in tracked top 100s';
+
+    return `
+      <div class="shortlist-item maybe-item">
+        <div class="shortlist-item-head">
+          <div>
+            <div class="shortlist-item-name">${name}</div>
+            <div class="shortlist-item-sub">${origin || rankingText}</div>
+            ${origin && rankings.length
+              ? `<div class="shortlist-item-sub">${rankingText}</div>`
+              : ''}
+          </div>
+          <span class="shortlist-item-badge maybe">🤔 Maybe</span>
+        </div>
       </div>`;
   },
 
