@@ -70,6 +70,9 @@ const SWIPE = {
           <button class="btn btn-secondary" onclick="restartWithPassed()" style="margin-top:4px">
             Review ${passedNames.length} passed names →
           </button>` : ''}
+          <button class="btn btn-secondary" onclick="emailMyList()" style="margin-top:4px">
+            📧 Email my list
+          </button>
           <button class="btn btn-primary" onclick="showMainScreen('shortlist-screen')" style="margin-top:8px">
             View Shortlist ⭐
           </button>

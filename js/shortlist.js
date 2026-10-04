@@ -207,3 +207,72 @@ const SHORTLIST = {
     showToast(`"${name}" added to shortlist ✓`);
   }
 };
+
+// ── EMAIL MY LIST ─────────────────────────────────────────────────────────────
+function emailMyList() {
+  const lovedNames = Object.entries(STATE.myVotes)
+    .filter(([, v]) => v === 'love')
+    .map(([n]) => n);
+  const maybeNames = Object.entries(STATE.myVotes)
+    .filter(([, v]) => v === 'maybe')
+    .map(([n]) => n);
+
+  if (lovedNames.length === 0 && maybeNames.length === 0) {
+    showToast('No loved or maybe names yet — keep swiping!');
+    return;
+  }
+
+  const nameInfo = n => {
+    const obj = NAMES.find(x => x.name === n);
+    const origin = obj ? (obj.origin || []).map(capitalize).join('/') : '';
+    const meaning = obj ? obj.meaning : '';
+    let line = n;
+    if (origin) line += ` (${origin})`;
+    if (meaning) line += ` — "${meaning}"`;
+    return line;
+  };
+
+  const matchNames = new Set(STATE.shortlist.filter(s => !s.is_custom).map(s => s.name));
+
+  let body = 'My Baby Name List\n\n';
+
+  if (lovedNames.length) {
+    body += `❤️ LOVED (${lovedNames.length})\n`;
+    lovedNames.forEach(n => {
+      body += `• ${nameInfo(n)}${matchNames.has(n) ? ' ✓ Match!' : ''}\n`;
+    });
+    body += '\n';
+  }
+
+  if (maybeNames.length) {
+    body += `🤔 MAYBE (${maybeNames.length})\n`;
+    maybeNames.forEach(n => {
+      body += `• ${nameInfo(n)}${matchNames.has(n) ? ' ✓ Match!' : ''}\n`;
+    });
+    body += '\n';
+  }
+
+  const mutualMatches = STATE.shortlist.filter(s => !s.is_custom);
+  if (mutualMatches.length) {
+    body += `❤️ MUTUAL MATCHES (${mutualMatches.length})\n`;
+    mutualMatches.forEach(s => { body += `• ${nameInfo(s.name)}\n`; });
+  }
+
+  const to      = encodeURIComponent(STATE.user.email);
+  const subject = encodeURIComponent('My Baby Name List 💕');
+  const encoded = encodeURIComponent(body);
+
+  // mailto: bodies have ~2000 char limits in some clients — warn if truncated
+  const link = `mailto:${to}?subject=${subject}&body=${encoded}`;
+  if (link.length > 2000) {
+    // Fall back to clipboard
+    navigator.clipboard.writeText(body).then(() => {
+      showToast('List copied to clipboard — paste it into an email!');
+    }).catch(() => {
+      showToast('List too long for email link. Try copying manually.');
+    });
+    return;
+  }
+
+  window.location.href = link;
+}
