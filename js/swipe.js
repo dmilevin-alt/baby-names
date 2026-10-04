@@ -18,7 +18,7 @@ const SWIPE = {
 
   updateProgress() {
     const total   = STATE.deck.length;
-    const done    = Object.keys(STATE.myVotes).length;
+    const done    = STATE.reviewMode ? STATE.deckIndex : Object.keys(STATE.myVotes).length;
     const pct     = total > 0 ? Math.round((done / total) * 100) : 0;
     const matches = STATE.shortlist.filter(s => !s.is_custom).length;
 
@@ -26,7 +26,11 @@ const SWIPE = {
     const progressEl = document.getElementById('swipe-progress');
     const matchEl    = document.getElementById('match-count');
 
-    if (countEl)    countEl.textContent    = done > 0 ? `${done} rated` : 'Start swiping!';
+    if (countEl) {
+      countEl.textContent = STATE.reviewMode
+        ? `Reviewing passes · ${done} of ${total}`
+        : done > 0 ? `${done} rated` : 'Start swiping!';
+    }
     if (progressEl) progressEl.style.width = pct + '%';
     if (matchEl)    matchEl.textContent    = matches === 1 ? '1 match ❤️' : `${matches} matches ❤️`;
   },
@@ -48,16 +52,20 @@ const SWIPE = {
       const passed = Object.values(votes).filter(v => v === 'pass').length;
 
       const passedNames = STATE.deck.filter(d => votes[d.name] === 'pass');
+      const totalVotes = loved + maybe + passed;
+      const selectionInsights = buildSelectionInsights();
+      const isPassReview = STATE.reviewMode;
 
       stage.innerHTML = `
         <div class="swipe-done">
           <div class="big-icon">🎉</div>
-          <h3>You've seen all the names!</h3>
+          <h3>${isPassReview ? 'Pass review complete!' : "You've seen all the names!"}</h3>
           <div class="swipe-done-stats">
-            <div class="swipe-done-stat"><span class="swipe-done-stat-num">${loved}</span><span class="swipe-done-stat-label">❤️ Loved</span></div>
-            <div class="swipe-done-stat"><span class="swipe-done-stat-num">${maybe}</span><span class="swipe-done-stat-label">🤔 Maybe</span></div>
-            <div class="swipe-done-stat"><span class="swipe-done-stat-num">${passed}</span><span class="swipe-done-stat-label">✕ Passed</span></div>
+            <div class="swipe-done-stat"><span class="swipe-done-stat-num">${loved}</span><span class="swipe-done-stat-label">❤️ Loved${totalVotes ? ` · ${Math.round(loved / totalVotes * 100)}%` : ''}</span></div>
+            <div class="swipe-done-stat"><span class="swipe-done-stat-num">${maybe}</span><span class="swipe-done-stat-label">🤔 Maybe${totalVotes ? ` · ${Math.round(maybe / totalVotes * 100)}%` : ''}</span></div>
+            <div class="swipe-done-stat"><span class="swipe-done-stat-num">${passed}</span><span class="swipe-done-stat-label">✕ Passed${totalVotes ? ` · ${Math.round(passed / totalVotes * 100)}%` : ''}</span></div>
           </div>
+          ${selectionInsights}
           ${passedNames.length > 0 ? `
           <button class="btn btn-secondary" onclick="restartWithPassed()" style="margin-top:4px">
             Review ${passedNames.length} passed names →
@@ -66,6 +74,8 @@ const SWIPE = {
             View Shortlist ⭐
           </button>
         </div>`;
+      STATE.reviewMode = false;
+      this.updateProgress();
       return;
     }
 
@@ -222,7 +232,7 @@ async function castVote(voteType) {
   // Optimistically advance UI
   STATE.myVotes[name.name] = voteType;
   STATE.deckIndex++;
-  while (STATE.deckIndex < STATE.deck.length &&
+  while (!STATE.reviewMode && STATE.deckIndex < STATE.deck.length &&
          STATE.myVotes[STATE.deck[STATE.deckIndex].name]) {
     STATE.deckIndex++;
   }
@@ -296,14 +306,66 @@ function restartWithPassed() {
   const passedNames = STATE.deck.filter(d => STATE.myVotes[d.name] === 'pass');
   if (passedNames.length === 0) return;
 
-  // Remove passed votes from local cache so the deck-advance logic won't skip them
-  passedNames.forEach(d => delete STATE.myVotes[d.name]);
-
   STATE.deck = passedNames;
   STATE.deckIndex = 0;
+  STATE.reviewMode = true;
 
   document.getElementById('vote-buttons').style.display = '';
   SWIPE.render();
+}
+
+function buildSelectionInsights() {
+  const selectedNames = NAMES.filter(name =>
+    STATE.myVotes[name.name] === 'love' || STATE.myVotes[name.name] === 'maybe'
+  );
+  if (selectedNames.length === 0) return '';
+
+  const backgrounds = new Map();
+  const styles = new Map();
+  const addCounts = (counts, values) => {
+    for (const value of new Set(values || [])) {
+      counts.set(value, (counts.get(value) || 0) + 1);
+    }
+  };
+
+  for (const name of selectedNames) {
+    addCounts(backgrounds, name.origin);
+    addCounts(styles, name.style);
+  }
+
+  const topEntries = counts => [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, 3);
+  const topBackgrounds = topEntries(backgrounds);
+  const topStyles = topEntries(styles);
+  const rankedCount = selectedNames.filter(name => (name.popularIn || []).length > 0).length;
+  const insights = [];
+
+  if (topBackgrounds.length) {
+    insights.push(`
+      <div class="swipe-done-insight">
+        <span class="swipe-done-insight-label">Top backgrounds in your Love/Maybe picks</span>
+        <span>${topBackgrounds.map(([name, count]) => `${capitalize(name)} (${count})`).join(' · ')}</span>
+      </div>`);
+  }
+  if (topStyles.length) {
+    insights.push(`
+      <div class="swipe-done-insight">
+        <span class="swipe-done-insight-label">Most common styles in your picks</span>
+        <span>${topStyles.map(([name, count]) => `${capitalize(name)} (${count})`).join(' · ')}</span>
+      </div>`);
+  }
+  insights.push(`
+    <div class="swipe-done-insight">
+      <span class="swipe-done-insight-label">Trending in tracked top 100s</span>
+      <span>${rankedCount} of ${selectedNames.length} picks</span>
+    </div>`);
+
+  return `
+    <div class="swipe-done-insights">
+      <div class="swipe-done-insights-title">Your selection insights</div>
+      ${insights.join('')}
+    </div>`;
 }
 
 function capitalize(str) {

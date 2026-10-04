@@ -9,6 +9,7 @@ const STATE = {
   partnerPrefs:null,   // preferences row (partner)
   deck:        [],     // array of name objects, scored + sorted
   deckIndex:   0,      // current swipe position
+  reviewMode:  false,  // reviewing previously passed names
   myVotes:     {},     // { name: 'love'|'maybe'|'pass' }
   shortlist:   [],     // shortlist rows
   matchQueue:  [],     // new match names to celebrate
