@@ -59,15 +59,25 @@ const SWIPE = {
     const originText  = (name.origin || []).map(capitalize).join(' · ');
     const styleText   = (name.style  || []).map(capitalize).join(', ');
     const partnerMatch = DECK.partnerMatch(name, STATE.partnerPrefs);
-    const sylDots     = Array.from({ length: Math.min(name.syllables, 5) }, (_, i) =>
+    const knownSyllables = Number.isFinite(name.syllables);
+    const popularityText = (name.popularIn || []).length
+      ? `Top 100 · ${(name.popularIn || []).join(' · ')}`
+      : '';
+    const sylDots     = Array.from({ length: knownSyllables ? Math.min(name.syllables, 5) : 0 }, () =>
       `<div class="syl-dot filled"></div>`
     ).join('');
-    const matchDetails = partnerMatch.criteria.map(criterion => `
-      <span class="card-match-item ${criterion.matches ? 'is-match' : 'is-miss'}"
-        aria-label="${criterion.matches ? 'Matches' : 'Does not match'} Jasmine's ${criterion.label.toLowerCase()} preference">
-        <span aria-hidden="true">${criterion.matches ? '✓' : '–'}</span>${criterion.label}
-      </span>`
-    ).join('');
+    const matchDetails = partnerMatch.criteria.map(criterion => {
+      const isUnknown = criterion.matches === null;
+      const status = isUnknown ? 'is-unknown' : criterion.matches ? 'is-match' : 'is-miss';
+      const indicator = isUnknown ? '?' : criterion.matches ? '✓' : '–';
+      const description = isUnknown
+        ? `Could not verify Jasmine's ${criterion.label.toLowerCase()} preference`
+        : `${criterion.matches ? 'Matches' : 'Does not match'} Jasmine's ${criterion.label.toLowerCase()} preference`;
+      return `
+      <span class="card-match-item ${status}" aria-label="${description}">
+        <span aria-hidden="true">${indicator}</span>${criterion.label}${isUnknown ? ' (unknown)' : ''}
+      </span>`;
+    }).join('');
 
     stage.innerHTML = `
       <div class="name-card" id="swipe-card">
@@ -75,7 +85,8 @@ const SWIPE = {
         <div class="card-vote-label pass-label"  id="label-pass">PASS</div>
         <div class="card-vote-label maybe-label" id="label-maybe">MAYBE</div>
         <div class="card-name">${name.name}</div>
-        <div class="card-origin">${originText}</div>
+        ${originText ? `<div class="card-origin">${originText}</div>` : ''}
+        ${popularityText ? `<div class="card-popularity">${popularityText}</div>` : ''}
         ${name.meaning ? `
         <div class="card-meaning-section">
           <div class="card-meaning-label">meaning</div>
@@ -85,7 +96,9 @@ const SWIPE = {
           <div class="card-match-head">
             <span class="card-match-title">Jasmine's match</span>
             ${partnerMatch.total
-              ? `<strong>${partnerMatch.matched} of ${partnerMatch.total} preferences</strong>`
+              ? `<strong>${partnerMatch.matched} of ${partnerMatch.total} ${partnerMatch.unknown ? 'known ' : ''}preferences${partnerMatch.unknown ? ` · ${partnerMatch.unknown} unknown` : ''}</strong>`
+              : partnerMatch.unknown
+                ? `<strong>${partnerMatch.unknown} preferences unknown</strong>`
               : ''}
           </div>
           ${partnerMatch.total
@@ -98,7 +111,7 @@ const SWIPE = {
         </div>
         <div class="card-syllables">
           ${sylDots}
-          <span class="card-syl-label">${name.syllables} syl.</span>
+          <span class="card-syl-label">${knownSyllables ? `${name.syllables} syl.` : 'Syllables unavailable'}</span>
         </div>
       </div>`;
 

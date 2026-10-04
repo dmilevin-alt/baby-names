@@ -93,27 +93,38 @@ const DECK = {
     const includeLetters = parseLetters(prefs.include_letters).map(l => l.toUpperCase());
 
     if (backgrounds.length > 0) {
+      const origins = name.origin || [];
       criteria.push({
         label: 'Background',
-        matches: (name.origin || []).some(origin => backgrounds.includes(origin))
+        matches: origins.length
+          ? origins.some(origin => backgrounds.includes(origin))
+          : null
       });
     }
     if (styles.length > 0) {
+      const nameStyles = name.style || [];
       criteria.push({
         label: 'Style',
-        matches: (name.style || []).some(style => styles.includes(style))
+        matches: nameStyles.length
+          ? nameStyles.some(style => styles.includes(style))
+          : null
       });
     }
     if (traditions.length > 0) {
+      const nameTraditions = name.tradition || [];
       criteria.push({
         label: 'Tradition',
-        matches: (name.tradition || []).some(tradition => traditions.includes(tradition))
+        matches: nameTraditions.length
+          ? nameTraditions.some(tradition => traditions.includes(tradition))
+          : null
       });
     }
     if (prefs.length_pref && prefs.length_pref !== 'any') {
       criteria.push({
         label: 'Length',
-        matches: checkNameLength(prefs.length_pref, name.syllables)
+        matches: Number.isFinite(name.syllables)
+          ? checkNameLength(prefs.length_pref, name.syllables)
+          : null
       });
     }
     if (includeLetters.length > 0) {
@@ -124,8 +135,9 @@ const DECK = {
     }
 
     return {
-      matched: criteria.filter(criterion => criterion.matches).length,
-      total: criteria.length,
+      matched: criteria.filter(criterion => criterion.matches === true).length,
+      total: criteria.filter(criterion => criterion.matches !== null).length,
+      unknown: criteria.filter(criterion => criterion.matches === null).length,
       criteria
     };
   }
@@ -143,6 +155,7 @@ function union(a, b) {
 
 function checkNameLength(pref, syllables) {
   if (!pref || pref === 'any') return true;
+  if (!Number.isFinite(syllables)) return false;
   if (pref === 'short')  return syllables <= 2;
   if (pref === 'medium') return syllables >= 2 && syllables <= 3;
   if (pref === 'long')   return syllables >= 3;

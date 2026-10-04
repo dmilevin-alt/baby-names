@@ -794,6 +794,7 @@ a { color: var(--primary); text-decoration: none; }
 
 .card-match-item.is-match { color: var(--match); }
 .card-match-item.is-miss { color: var(--text-muted); }
+.card-match-item.is-unknown { color: var(--text-muted); font-style: italic; }
 
 .card-match-empty {
   color: var(--text-muted);
@@ -805,6 +806,13 @@ a { color: var(--primary); text-decoration: none; }
   font-weight: 700;
   color: var(--primary);
   margin-bottom: 14px;
+}
+
+.card-popularity {
+  margin: -10px 0 14px;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .card-tags {

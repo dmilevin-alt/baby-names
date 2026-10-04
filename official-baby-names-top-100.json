@@ -1,0 +1,8687 @@
+{
+  "dataset": "Official baby-name top 100, latest verified releases",
+  "retrieved_on": "2026-10-04",
+  "selection": "Top 100 by published rank; ties at or above rank 100 retained. Names are source spellings. Same names are separate observations for each jurisdiction and are never deduplicated across datasets.",
+  "schema": {
+    "rank": "Official rank (1-based), read from the source rank field/list; source rank may tie.",
+    "rank_tied": "True when multiple entries share this rank in the same jurisdiction/year/sex source list.",
+    "name": "Name exactly as supplied by source.",
+    "count": "Official count when published; null when unavailable or suppressed.",
+    "sex": "male/female as categorized by the official source."
+  },
+  "dataset_count": 14,
+  "total_entries": 1413,
+  "same_name_handling": "No cross-jurisdiction deduplication. The same spelling in different countries/jurisdictions remains a separate observation under each source.",
+  "unavailable": [
+    {
+      "country": "United States",
+      "jurisdiction": "United States",
+      "year": 2025,
+      "source_url": "https://www.ssa.gov/oact/babynames/",
+      "data_url": "https://www.ssa.gov/oact/babynames/names.zip",
+      "status": "Not extracted: official page and ZIP returned HTTP 403 to both browser fetch and curl, including a retried download. No nonofficial mirror or substitute was used."
+    }
+  ],
+  "datasets": [
+    {
+      "country": "United Kingdom",
+      "jurisdiction": "England and Wales",
+      "year": 2025,
+      "sex": "male",
+      "source_url": "https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/livebirths/datasets/babynamesenglandandwalesbabynamesstatisticsboys",
+      "data_url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/birthsdeathsandmarriages/livebirths/datasets/babynamesenglandandwalesbabynamesstatisticsboys/2025/2025boysbabynames.xlsx",
+      "format": "XLSX",
+      "count_note": "Official count.",
+      "entry_count": 100,
+      "entries": [
+        {
+          "rank": 1,
+          "rank_tied": false,
+          "name": "Muhammad",
+          "count": 5957
+        },
+        {
+          "rank": 2,
+          "rank_tied": false,
+          "name": "Noah",
+          "count": 4075
+        },
+        {
+          "rank": 3,
+          "rank_tied": false,
+          "name": "Leo",
+          "count": 3278
+        },
+        {
+          "rank": 4,
+          "rank_tied": false,
+          "name": "Luca",
+          "count": 3266
+        },
+        {
+          "rank": 5,
+          "rank_tied": false,
+          "name": "Arthur",
+          "count": 3211
+        },
+        {
+          "rank": 6,
+          "rank_tied": false,
+          "name": "Oliver",
+          "count": 3154
+        },
+        {
+          "rank": 7,
+          "rank_tied": false,
+          "name": "George",
+          "count": 3082
+        },
+        {
+          "rank": 8,
+          "rank_tied": false,
+          "name": "Oscar",
+          "count": 2798
+        },
+        {
+          "rank": 9,
+          "rank_tied": false,
+          "name": "Theodore",
+          "count": 2638
+        },
+        {
+          "rank": 10,
+          "rank_tied": false,
+          "name": "Freddie",
+          "count": 2526
+        },
+        {
+          "rank": 11,
+          "rank_tied": false,
+          "name": "Archie",
+          "count": 2465
+        },
+        {
+          "rank": 12,
+          "rank_tied": false,
+          "name": "Theo",
+          "count": 2398
+        },
+        {
+          "rank": 13,
+          "rank_tied": false,
+          "name": "Henry",
+          "count": 2295
+        },
+        {
+          "rank": 14,
+          "rank_tied": false,
+          "name": "Jude",
+          "count": 2153
+        },
+        {
+          "rank": 15,
+          "rank_tied": false,
+          "name": "Arlo",
+          "count": 2083
+        },
+        {
+          "rank": 16,
+          "rank_tied": false,
+          "name": "Alfie",
+          "count": 1955
+        },
+        {
+          "rank": 17,
+          "rank_tied": false,
+          "name": "Rory",
+          "count": 1760
+        },
+        {
+          "rank": 18,
+          "rank_tied": false,
+          "name": "Finley",
+          "count": 1733
+        },
+        {
+          "rank": 19,
+          "rank_tied": false,
+          "name": "Harry",
+          "count": 1718
+        },
+        {
+          "rank": 20,
+          "rank_tied": false,
+          "name": "Mohammed",
+          "count": 1712
+        },
+        {
+          "rank": 21,
+          "rank_tied": false,
+          "name": "Albie",
+          "count": 1702
+        },
+        {
+          "rank": 22,
+          "rank_tied": false,
+          "name": "Charlie",
+          "count": 1679
+        },
+        {
+          "rank": 23,
+          "rank_tied": false,
+          "name": "Elijah",
+          "count": 1659
+        },
+        {
+          "rank": 24,
+          "rank_tied": false,
+          "name": "Jack",
+          "count": 1595
+        },
+        {
+          "rank": 25,
+          "rank_tied": false,
+          "name": "William",
+          "count": 1456
+        },
+        {
+          "rank": 26,
+          "rank_tied": false,
+          "name": "Adam",
+          "count": 1431
+        },
+        {
+          "rank": 27,
+          "rank_tied": false,
+          "name": "Roman",
+          "count": 1420
+        },
+        {
+          "rank": 28,
+          "rank_tied": false,
+          "name": "Louie",
+          "count": 1418
+        },
+        {
+          "rank": 29,
+          "rank_tied": false,
+          "name": "Reuben",
+          "count": 1412
+        },
+        {
+          "rank": 30,
+          "rank_tied": false,
+          "name": "Rowan",
+          "count": 1398
+        },
+        {
+          "rank": 31,
+          "rank_tied": false,
+          "name": "Edward",
+          "count": 1385
+        },
+        {
+          "rank": 32,
+          "rank_tied": false,
+          "name": "Lucas",
+          "count": 1381
+        },
+        {
+          "rank": 33,
+          "rank_tied": false,
+          "name": "Oakley",
+          "count": 1377
+        },
+        {
+          "rank": 34,
+          "rank_tied": false,
+          "name": "Teddy",
+          "count": 1360
+        },
+        {
+          "rank": 35,
+          "rank_tied": false,
+          "name": "Thomas",
+          "count": 1344
+        },
+        {
+          "rank": 36,
+          "rank_tied": false,
+          "name": "Isaac",
+          "count": 1331
+        },
+        {
+          "rank": 37,
+          "rank_tied": false,
+          "name": "Reggie",
+          "count": 1312
+        },
+        {
+          "rank": 38,
+          "rank_tied": false,
+          "name": "Ezra",
+          "count": 1300
+        },
+        {
+          "rank": 39,
+          "rank_tied": false,
+          "name": "Ronnie",
+          "count": 1281
+        },
+        {
+          "rank": 40,
+          "rank_tied": false,
+          "name": "Alexander",
+          "count": 1271
+        },
+        {
+          "rank": 41,
+          "rank_tied": false,
+          "name": "Jacob",
+          "count": 1258
+        },
+        {
+          "rank": 42,
+          "rank_tied": false,
+          "name": "James",
+          "count": 1211
+        },
+        {
+          "rank": 43,
+          "rank_tied": false,
+          "name": "Hudson",
+          "count": 1204
+        },
+        {
+          "rank": 44,
+          "rank_tied": false,
+          "name": "Tommy",
+          "count": 1160
+        },
+        {
+          "rank": 45,
+          "rank_tied": false,
+          "name": "Sonny",
+          "count": 1137
+        },
+        {
+          "rank": 46,
+          "rank_tied": false,
+          "name": "Hugo",
+          "count": 1094
+        },
+        {
+          "rank": 47,
+          "rank_tied": false,
+          "name": "Sebastian",
+          "count": 1077
+        },
+        {
+          "rank": 48,
+          "rank_tied": false,
+          "name": "Max",
+          "count": 1061
+        },
+        {
+          "rank": 49,
+          "rank_tied": false,
+          "name": "Louis",
+          "count": 1030
+        },
+        {
+          "rank": 50,
+          "rank_tied": false,
+          "name": "Harrison",
+          "count": 1007
+        },
+        {
+          "rank": 51,
+          "rank_tied": false,
+          "name": "Jesse",
+          "count": 980
+        },
+        {
+          "rank": 52,
+          "rank_tied": false,
+          "name": "Frederick",
+          "count": 954
+        },
+        {
+          "rank": 53,
+          "rank_tied": false,
+          "name": "Joshua",
+          "count": 938
+        },
+        {
+          "rank": 54,
+          "rank_tied": false,
+          "name": "Ethan",
+          "count": 917
+        },
+        {
+          "rank": 55,
+          "rank_tied": false,
+          "name": "Mohammad",
+          "count": 895
+        },
+        {
+          "rank": 56,
+          "rank_tied": false,
+          "name": "Frankie",
+          "count": 887
+        },
+        {
+          "rank": 57,
+          "rank_tied": false,
+          "name": "Albert",
+          "count": 884
+        },
+        {
+          "rank": 58,
+          "rank_tied": false,
+          "name": "Vinnie",
+          "count": 851
+        },
+        {
+          "rank": 59,
+          "rank_tied": true,
+          "name": "Felix",
+          "count": 811
+        },
+        {
+          "rank": 59,
+          "rank_tied": true,
+          "name": "Joseph",
+          "count": 811
+        },
+        {
+          "rank": 61,
+          "rank_tied": false,
+          "name": "Benjamin",
+          "count": 808
+        },
+        {
+          "rank": 62,
+          "rank_tied": false,
+          "name": "Daniel",
+          "count": 804
+        },
+        {
+          "rank": 63,
+          "rank_tied": false,
+          "name": "Jasper",
+          "count": 802
+        },
+        {
+          "rank": 64,
+          "rank_tied": true,
+          "name": "Musa",
+          "count": 798
+        },
+        {
+          "rank": 64,
+          "rank_tied": true,
+          "name": "Yusuf",
+          "count": 798
+        },
+        {
+          "rank": 66,
+          "rank_tied": false,
+          "name": "Samuel",
+          "count": 768
+        },
+        {
+          "rank": 67,
+          "rank_tied": false,
+          "name": "Myles",
+          "count": 764
+        },
+        {
+          "rank": 68,
+          "rank_tied": false,
+          "name": "Liam",
+          "count": 763
+        },
+        {
+          "rank": 69,
+          "rank_tied": false,
+          "name": "Elias",
+          "count": 738
+        },
+        {
+          "rank": 70,
+          "rank_tied": false,
+          "name": "Ibrahim",
+          "count": 731
+        },
+        {
+          "rank": 71,
+          "rank_tied": false,
+          "name": "Otis",
+          "count": 726
+        },
+        {
+          "rank": 72,
+          "rank_tied": false,
+          "name": "Dylan",
+          "count": 717
+        },
+        {
+          "rank": 73,
+          "rank_tied": false,
+          "name": "David",
+          "count": 712
+        },
+        {
+          "rank": 74,
+          "rank_tied": false,
+          "name": "Finn",
+          "count": 706
+        },
+        {
+          "rank": 75,
+          "rank_tied": false,
+          "name": "Zachary",
+          "count": 703
+        },
+        {
+          "rank": 76,
+          "rank_tied": false,
+          "name": "Alfred",
+          "count": 682
+        },
+        {
+          "rank": 77,
+          "rank_tied": false,
+          "name": "Mason",
+          "count": 675
+        },
+        {
+          "rank": 78,
+          "rank_tied": false,
+          "name": "Kai",
+          "count": 672
+        },
+        {
+          "rank": 79,
+          "rank_tied": false,
+          "name": "Rupert",
+          "count": 670
+        },
+        {
+          "rank": 80,
+          "rank_tied": false,
+          "name": "Gabriel",
+          "count": 666
+        },
+        {
+          "rank": 81,
+          "rank_tied": false,
+          "name": "Yahya",
+          "count": 625
+        },
+        {
+          "rank": 82,
+          "rank_tied": false,
+          "name": "Caleb",
+          "count": 624
+        },
+        {
+          "rank": 83,
+          "rank_tied": false,
+          "name": "Riley",
+          "count": 619
+        },
+        {
+          "rank": 84,
+          "rank_tied": false,
+          "name": "Enzo",
+          "count": 617
+        },
+        {
+          "rank": 85,
+          "rank_tied": false,
+          "name": "Michael",
+          "count": 615
+        },
+        {
+          "rank": 86,
+          "rank_tied": false,
+          "name": "Austin",
+          "count": 612
+        },
+        {
+          "rank": 87,
+          "rank_tied": false,
+          "name": "Logan",
+          "count": 609
+        },
+        {
+          "rank": 88,
+          "rank_tied": false,
+          "name": "Jaxon",
+          "count": 605
+        },
+        {
+          "rank": 89,
+          "rank_tied": false,
+          "name": "Toby",
+          "count": 600
+        },
+        {
+          "rank": 90,
+          "rank_tied": false,
+          "name": "Milo",
+          "count": 597
+        },
+        {
+          "rank": 91,
+          "rank_tied": false,
+          "name": "Hunter",
+          "count": 595
+        },
+        {
+          "rank": 92,
+          "rank_tied": false,
+          "name": "Ellis",
+          "count": 582
+        },
+        {
+          "rank": 93,
+          "rank_tied": false,
+          "name": "Vincent",
+          "count": 560
+        },
+        {
+          "rank": 94,
+          "rank_tied": true,
+          "name": "Bobby",
+          "count": 544
+        },
+        {
+          "rank": 94,
+          "rank_tied": true,
+          "name": "Elliot",
+          "count": 544
+        },
+        {
+          "rank": 96,
+          "rank_tied": false,
+          "name": "Ralph",
+          "count": 541
+        },
+        {
+          "rank": 97,
+          "rank_tied": true,
+          "name": "Carter",
+          "count": 536
+        },
+        {
+          "rank": 97,
+          "rank_tied": true,
+          "name": "Stanley",
+          "count": 536
+        },
+        {
+          "rank": 99,
+          "rank_tied": false,
+          "name": "Nathan",
+          "count": 528
+        },
+        {
+          "rank": 100,
+          "rank_tied": false,
+          "name": "Ruben",
+          "count": 527
+        }
+      ]
+    },
+    {
+      "country": "United Kingdom",
+      "jurisdiction": "England and Wales",
+      "year": 2025,
+      "sex": "female",
+      "source_url": "https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/livebirths/datasets/babynamesenglandandwalesbabynamesstatisticsgirls",
+      "data_url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/birthsdeathsandmarriages/livebirths/datasets/babynamesenglandandwalesbabynamesstatisticsgirls/2025/2025girlsbabynames.xlsx",
+      "format": "XLSX",
+      "count_note": "Official count.",
+      "entry_count": 100,
+      "entries": [
+        {
+          "rank": 1,
+          "rank_tied": false,
+          "name": "Olivia",
+          "count": 2386
+        },
+        {
+          "rank": 2,
+          "rank_tied": false,
+          "name": "Lily",
+          "count": 2249
+        },
+        {
+          "rank": 3,
+          "rank_tied": false,
+          "name": "Amelia",
+          "count": 2153
+        },
+        {
+          "rank": 4,
+          "rank_tied": false,
+          "name": "Isla",
+          "count": 1959
+        },
+        {
+          "rank": 5,
+          "rank_tied": false,
+          "name": "Florence",
+          "count": 1924
+        },
+        {
+          "rank": 6,
+          "rank_tied": false,
+          "name": "Freya",
+          "count": 1802
+        },
+        {
+          "rank": 7,
+          "rank_tied": false,
+          "name": "Poppy",
+          "count": 1789
+        },
+        {
+          "rank": 8,
+          "rank_tied": false,
+          "name": "Elsie",
+          "count": 1700
+        },
+        {
+          "rank": 9,
+          "rank_tied": false,
+          "name": "Ivy",
+          "count": 1698
+        },
+        {
+          "rank": 10,
+          "rank_tied": false,
+          "name": "Isabella",
+          "count": 1690
+        },
+        {
+          "rank": 11,
+          "rank_tied": false,
+          "name": "Ava",
+          "count": 1611
+        },
+        {
+          "rank": 12,
+          "rank_tied": false,
+          "name": "Evelyn",
+          "count": 1560
+        },
+        {
+          "rank": 13,
+          "rank_tied": false,
+          "name": "Sophia",
+          "count": 1547
+        },
+        {
+          "rank": 14,
+          "rank_tied": false,
+          "name": "Phoebe",
+          "count": 1542
+        },
+        {
+          "rank": 15,
+          "rank_tied": false,
+          "name": "Sienna",
+          "count": 1530
+        },
+        {
+          "rank": 16,
+          "rank_tied": false,
+          "name": "Mabel",
+          "count": 1527
+        },
+        {
+          "rank": 17,
+          "rank_tied": false,
+          "name": "Sofia",
+          "count": 1490
+        },
+        {
+          "rank": 18,
+          "rank_tied": false,
+          "name": "Daisy",
+          "count": 1454
+        },
+        {
+          "rank": 19,
+          "rank_tied": false,
+          "name": "Matilda",
+          "count": 1449
+        },
+        {
+          "rank": 20,
+          "rank_tied": false,
+          "name": "Willow",
+          "count": 1384
+        },
+        {
+          "rank": 21,
+          "rank_tied": false,
+          "name": "Mia",
+          "count": 1372
+        },
+        {
+          "rank": 22,
+          "rank_tied": false,
+          "name": "Arabella",
+          "count": 1368
+        },
+        {
+          "rank": 23,
+          "rank_tied": false,
+          "name": "Harper",
+          "count": 1367
+        },
+        {
+          "rank": 24,
+          "rank_tied": false,
+          "name": "Rosie",
+          "count": 1343
+        },
+        {
+          "rank": 25,
+          "rank_tied": false,
+          "name": "Charlotte",
+          "count": 1339
+        },
+        {
+          "rank": 26,
+          "rank_tied": false,
+          "name": "Maeve",
+          "count": 1330
+        },
+        {
+          "rank": 27,
+          "rank_tied": false,
+          "name": "Grace",
+          "count": 1309
+        },
+        {
+          "rank": 28,
+          "rank_tied": false,
+          "name": "Maya",
+          "count": 1259
+        },
+        {
+          "rank": 29,
+          "rank_tied": false,
+          "name": "Hallie",
+          "count": 1246
+        },
+        {
+          "rank": 30,
+          "rank_tied": false,
+          "name": "Margot",
+          "count": 1230
+        },
+        {
+          "rank": 31,
+          "rank_tied": false,
+          "name": "Lottie",
+          "count": 1222
+        },
+        {
+          "rank": 32,
+          "rank_tied": false,
+          "name": "Delilah",
+          "count": 1180
+        },
+        {
+          "rank": 33,
+          "rank_tied": false,
+          "name": "Penelope",
+          "count": 1174
+        },
+        {
+          "rank": 34,
+          "rank_tied": false,
+          "name": "Aria",
+          "count": 1132
+        },
+        {
+          "rank": 35,
+          "rank_tied": false,
+          "name": "Evie",
+          "count": 1129
+        },
+        {
+          "rank": 36,
+          "rank_tied": false,
+          "name": "Millie",
+          "count": 1080
+        },
+        {
+          "rank": 37,
+          "rank_tied": false,
+          "name": "Violet",
+          "count": 1061
+        },
+        {
+          "rank": 38,
+          "rank_tied": false,
+          "name": "Ruby",
+          "count": 1032
+        },
+        {
+          "rank": 39,
+          "rank_tied": false,
+          "name": "Aurora",
+          "count": 1030
+        },
+        {
+          "rank": 40,
+          "rank_tied": true,
+          "name": "Ada",
+          "count": 1014
+        },
+        {
+          "rank": 40,
+          "rank_tied": true,
+          "name": "Mila",
+          "count": 1014
+        },
+        {
+          "rank": 42,
+          "rank_tied": false,
+          "name": "Ayla",
+          "count": 980
+        },
+        {
+          "rank": 43,
+          "rank_tied": false,
+          "name": "Maisie",
+          "count": 966
+        },
+        {
+          "rank": 44,
+          "rank_tied": false,
+          "name": "Emily",
+          "count": 956
+        },
+        {
+          "rank": 45,
+          "rank_tied": false,
+          "name": "Esme",
+          "count": 933
+        },
+        {
+          "rank": 46,
+          "rank_tied": false,
+          "name": "Ella",
+          "count": 932
+        },
+        {
+          "rank": 47,
+          "rank_tied": false,
+          "name": "Olive",
+          "count": 892
+        },
+        {
+          "rank": 48,
+          "rank_tied": false,
+          "name": "Bonnie",
+          "count": 882
+        },
+        {
+          "rank": 49,
+          "rank_tied": false,
+          "name": "Elodie",
+          "count": 849
+        },
+        {
+          "rank": 50,
+          "rank_tied": false,
+          "name": "Layla",
+          "count": 833
+        },
+        {
+          "rank": 51,
+          "rank_tied": false,
+          "name": "Emilia",
+          "count": 832
+        },
+        {
+          "rank": 52,
+          "rank_tied": true,
+          "name": "Alice",
+          "count": 825
+        },
+        {
+          "rank": 52,
+          "rank_tied": true,
+          "name": "Maryam",
+          "count": 825
+        },
+        {
+          "rank": 54,
+          "rank_tied": false,
+          "name": "Isabelle",
+          "count": 814
+        },
+        {
+          "rank": 55,
+          "rank_tied": false,
+          "name": "Ottilie",
+          "count": 782
+        },
+        {
+          "rank": 56,
+          "rank_tied": false,
+          "name": "Eleanor",
+          "count": 776
+        },
+        {
+          "rank": 57,
+          "rank_tied": false,
+          "name": "Iris",
+          "count": 759
+        },
+        {
+          "rank": 58,
+          "rank_tied": false,
+          "name": "Eva",
+          "count": 758
+        },
+        {
+          "rank": 59,
+          "rank_tied": true,
+          "name": "Harriet",
+          "count": 757
+        },
+        {
+          "rank": 59,
+          "rank_tied": true,
+          "name": "Luna",
+          "count": 757
+        },
+        {
+          "rank": 61,
+          "rank_tied": false,
+          "name": "Lyla",
+          "count": 751
+        },
+        {
+          "rank": 62,
+          "rank_tied": false,
+          "name": "Eliana",
+          "count": 736
+        },
+        {
+          "rank": 63,
+          "rank_tied": false,
+          "name": "Sophie",
+          "count": 724
+        },
+        {
+          "rank": 64,
+          "rank_tied": false,
+          "name": "Orla",
+          "count": 721
+        },
+        {
+          "rank": 65,
+          "rank_tied": false,
+          "name": "Eliza",
+          "count": 712
+        },
+        {
+          "rank": 66,
+          "rank_tied": false,
+          "name": "Thea",
+          "count": 686
+        },
+        {
+          "rank": 67,
+          "rank_tied": false,
+          "name": "Rose",
+          "count": 666
+        },
+        {
+          "rank": 68,
+          "rank_tied": false,
+          "name": "Nova",
+          "count": 650
+        },
+        {
+          "rank": 69,
+          "rank_tied": false,
+          "name": "Imogen",
+          "count": 648
+        },
+        {
+          "rank": 70,
+          "rank_tied": false,
+          "name": "Lyra",
+          "count": 643
+        },
+        {
+          "rank": 71,
+          "rank_tied": false,
+          "name": "Hazel",
+          "count": 638
+        },
+        {
+          "rank": 72,
+          "rank_tied": false,
+          "name": "Erin",
+          "count": 633
+        },
+        {
+          "rank": 73,
+          "rank_tied": false,
+          "name": "Zara",
+          "count": 625
+        },
+        {
+          "rank": 74,
+          "rank_tied": false,
+          "name": "Elizabeth",
+          "count": 624
+        },
+        {
+          "rank": 75,
+          "rank_tied": false,
+          "name": "Nora",
+          "count": 616
+        },
+        {
+          "rank": 76,
+          "rank_tied": false,
+          "name": "Robyn",
+          "count": 611
+        },
+        {
+          "rank": 77,
+          "rank_tied": false,
+          "name": "Clara",
+          "count": 610
+        },
+        {
+          "rank": 78,
+          "rank_tied": false,
+          "name": "Nancy",
+          "count": 604
+        },
+        {
+          "rank": 79,
+          "rank_tied": false,
+          "name": "Fatima",
+          "count": 598
+        },
+        {
+          "rank": 80,
+          "rank_tied": false,
+          "name": "Eden",
+          "count": 594
+        },
+        {
+          "rank": 81,
+          "rank_tied": false,
+          "name": "Ophelia",
+          "count": 578
+        },
+        {
+          "rank": 82,
+          "rank_tied": false,
+          "name": "Raya",
+          "count": 547
+        },
+        {
+          "rank": 83,
+          "rank_tied": false,
+          "name": "Eloise",
+          "count": 546
+        },
+        {
+          "rank": 84,
+          "rank_tied": false,
+          "name": "Gracie",
+          "count": 539
+        },
+        {
+          "rank": 85,
+          "rank_tied": false,
+          "name": "Emma",
+          "count": 536
+        },
+        {
+          "rank": 86,
+          "rank_tied": false,
+          "name": "Anaya",
+          "count": 535
+        },
+        {
+          "rank": 87,
+          "rank_tied": false,
+          "name": "Lola",
+          "count": 524
+        },
+        {
+          "rank": 88,
+          "rank_tied": false,
+          "name": "Maria",
+          "count": 522
+        },
+        {
+          "rank": 89,
+          "rank_tied": false,
+          "name": "Chloe",
+          "count": 521
+        },
+        {
+          "rank": 90,
+          "rank_tied": false,
+          "name": "Athena",
+          "count": 519
+        },
+        {
+          "rank": 91,
+          "rank_tied": false,
+          "name": "Bella",
+          "count": 515
+        },
+        {
+          "rank": 92,
+          "rank_tied": false,
+          "name": "Darcie",
+          "count": 513
+        },
+        {
+          "rank": 93,
+          "rank_tied": false,
+          "name": "Scarlett",
+          "count": 496
+        },
+        {
+          "rank": 94,
+          "rank_tied": false,
+          "name": "Myla",
+          "count": 490
+        },
+        {
+          "rank": 95,
+          "rank_tied": false,
+          "name": "Alba",
+          "count": 472
+        },
+        {
+          "rank": 96,
+          "rank_tied": false,
+          "name": "Rosa",
+          "count": 470
+        },
+        {
+          "rank": 97,
+          "rank_tied": false,
+          "name": "Marnie",
+          "count": 467
+        },
+        {
+          "rank": 98,
+          "rank_tied": false,
+          "name": "Lara",
+          "count": 465
+        },
+        {
+          "rank": 99,
+          "rank_tied": false,
+          "name": "Lilah",
+          "count": 464
+        },
+        {
+          "rank": 100,
+          "rank_tied": false,
+          "name": "Frankie",
+          "count": 462
+        }
+      ]
+    },
+    {
+      "country": "United Kingdom",
+      "jurisdiction": "Scotland",
+      "year": 2025,
+      "sex": "male",
+      "source_url": "https://www.nrscotland.gov.uk/publications/babies-first-names-2025/",
+      "data_url": "https://www.nrscotland.gov.uk/media/ynqlqdfk/all-names-given-to-babies-in-2025.xlsx",
+      "format": "XLSX",
+      "count_note": "Official count; names with counts of 2 or less are suppressed.",
+      "entry_count": 101,
+      "entries": [
+        {
+          "rank": 1,
+          "rank_tied": false,
+          "name": "Noah",
+          "count": 318
+        },
+        {
+          "rank": 2,
+          "rank_tied": false,
+          "name": "Luca",
+          "count": 302
+        },
+        {
+          "rank": 3,
+          "rank_tied": false,
+          "name": "Rory",
+          "count": 301
+        },
+        {
+          "rank": 4,
+          "rank_tied": false,
+          "name": "Muhammad",
+          "count": 291
+        },
+        {
+          "rank": 5,
+          "rank_tied": false,
+          "name": "Oliver",
+          "count": 269
+        },
+        {
+          "rank": 6,
+          "rank_tied": false,
+          "name": "Theo",
+          "count": 243
+        },
+        {
+          "rank": 7,
+          "rank_tied": false,
+          "name": "Leo",
+          "count": 236
+        },
+        {
+          "rank": 8,
+          "rank_tied": false,
+          "name": "Archie",
+          "count": 222
+        },
+        {
+          "rank": 9,
+          "rank_tied": false,
+          "name": "Finlay",
+          "count": 216
+        },
+        {
+          "rank": 10,
+          "rank_tied": false,
+          "name": "Harris",
+          "count": 211
+        },
+        {
+          "rank": 11,
+          "rank_tied": false,
+          "name": "Jude",
+          "count": 206
+        },
+        {
+          "rank": 12,
+          "rank_tied": false,
+          "name": "Freddie",
+          "count": 201
+        },
+        {
+          "rank": 13,
+          "rank_tied": false,
+          "name": "Jack",
+          "count": 200
+        },
+        {
+          "rank": 14,
+          "rank_tied": false,
+          "name": "James",
+          "count": 199
+        },
+        {
+          "rank": 15,
+          "rank_tied": false,
+          "name": "Brodie",
+          "count": 194
+        },
+        {
+          "rank": 16,
+          "rank_tied": true,
+          "name": "Alfie",
+          "count": 167
+        },
+        {
+          "rank": 16,
+          "rank_tied": true,
+          "name": "Charlie",
+          "count": 167
+        },
+        {
+          "rank": 18,
+          "rank_tied": false,
+          "name": "Finn",
+          "count": 159
+        },
+        {
+          "rank": 19,
+          "rank_tied": false,
+          "name": "Arthur",
+          "count": 158
+        },
+        {
+          "rank": 20,
+          "rank_tied": false,
+          "name": "Oscar",
+          "count": 157
+        },
+        {
+          "rank": 21,
+          "rank_tied": false,
+          "name": "Thomas",
+          "count": 155
+        },
+        {
+          "rank": 22,
+          "rank_tied": true,
+          "name": "Alexander",
+          "count": 151
+        },
+        {
+          "rank": 22,
+          "rank_tied": true,
+          "name": "Lewis",
+          "count": 151
+        },
+        {
+          "rank": 24,
+          "rank_tied": false,
+          "name": "Arlo",
+          "count": 146
+        },
+        {
+          "rank": 25,
+          "rank_tied": false,
+          "name": "Max",
+          "count": 143
+        },
+        {
+          "rank": 26,
+          "rank_tied": true,
+          "name": "Harrison",
+          "count": 137
+        },
+        {
+          "rank": 26,
+          "rank_tied": true,
+          "name": "Sonny",
+          "count": 137
+        },
+        {
+          "rank": 26,
+          "rank_tied": true,
+          "name": "Tommy",
+          "count": 137
+        },
+        {
+          "rank": 29,
+          "rank_tied": false,
+          "name": "Lucas",
+          "count": 131
+        },
+        {
+          "rank": 30,
+          "rank_tied": false,
+          "name": "Albie",
+          "count": 123
+        },
+        {
+          "rank": 31,
+          "rank_tied": false,
+          "name": "Harry",
+          "count": 120
+        },
+        {
+          "rank": 32,
+          "rank_tied": false,
+          "name": "Adam",
+          "count": 114
+        },
+        {
+          "rank": 33,
+          "rank_tied": true,
+          "name": "Angus",
+          "count": 112
+        },
+        {
+          "rank": 33,
+          "rank_tied": true,
+          "name": "Roman",
+          "count": 112
+        },
+        {
+          "rank": 35,
+          "rank_tied": false,
+          "name": "Logan",
+          "count": 111
+        },
+        {
+          "rank": 36,
+          "rank_tied": false,
+          "name": "Callan",
+          "count": 109
+        },
+        {
+          "rank": 37,
+          "rank_tied": true,
+          "name": "Louie",
+          "count": 107
+        },
+        {
+          "rank": 37,
+          "rank_tied": true,
+          "name": "Reuben",
+          "count": 107
+        },
+        {
+          "rank": 39,
+          "rank_tied": false,
+          "name": "Theodore",
+          "count": 102
+        },
+        {
+          "rank": 40,
+          "rank_tied": false,
+          "name": "Kai",
+          "count": 101
+        },
+        {
+          "rank": 41,
+          "rank_tied": true,
+          "name": "Blake",
+          "count": 100
+        },
+        {
+          "rank": 41,
+          "rank_tied": true,
+          "name": "Mason",
+          "count": 100
+        },
+        {
+          "rank": 43,
+          "rank_tied": true,
+          "name": "Daniel",
+          "count": 99
+        },
+        {
+          "rank": 43,
+          "rank_tied": true,
+          "name": "Myles",
+          "count": 99
+        },
+        {
+          "rank": 45,
+          "rank_tied": false,
+          "name": "Jacob",
+          "count": 98
+        },
+        {
+          "rank": 46,
+          "rank_tied": false,
+          "name": "Hudson",
+          "count": 96
+        },
+        {
+          "rank": 47,
+          "rank_tied": false,
+          "name": "Rowan",
+          "count": 94
+        },
+        {
+          "rank": 48,
+          "rank_tied": false,
+          "name": "Cameron",
+          "count": 92
+        },
+        {
+          "rank": 49,
+          "rank_tied": false,
+          "name": "Caleb",
+          "count": 91
+        },
+        {
+          "rank": 50,
+          "rank_tied": false,
+          "name": "George",
+          "count": 88
+        },
+        {
+          "rank": 51,
+          "rank_tied": false,
+          "name": "Liam",
+          "count": 81
+        },
+        {
+          "rank": 52,
+          "rank_tied": true,
+          "name": "Ruaridh",
+          "count": 80
+        },
+        {
+          "rank": 52,
+          "rank_tied": true,
+          "name": "William",
+          "count": 80
+        },
+        {
+          "rank": 54,
+          "rank_tied": false,
+          "name": "Hunter",
+          "count": 79
+        },
+        {
+          "rank": 55,
+          "rank_tied": false,
+          "name": "Ethan",
+          "count": 78
+        },
+        {
+          "rank": 56,
+          "rank_tied": true,
+          "name": "Isaac",
+          "count": 77
+        },
+        {
+          "rank": 56,
+          "rank_tied": true,
+          "name": "Nathan",
+          "count": 77
+        },
+        {
+          "rank": 56,
+          "rank_tied": true,
+          "name": "Ollie",
+          "count": 77
+        },
+        {
+          "rank": 59,
+          "rank_tied": false,
+          "name": "Elijah",
+          "count": 76
+        },
+        {
+          "rank": 60,
+          "rank_tied": true,
+          "name": "Arran",
+          "count": 75
+        },
+        {
+          "rank": 60,
+          "rank_tied": true,
+          "name": "Ronan",
+          "count": 75
+        },
+        {
+          "rank": 62,
+          "rank_tied": true,
+          "name": "Blair",
+          "count": 74
+        },
+        {
+          "rank": 62,
+          "rank_tied": true,
+          "name": "Hamish",
+          "count": 74
+        },
+        {
+          "rank": 64,
+          "rank_tied": false,
+          "name": "Cole",
+          "count": 73
+        },
+        {
+          "rank": 65,
+          "rank_tied": true,
+          "name": "Joseph",
+          "count": 71
+        },
+        {
+          "rank": 65,
+          "rank_tied": true,
+          "name": "Michael",
+          "count": 71
+        },
+        {
+          "rank": 65,
+          "rank_tied": true,
+          "name": "Samuel",
+          "count": 71
+        },
+        {
+          "rank": 68,
+          "rank_tied": true,
+          "name": "Callum",
+          "count": 70
+        },
+        {
+          "rank": 68,
+          "rank_tied": true,
+          "name": "Grayson",
+          "count": 70
+        },
+        {
+          "rank": 70,
+          "rank_tied": true,
+          "name": "Cody",
+          "count": 69
+        },
+        {
+          "rank": 70,
+          "rank_tied": true,
+          "name": "Luke",
+          "count": 69
+        },
+        {
+          "rank": 72,
+          "rank_tied": false,
+          "name": "Lochlan",
+          "count": 68
+        },
+        {
+          "rank": 73,
+          "rank_tied": true,
+          "name": "Nico",
+          "count": 67
+        },
+        {
+          "rank": 73,
+          "rank_tied": true,
+          "name": "Ruairidh",
+          "count": 67
+        },
+        {
+          "rank": 75,
+          "rank_tied": true,
+          "name": "Jamie",
+          "count": 66
+        },
+        {
+          "rank": 75,
+          "rank_tied": true,
+          "name": "Joey",
+          "count": 66
+        },
+        {
+          "rank": 75,
+          "rank_tied": true,
+          "name": "Joshua",
+          "count": 66
+        },
+        {
+          "rank": 75,
+          "rank_tied": true,
+          "name": "Reggie",
+          "count": 66
+        },
+        {
+          "rank": 79,
+          "rank_tied": true,
+          "name": "Carter",
+          "count": 65
+        },
+        {
+          "rank": 79,
+          "rank_tied": true,
+          "name": "Cooper",
+          "count": 65
+        },
+        {
+          "rank": 79,
+          "rank_tied": true,
+          "name": "Lachlan",
+          "count": 65
+        },
+        {
+          "rank": 79,
+          "rank_tied": true,
+          "name": "Matthew",
+          "count": 65
+        },
+        {
+          "rank": 83,
+          "rank_tied": true,
+          "name": "Louis",
+          "count": 64
+        },
+        {
+          "rank": 83,
+          "rank_tied": true,
+          "name": "Riley",
+          "count": 64
+        },
+        {
+          "rank": 85,
+          "rank_tied": false,
+          "name": "Elliot",
+          "count": 62
+        },
+        {
+          "rank": 86,
+          "rank_tied": true,
+          "name": "Oakley",
+          "count": 61
+        },
+        {
+          "rank": 86,
+          "rank_tied": true,
+          "name": "Robert",
+          "count": 61
+        },
+        {
+          "rank": 88,
+          "rank_tied": true,
+          "name": "Henry",
+          "count": 60
+        },
+        {
+          "rank": 88,
+          "rank_tied": true,
+          "name": "Murray",
+          "count": 60
+        },
+        {
+          "rank": 88,
+          "rank_tied": true,
+          "name": "Teddy",
+          "count": 60
+        },
+        {
+          "rank": 91,
+          "rank_tied": false,
+          "name": "Fergus",
+          "count": 59
+        },
+        {
+          "rank": 92,
+          "rank_tied": true,
+          "name": "Austin",
+          "count": 58
+        },
+        {
+          "rank": 92,
+          "rank_tied": true,
+          "name": "David",
+          "count": 58
+        },
+        {
+          "rank": 92,
+          "rank_tied": true,
+          "name": "Jax",
+          "count": 58
+        },
+        {
+          "rank": 95,
+          "rank_tied": true,
+          "name": "Aaron",
+          "count": 56
+        },
+        {
+          "rank": 95,
+          "rank_tied": true,
+          "name": "Vinnie",
+          "count": 56
+        },
+        {
+          "rank": 97,
+          "rank_tied": false,
+          "name": "Leon",
+          "count": 55
+        },
+        {
+          "rank": 98,
+          "rank_tied": false,
+          "name": "Frankie",
+          "count": 54
+        },
+        {
+          "rank": 99,
+          "rank_tied": false,
+          "name": "Robbie",
+          "count": 52
+        },
+        {
+          "rank": 100,
+          "rank_tied": true,
+          "name": "Cillian",
+          "count": 51
+        },
+        {
+          "rank": 100,
+          "rank_tied": true,
+          "name": "Ellis",
+          "count": 51
+        }
+      ]
+    },
+    {
+      "country": "United Kingdom",
+      "jurisdiction": "Scotland",
+      "year": 2025,
+      "sex": "female",
+      "source_url": "https://www.nrscotland.gov.uk/publications/babies-first-names-2025/",
+      "data_url": "https://www.nrscotland.gov.uk/media/ynqlqdfk/all-names-given-to-babies-in-2025.xlsx",
+      "format": "XLSX",
+      "count_note": "Official count; names with counts of 2 or less are suppressed.",
+      "entry_count": 103,
+      "entries": [
+        {
+          "rank": 1,
+          "rank_tied": false,
+          "name": "Freya",
+          "count": 268
+        },
+        {
+          "rank": 2,
+          "rank_tied": false,
+          "name": "Isla",
+          "count": 253
+        },
+        {
+          "rank": 3,
+          "rank_tied": false,
+          "name": "Olivia",
+          "count": 251
+        },
+        {
+          "rank": 4,
+          "rank_tied": false,
+          "name": "Amelia",
+          "count": 204
+        },
+        {
+          "rank": 5,
+          "rank_tied": false,
+          "name": "Grace",
+          "count": 200
+        },
+        {
+          "rank": 6,
+          "rank_tied": false,
+          "name": "Emily",
+          "count": 196
+        },
+        {
+          "rank": 7,
+          "rank_tied": false,
+          "name": "Millie",
+          "count": 195
+        },
+        {
+          "rank": 8,
+          "rank_tied": false,
+          "name": "Lily",
+          "count": 193
+        },
+        {
+          "rank": 9,
+          "rank_tied": false,
+          "name": "Sophia",
+          "count": 181
+        },
+        {
+          "rank": 10,
+          "rank_tied": false,
+          "name": "Rosie",
+          "count": 177
+        },
+        {
+          "rank": 11,
+          "rank_tied": false,
+          "name": "Maisie",
+          "count": 169
+        },
+        {
+          "rank": 12,
+          "rank_tied": false,
+          "name": "Sophie",
+          "count": 168
+        },
+        {
+          "rank": 13,
+          "rank_tied": false,
+          "name": "Ava",
+          "count": 166
+        },
+        {
+          "rank": 14,
+          "rank_tied": true,
+          "name": "Charlotte",
+          "count": 164
+        },
+        {
+          "rank": 14,
+          "rank_tied": true,
+          "name": "Ella",
+          "count": 164
+        },
+        {
+          "rank": 16,
+          "rank_tied": false,
+          "name": "Ivy",
+          "count": 144
+        },
+        {
+          "rank": 17,
+          "rank_tied": false,
+          "name": "Sofia",
+          "count": 142
+        },
+        {
+          "rank": 18,
+          "rank_tied": false,
+          "name": "Evie",
+          "count": 141
+        },
+        {
+          "rank": 19,
+          "rank_tied": false,
+          "name": "Hallie",
+          "count": 137
+        },
+        {
+          "rank": 20,
+          "rank_tied": false,
+          "name": "Maya",
+          "count": 136
+        },
+        {
+          "rank": 21,
+          "rank_tied": false,
+          "name": "Elsie",
+          "count": 135
+        },
+        {
+          "rank": 22,
+          "rank_tied": false,
+          "name": "Orla",
+          "count": 134
+        },
+        {
+          "rank": 23,
+          "rank_tied": true,
+          "name": "Harper",
+          "count": 130
+        },
+        {
+          "rank": 23,
+          "rank_tied": true,
+          "name": "Maeve",
+          "count": 130
+        },
+        {
+          "rank": 25,
+          "rank_tied": false,
+          "name": "Aria",
+          "count": 127
+        },
+        {
+          "rank": 26,
+          "rank_tied": false,
+          "name": "Daisy",
+          "count": 126
+        },
+        {
+          "rank": 27,
+          "rank_tied": false,
+          "name": "Willow",
+          "count": 125
+        },
+        {
+          "rank": 28,
+          "rank_tied": false,
+          "name": "Eilidh",
+          "count": 119
+        },
+        {
+          "rank": 29,
+          "rank_tied": false,
+          "name": "Lottie",
+          "count": 116
+        },
+        {
+          "rank": 30,
+          "rank_tied": false,
+          "name": "Ruby",
+          "count": 115
+        },
+        {
+          "rank": 31,
+          "rank_tied": false,
+          "name": "Isabella",
+          "count": 114
+        },
+        {
+          "rank": 32,
+          "rank_tied": true,
+          "name": "Bonnie",
+          "count": 112
+        },
+        {
+          "rank": 32,
+          "rank_tied": true,
+          "name": "Gracie",
+          "count": 112
+        },
+        {
+          "rank": 34,
+          "rank_tied": false,
+          "name": "Mia",
+          "count": 111
+        },
+        {
+          "rank": 35,
+          "rank_tied": false,
+          "name": "Poppy",
+          "count": 109
+        },
+        {
+          "rank": 36,
+          "rank_tied": false,
+          "name": "Sienna",
+          "count": 101
+        },
+        {
+          "rank": 37,
+          "rank_tied": false,
+          "name": "Lucy",
+          "count": 100
+        },
+        {
+          "rank": 38,
+          "rank_tied": false,
+          "name": "Esme",
+          "count": 98
+        },
+        {
+          "rank": 39,
+          "rank_tied": false,
+          "name": "Georgia",
+          "count": 97
+        },
+        {
+          "rank": 40,
+          "rank_tied": false,
+          "name": "Mila",
+          "count": 95
+        },
+        {
+          "rank": 41,
+          "rank_tied": false,
+          "name": "Ayla",
+          "count": 93
+        },
+        {
+          "rank": 42,
+          "rank_tied": false,
+          "name": "Arabella",
+          "count": 92
+        },
+        {
+          "rank": 43,
+          "rank_tied": false,
+          "name": "Layla",
+          "count": 91
+        },
+        {
+          "rank": 44,
+          "rank_tied": false,
+          "name": "Robyn",
+          "count": 90
+        },
+        {
+          "rank": 45,
+          "rank_tied": false,
+          "name": "Aurora",
+          "count": 89
+        },
+        {
+          "rank": 46,
+          "rank_tied": false,
+          "name": "Remi",
+          "count": 88
+        },
+        {
+          "rank": 47,
+          "rank_tied": false,
+          "name": "Phoebe",
+          "count": 87
+        },
+        {
+          "rank": 48,
+          "rank_tied": false,
+          "name": "Ellie",
+          "count": 85
+        },
+        {
+          "rank": 49,
+          "rank_tied": false,
+          "name": "Jessica",
+          "count": 81
+        },
+        {
+          "rank": 50,
+          "rank_tied": false,
+          "name": "Lyla",
+          "count": 77
+        },
+        {
+          "rank": 51,
+          "rank_tied": false,
+          "name": "Ada",
+          "count": 76
+        },
+        {
+          "rank": 52,
+          "rank_tied": true,
+          "name": "Alice",
+          "count": 75
+        },
+        {
+          "rank": 52,
+          "rank_tied": true,
+          "name": "Zoe",
+          "count": 75
+        },
+        {
+          "rank": 54,
+          "rank_tied": true,
+          "name": "Anna",
+          "count": 74
+        },
+        {
+          "rank": 54,
+          "rank_tied": true,
+          "name": "Florence",
+          "count": 74
+        },
+        {
+          "rank": 56,
+          "rank_tied": true,
+          "name": "Molly",
+          "count": 71
+        },
+        {
+          "rank": 56,
+          "rank_tied": true,
+          "name": "Zara",
+          "count": 71
+        },
+        {
+          "rank": 58,
+          "rank_tied": false,
+          "name": "Mabel",
+          "count": 70
+        },
+        {
+          "rank": 59,
+          "rank_tied": false,
+          "name": "Sadie",
+          "count": 69
+        },
+        {
+          "rank": 60,
+          "rank_tied": false,
+          "name": "Skye",
+          "count": 67
+        },
+        {
+          "rank": 61,
+          "rank_tied": false,
+          "name": "Callie",
+          "count": 66
+        },
+        {
+          "rank": 62,
+          "rank_tied": true,
+          "name": "Alba",
+          "count": 65
+        },
+        {
+          "rank": 62,
+          "rank_tied": true,
+          "name": "Emilia",
+          "count": 65
+        },
+        {
+          "rank": 64,
+          "rank_tied": true,
+          "name": "Hannah",
+          "count": 64
+        },
+        {
+          "rank": 64,
+          "rank_tied": true,
+          "name": "Violet",
+          "count": 64
+        },
+        {
+          "rank": 66,
+          "rank_tied": true,
+          "name": "Maeva",
+          "count": 62
+        },
+        {
+          "rank": 66,
+          "rank_tied": true,
+          "name": "Nina",
+          "count": 62
+        },
+        {
+          "rank": 68,
+          "rank_tied": false,
+          "name": "Summer",
+          "count": 61
+        },
+        {
+          "rank": 69,
+          "rank_tied": false,
+          "name": "Thea",
+          "count": 60
+        },
+        {
+          "rank": 70,
+          "rank_tied": false,
+          "name": "Fiadh",
+          "count": 59
+        },
+        {
+          "rank": 71,
+          "rank_tied": true,
+          "name": "Eva",
+          "count": 58
+        },
+        {
+          "rank": 71,
+          "rank_tied": true,
+          "name": "Penelope",
+          "count": 58
+        },
+        {
+          "rank": 71,
+          "rank_tied": true,
+          "name": "Rose",
+          "count": 58
+        },
+        {
+          "rank": 74,
+          "rank_tied": true,
+          "name": "Myla",
+          "count": 56
+        },
+        {
+          "rank": 74,
+          "rank_tied": true,
+          "name": "Niamh",
+          "count": 56
+        },
+        {
+          "rank": 74,
+          "rank_tied": true,
+          "name": "Nova",
+          "count": 56
+        },
+        {
+          "rank": 77,
+          "rank_tied": true,
+          "name": "Cora",
+          "count": 54
+        },
+        {
+          "rank": 77,
+          "rank_tied": true,
+          "name": "Holly",
+          "count": 54
+        },
+        {
+          "rank": 79,
+          "rank_tied": true,
+          "name": "Margot",
+          "count": 53
+        },
+        {
+          "rank": 79,
+          "rank_tied": true,
+          "name": "Quinn",
+          "count": 53
+        },
+        {
+          "rank": 81,
+          "rank_tied": false,
+          "name": "Romy",
+          "count": 52
+        },
+        {
+          "rank": 82,
+          "rank_tied": false,
+          "name": "Clara",
+          "count": 51
+        },
+        {
+          "rank": 83,
+          "rank_tied": true,
+          "name": "Chloe",
+          "count": 50
+        },
+        {
+          "rank": 83,
+          "rank_tied": true,
+          "name": "Eden",
+          "count": 50
+        },
+        {
+          "rank": 83,
+          "rank_tied": true,
+          "name": "Lilly",
+          "count": 50
+        },
+        {
+          "rank": 86,
+          "rank_tied": true,
+          "name": "Evelyn",
+          "count": 49
+        },
+        {
+          "rank": 86,
+          "rank_tied": true,
+          "name": "Imogen",
+          "count": 49
+        },
+        {
+          "rank": 86,
+          "rank_tied": true,
+          "name": "Iona",
+          "count": 49
+        },
+        {
+          "rank": 86,
+          "rank_tied": true,
+          "name": "Nora",
+          "count": 49
+        },
+        {
+          "rank": 86,
+          "rank_tied": true,
+          "name": "Rosa",
+          "count": 49
+        },
+        {
+          "rank": 91,
+          "rank_tied": true,
+          "name": "Eloise",
+          "count": 48
+        },
+        {
+          "rank": 91,
+          "rank_tied": true,
+          "name": "Heidi",
+          "count": 48
+        },
+        {
+          "rank": 93,
+          "rank_tied": false,
+          "name": "Matilda",
+          "count": 47
+        },
+        {
+          "rank": 94,
+          "rank_tied": true,
+          "name": "Annie",
+          "count": 46
+        },
+        {
+          "rank": 94,
+          "rank_tied": true,
+          "name": "Emma",
+          "count": 46
+        },
+        {
+          "rank": 94,
+          "rank_tied": true,
+          "name": "Flora",
+          "count": 46
+        },
+        {
+          "rank": 94,
+          "rank_tied": true,
+          "name": "Hazel",
+          "count": 46
+        },
+        {
+          "rank": 94,
+          "rank_tied": true,
+          "name": "Mollie",
+          "count": 46
+        },
+        {
+          "rank": 99,
+          "rank_tied": false,
+          "name": "Mirren",
+          "count": 45
+        },
+        {
+          "rank": 100,
+          "rank_tied": true,
+          "name": "Billie",
+          "count": 44
+        },
+        {
+          "rank": 100,
+          "rank_tied": true,
+          "name": "Darcy",
+          "count": 44
+        },
+        {
+          "rank": 100,
+          "rank_tied": true,
+          "name": "Lilah",
+          "count": 44
+        },
+        {
+          "rank": 100,
+          "rank_tied": true,
+          "name": "Lucia",
+          "count": 44
+        }
+      ]
+    },
+    {
+      "country": "United Kingdom",
+      "jurisdiction": "Northern Ireland",
+      "year": 2025,
+      "sex": "male",
+      "source_url": "https://www.nisra.gov.uk/publications/baby-names-2025",
+      "data_url": "https://www.nisra.gov.uk/files/nisra/documents/2026-04/Full_Name_List_NI_97_25.xlsx",
+      "format": "XLSX",
+      "count_note": "Official number of babies.",
+      "entry_count": 102,
+      "entries": [
+        {
+          "rank": 1,
+          "rank_tied": false,
+          "name": "Noah",
+          "count": 170
+        },
+        {
+          "rank": 2,
+          "rank_tied": false,
+          "name": "Jack",
+          "count": 150
+        },
+        {
+          "rank": 3,
+          "rank_tied": false,
+          "name": "James",
+          "count": 135
+        },
+        {
+          "rank": 4,
+          "rank_tied": false,
+          "name": "Charlie",
+          "count": 123
+        },
+        {
+          "rank": 5,
+          "rank_tied": false,
+          "name": "Leo",
+          "count": 115
+        },
+        {
+          "rank": 6,
+          "rank_tied": false,
+          "name": "Oisin",
+          "count": 108
+        },
+        {
+          "rank": 7,
+          "rank_tied": false,
+          "name": "Theo",
+          "count": 106
+        },
+        {
+          "rank": 8,
+          "rank_tied": false,
+          "name": "Luca",
+          "count": 104
+        },
+        {
+          "rank": 9,
+          "rank_tied": true,
+          "name": "Arthur",
+          "count": 101
+        },
+        {
+          "rank": 9,
+          "rank_tied": true,
+          "name": "Jude",
+          "count": 101
+        },
+        {
+          "rank": 11,
+          "rank_tied": false,
+          "name": "Cillian",
+          "count": 95
+        },
+        {
+          "rank": 12,
+          "rank_tied": false,
+          "name": "Oliver",
+          "count": 91
+        },
+        {
+          "rank": 13,
+          "rank_tied": false,
+          "name": "Harry",
+          "count": 90
+        },
+        {
+          "rank": 14,
+          "rank_tied": false,
+          "name": "Tommy",
+          "count": 84
+        },
+        {
+          "rank": 15,
+          "rank_tied": false,
+          "name": "Archie",
+          "count": 81
+        },
+        {
+          "rank": 16,
+          "rank_tied": true,
+          "name": "Finn",
+          "count": 80
+        },
+        {
+          "rank": 16,
+          "rank_tied": true,
+          "name": "Ronan",
+          "count": 80
+        },
+        {
+          "rank": 18,
+          "rank_tied": false,
+          "name": "Thomas",
+          "count": 74
+        },
+        {
+          "rank": 19,
+          "rank_tied": false,
+          "name": "Rian",
+          "count": 73
+        },
+        {
+          "rank": 20,
+          "rank_tied": false,
+          "name": "Rory",
+          "count": 71
+        },
+        {
+          "rank": 21,
+          "rank_tied": false,
+          "name": "Freddie",
+          "count": 70
+        },
+        {
+          "rank": 22,
+          "rank_tied": false,
+          "name": "Shea",
+          "count": 67
+        },
+        {
+          "rank": 23,
+          "rank_tied": false,
+          "name": "Alfie",
+          "count": 66
+        },
+        {
+          "rank": 24,
+          "rank_tied": false,
+          "name": "Henry",
+          "count": 64
+        },
+        {
+          "rank": 25,
+          "rank_tied": false,
+          "name": "Oscar",
+          "count": 63
+        },
+        {
+          "rank": 26,
+          "rank_tied": false,
+          "name": "Patrick",
+          "count": 62
+        },
+        {
+          "rank": 27,
+          "rank_tied": false,
+          "name": "Jacob",
+          "count": 61
+        },
+        {
+          "rank": 28,
+          "rank_tied": false,
+          "name": "Daithi",
+          "count": 60
+        },
+        {
+          "rank": 29,
+          "rank_tied": false,
+          "name": "Reuben",
+          "count": 57
+        },
+        {
+          "rank": 30,
+          "rank_tied": false,
+          "name": "Rowan",
+          "count": 56
+        },
+        {
+          "rank": 31,
+          "rank_tied": false,
+          "name": "Isaac",
+          "count": 55
+        },
+        {
+          "rank": 32,
+          "rank_tied": true,
+          "name": "Darragh",
+          "count": 54
+        },
+        {
+          "rank": 32,
+          "rank_tied": true,
+          "name": "Ethan",
+          "count": 54
+        },
+        {
+          "rank": 34,
+          "rank_tied": true,
+          "name": "Daniel",
+          "count": 53
+        },
+        {
+          "rank": 34,
+          "rank_tied": true,
+          "name": "George",
+          "count": 53
+        },
+        {
+          "rank": 36,
+          "rank_tied": true,
+          "name": "Caleb",
+          "count": 51
+        },
+        {
+          "rank": 36,
+          "rank_tied": true,
+          "name": "Daire",
+          "count": 51
+        },
+        {
+          "rank": 38,
+          "rank_tied": true,
+          "name": "Michael",
+          "count": 50
+        },
+        {
+          "rank": 38,
+          "rank_tied": true,
+          "name": "Ruairi",
+          "count": 50
+        },
+        {
+          "rank": 40,
+          "rank_tied": true,
+          "name": "Ollie",
+          "count": 49
+        },
+        {
+          "rank": 40,
+          "rank_tied": true,
+          "name": "Theodore",
+          "count": 49
+        },
+        {
+          "rank": 42,
+          "rank_tied": false,
+          "name": "Ezra",
+          "count": 47
+        },
+        {
+          "rank": 43,
+          "rank_tied": false,
+          "name": "Lucas",
+          "count": 46
+        },
+        {
+          "rank": 44,
+          "rank_tied": true,
+          "name": "Conor",
+          "count": 43
+        },
+        {
+          "rank": 44,
+          "rank_tied": true,
+          "name": "Fionn",
+          "count": 43
+        },
+        {
+          "rank": 44,
+          "rank_tied": true,
+          "name": "Kai",
+          "count": 43
+        },
+        {
+          "rank": 44,
+          "rank_tied": true,
+          "name": "Liam",
+          "count": 43
+        },
+        {
+          "rank": 48,
+          "rank_tied": true,
+          "name": "Alexander",
+          "count": 42
+        },
+        {
+          "rank": 48,
+          "rank_tied": true,
+          "name": "Arlo",
+          "count": 42
+        },
+        {
+          "rank": 48,
+          "rank_tied": true,
+          "name": "Hugo",
+          "count": 42
+        },
+        {
+          "rank": 48,
+          "rank_tied": true,
+          "name": "Lorcan",
+          "count": 42
+        },
+        {
+          "rank": 52,
+          "rank_tied": true,
+          "name": "Levi",
+          "count": 41
+        },
+        {
+          "rank": 52,
+          "rank_tied": true,
+          "name": "Sonny",
+          "count": 41
+        },
+        {
+          "rank": 54,
+          "rank_tied": false,
+          "name": "Joseph",
+          "count": 40
+        },
+        {
+          "rank": 55,
+          "rank_tied": true,
+          "name": "Albie",
+          "count": 39
+        },
+        {
+          "rank": 55,
+          "rank_tied": true,
+          "name": "Joshua",
+          "count": 39
+        },
+        {
+          "rank": 55,
+          "rank_tied": true,
+          "name": "Mason",
+          "count": 39
+        },
+        {
+          "rank": 55,
+          "rank_tied": true,
+          "name": "Odhran",
+          "count": 39
+        },
+        {
+          "rank": 59,
+          "rank_tied": true,
+          "name": "Elijah",
+          "count": 38
+        },
+        {
+          "rank": 59,
+          "rank_tied": true,
+          "name": "William",
+          "count": 38
+        },
+        {
+          "rank": 61,
+          "rank_tied": true,
+          "name": "Benjamin",
+          "count": 37
+        },
+        {
+          "rank": 61,
+          "rank_tied": true,
+          "name": "Conan",
+          "count": 37
+        },
+        {
+          "rank": 61,
+          "rank_tied": true,
+          "name": "Matthew",
+          "count": 37
+        },
+        {
+          "rank": 64,
+          "rank_tied": true,
+          "name": "Hudson",
+          "count": 36
+        },
+        {
+          "rank": 64,
+          "rank_tied": true,
+          "name": "Jonah",
+          "count": 36
+        },
+        {
+          "rank": 64,
+          "rank_tied": true,
+          "name": "Max",
+          "count": 36
+        },
+        {
+          "rank": 67,
+          "rank_tied": true,
+          "name": "John",
+          "count": 35
+        },
+        {
+          "rank": 67,
+          "rank_tied": true,
+          "name": "Sean",
+          "count": 35
+        },
+        {
+          "rank": 69,
+          "rank_tied": true,
+          "name": "Logan",
+          "count": 34
+        },
+        {
+          "rank": 69,
+          "rank_tied": true,
+          "name": "Reggie",
+          "count": 34
+        },
+        {
+          "rank": 69,
+          "rank_tied": true,
+          "name": "Samuel",
+          "count": 34
+        },
+        {
+          "rank": 72,
+          "rank_tied": true,
+          "name": "Aodhan",
+          "count": 33
+        },
+        {
+          "rank": 72,
+          "rank_tied": true,
+          "name": "Cian",
+          "count": 33
+        },
+        {
+          "rank": 72,
+          "rank_tied": true,
+          "name": "Joey",
+          "count": 33
+        },
+        {
+          "rank": 75,
+          "rank_tied": true,
+          "name": "Paidi",
+          "count": 32
+        },
+        {
+          "rank": 75,
+          "rank_tied": true,
+          "name": "Senan",
+          "count": 32
+        },
+        {
+          "rank": 77,
+          "rank_tied": true,
+          "name": "Cody",
+          "count": 31
+        },
+        {
+          "rank": 77,
+          "rank_tied": true,
+          "name": "Riley",
+          "count": 31
+        },
+        {
+          "rank": 79,
+          "rank_tied": true,
+          "name": "Adam",
+          "count": 30
+        },
+        {
+          "rank": 79,
+          "rank_tied": true,
+          "name": "Frankie",
+          "count": 30
+        },
+        {
+          "rank": 79,
+          "rank_tied": true,
+          "name": "Harrison",
+          "count": 30
+        },
+        {
+          "rank": 79,
+          "rank_tied": true,
+          "name": "Tom",
+          "count": 30
+        },
+        {
+          "rank": 83,
+          "rank_tied": true,
+          "name": "Louie",
+          "count": 29
+        },
+        {
+          "rank": 83,
+          "rank_tied": true,
+          "name": "Luke",
+          "count": 29
+        },
+        {
+          "rank": 85,
+          "rank_tied": false,
+          "name": "Tadhg",
+          "count": 28
+        },
+        {
+          "rank": 86,
+          "rank_tied": true,
+          "name": "Eoin",
+          "count": 27
+        },
+        {
+          "rank": 86,
+          "rank_tied": true,
+          "name": "Micah",
+          "count": 27
+        },
+        {
+          "rank": 86,
+          "rank_tied": true,
+          "name": "Micheal",
+          "count": 27
+        },
+        {
+          "rank": 86,
+          "rank_tied": true,
+          "name": "Myles",
+          "count": 27
+        },
+        {
+          "rank": 90,
+          "rank_tied": true,
+          "name": "Conn",
+          "count": 26
+        },
+        {
+          "rank": 90,
+          "rank_tied": true,
+          "name": "Cuan",
+          "count": 26
+        },
+        {
+          "rank": 90,
+          "rank_tied": true,
+          "name": "Eli",
+          "count": 26
+        },
+        {
+          "rank": 90,
+          "rank_tied": true,
+          "name": "Hunter",
+          "count": 26
+        },
+        {
+          "rank": 90,
+          "rank_tied": true,
+          "name": "Padraig",
+          "count": 26
+        },
+        {
+          "rank": 95,
+          "rank_tied": true,
+          "name": "Aidan",
+          "count": 25
+        },
+        {
+          "rank": 95,
+          "rank_tied": true,
+          "name": "Cahir",
+          "count": 25
+        },
+        {
+          "rank": 95,
+          "rank_tied": true,
+          "name": "Naoise",
+          "count": 25
+        },
+        {
+          "rank": 95,
+          "rank_tied": true,
+          "name": "Ruadhan",
+          "count": 25
+        },
+        {
+          "rank": 99,
+          "rank_tied": true,
+          "name": "Caolan",
+          "count": 24
+        },
+        {
+          "rank": 99,
+          "rank_tied": true,
+          "name": "Jesse",
+          "count": 24
+        },
+        {
+          "rank": 99,
+          "rank_tied": true,
+          "name": "Ryan",
+          "count": 24
+        },
+        {
+          "rank": 99,
+          "rank_tied": true,
+          "name": "Tiernan",
+          "count": 24
+        }
+      ]
+    },
+    {
+      "country": "United Kingdom",
+      "jurisdiction": "Northern Ireland",
+      "year": 2025,
+      "sex": "female",
+      "source_url": "https://www.nisra.gov.uk/publications/baby-names-2025",
+      "data_url": "https://www.nisra.gov.uk/files/nisra/documents/2026-04/Full_Name_List_NI_97_25.xlsx",
+      "format": "XLSX",
+      "count_note": "Official number of babies.",
+      "entry_count": 105,
+      "entries": [
+        {
+          "rank": 1,
+          "rank_tied": false,
+          "name": "Grace",
+          "count": 127
+        },
+        {
+          "rank": 2,
+          "rank_tied": false,
+          "name": "Fiadh",
+          "count": 105
+        },
+        {
+          "rank": 3,
+          "rank_tied": false,
+          "name": "Olivia",
+          "count": 101
+        },
+        {
+          "rank": 4,
+          "rank_tied": false,
+          "name": "Isla",
+          "count": 97
+        },
+        {
+          "rank": 5,
+          "rank_tied": false,
+          "name": "Lily",
+          "count": 96
+        },
+        {
+          "rank": 6,
+          "rank_tied": false,
+          "name": "Emily",
+          "count": 94
+        },
+        {
+          "rank": 7,
+          "rank_tied": false,
+          "name": "Annie",
+          "count": 91
+        },
+        {
+          "rank": 8,
+          "rank_tied": false,
+          "name": "Aoife",
+          "count": 85
+        },
+        {
+          "rank": 9,
+          "rank_tied": false,
+          "name": "Meabh",
+          "count": 81
+        },
+        {
+          "rank": 10,
+          "rank_tied": false,
+          "name": "Freya",
+          "count": 78
+        },
+        {
+          "rank": 11,
+          "rank_tied": true,
+          "name": "Anna",
+          "count": 77
+        },
+        {
+          "rank": 11,
+          "rank_tied": true,
+          "name": "Sadie",
+          "count": 77
+        },
+        {
+          "rank": 13,
+          "rank_tied": false,
+          "name": "Eabha",
+          "count": 72
+        },
+        {
+          "rank": 14,
+          "rank_tied": false,
+          "name": "Rosie",
+          "count": 69
+        },
+        {
+          "rank": 15,
+          "rank_tied": true,
+          "name": "Charlotte",
+          "count": 68
+        },
+        {
+          "rank": 15,
+          "rank_tied": true,
+          "name": "Sophia",
+          "count": 68
+        },
+        {
+          "rank": 15,
+          "rank_tied": true,
+          "name": "Sophie",
+          "count": 68
+        },
+        {
+          "rank": 18,
+          "rank_tied": false,
+          "name": "Amelia",
+          "count": 64
+        },
+        {
+          "rank": 19,
+          "rank_tied": false,
+          "name": "Croia",
+          "count": 62
+        },
+        {
+          "rank": 20,
+          "rank_tied": false,
+          "name": "Ava",
+          "count": 59
+        },
+        {
+          "rank": 21,
+          "rank_tied": true,
+          "name": "Ellie",
+          "count": 57
+        },
+        {
+          "rank": 21,
+          "rank_tied": true,
+          "name": "Erin",
+          "count": 57
+        },
+        {
+          "rank": 23,
+          "rank_tied": true,
+          "name": "Elsie",
+          "count": 55
+        },
+        {
+          "rank": 23,
+          "rank_tied": true,
+          "name": "Ruby",
+          "count": 55
+        },
+        {
+          "rank": 25,
+          "rank_tied": true,
+          "name": "Cara",
+          "count": 52
+        },
+        {
+          "rank": 25,
+          "rank_tied": true,
+          "name": "Ella",
+          "count": 52
+        },
+        {
+          "rank": 25,
+          "rank_tied": true,
+          "name": "Phoebe",
+          "count": 52
+        },
+        {
+          "rank": 28,
+          "rank_tied": true,
+          "name": "Lottie",
+          "count": 51
+        },
+        {
+          "rank": 28,
+          "rank_tied": true,
+          "name": "Mia",
+          "count": 51
+        },
+        {
+          "rank": 30,
+          "rank_tied": true,
+          "name": "Evie",
+          "count": 50
+        },
+        {
+          "rank": 30,
+          "rank_tied": true,
+          "name": "Isabella",
+          "count": 50
+        },
+        {
+          "rank": 32,
+          "rank_tied": true,
+          "name": "Molly",
+          "count": 49
+        },
+        {
+          "rank": 32,
+          "rank_tied": true,
+          "name": "Sofia",
+          "count": 49
+        },
+        {
+          "rank": 34,
+          "rank_tied": false,
+          "name": "Lucy",
+          "count": 48
+        },
+        {
+          "rank": 35,
+          "rank_tied": true,
+          "name": "Clodagh",
+          "count": 47
+        },
+        {
+          "rank": 35,
+          "rank_tied": true,
+          "name": "Maisie",
+          "count": 47
+        },
+        {
+          "rank": 35,
+          "rank_tied": true,
+          "name": "Rhea",
+          "count": 47
+        },
+        {
+          "rank": 38,
+          "rank_tied": false,
+          "name": "Mollie",
+          "count": 45
+        },
+        {
+          "rank": 39,
+          "rank_tied": true,
+          "name": "Clara",
+          "count": 44
+        },
+        {
+          "rank": 39,
+          "rank_tied": true,
+          "name": "Harper",
+          "count": 44
+        },
+        {
+          "rank": 39,
+          "rank_tied": true,
+          "name": "Ivy",
+          "count": 44
+        },
+        {
+          "rank": 42,
+          "rank_tied": false,
+          "name": "Hannah",
+          "count": 43
+        },
+        {
+          "rank": 43,
+          "rank_tied": false,
+          "name": "Nora",
+          "count": 42
+        },
+        {
+          "rank": 44,
+          "rank_tied": true,
+          "name": "Daisy",
+          "count": 41
+        },
+        {
+          "rank": 44,
+          "rank_tied": true,
+          "name": "Saoirse",
+          "count": 41
+        },
+        {
+          "rank": 46,
+          "rank_tied": false,
+          "name": "Sienna",
+          "count": 40
+        },
+        {
+          "rank": 47,
+          "rank_tied": true,
+          "name": "Ada",
+          "count": 39
+        },
+        {
+          "rank": 47,
+          "rank_tied": true,
+          "name": "Cora",
+          "count": 39
+        },
+        {
+          "rank": 49,
+          "rank_tied": true,
+          "name": "Aria",
+          "count": 38
+        },
+        {
+          "rank": 49,
+          "rank_tied": true,
+          "name": "Gracie",
+          "count": 38
+        },
+        {
+          "rank": 51,
+          "rank_tied": false,
+          "name": "Poppy",
+          "count": 37
+        },
+        {
+          "rank": 52,
+          "rank_tied": true,
+          "name": "Eden",
+          "count": 36
+        },
+        {
+          "rank": 52,
+          "rank_tied": true,
+          "name": "Katie",
+          "count": 36
+        },
+        {
+          "rank": 52,
+          "rank_tied": true,
+          "name": "Margot",
+          "count": 36
+        },
+        {
+          "rank": 55,
+          "rank_tied": true,
+          "name": "Maeve",
+          "count": 35
+        },
+        {
+          "rank": 55,
+          "rank_tied": true,
+          "name": "Zara",
+          "count": 35
+        },
+        {
+          "rank": 57,
+          "rank_tied": true,
+          "name": "Georgia",
+          "count": 34
+        },
+        {
+          "rank": 57,
+          "rank_tied": true,
+          "name": "Hallie",
+          "count": 34
+        },
+        {
+          "rank": 57,
+          "rank_tied": true,
+          "name": "Heidi",
+          "count": 34
+        },
+        {
+          "rank": 57,
+          "rank_tied": true,
+          "name": "Rose",
+          "count": 34
+        },
+        {
+          "rank": 61,
+          "rank_tied": false,
+          "name": "Robyn",
+          "count": 33
+        },
+        {
+          "rank": 62,
+          "rank_tied": true,
+          "name": "Eva",
+          "count": 32
+        },
+        {
+          "rank": 62,
+          "rank_tied": true,
+          "name": "Mabel",
+          "count": 32
+        },
+        {
+          "rank": 62,
+          "rank_tied": true,
+          "name": "Rosa",
+          "count": 32
+        },
+        {
+          "rank": 65,
+          "rank_tied": true,
+          "name": "Alice",
+          "count": 31
+        },
+        {
+          "rank": 65,
+          "rank_tied": true,
+          "name": "Bonnie",
+          "count": 31
+        },
+        {
+          "rank": 65,
+          "rank_tied": true,
+          "name": "Esme",
+          "count": 31
+        },
+        {
+          "rank": 68,
+          "rank_tied": true,
+          "name": "Chloe",
+          "count": 30
+        },
+        {
+          "rank": 68,
+          "rank_tied": true,
+          "name": "Layla",
+          "count": 30
+        },
+        {
+          "rank": 68,
+          "rank_tied": true,
+          "name": "Willow",
+          "count": 30
+        },
+        {
+          "rank": 71,
+          "rank_tied": true,
+          "name": "Cassie",
+          "count": 29
+        },
+        {
+          "rank": 71,
+          "rank_tied": true,
+          "name": "Eala",
+          "count": 29
+        },
+        {
+          "rank": 71,
+          "rank_tied": true,
+          "name": "Lucia",
+          "count": 29
+        },
+        {
+          "rank": 71,
+          "rank_tied": true,
+          "name": "Lyla",
+          "count": 29
+        },
+        {
+          "rank": 74,
+          "rank_tied": true,
+          "name": "Caoimhe",
+          "count": 28
+        },
+        {
+          "rank": 74,
+          "rank_tied": true,
+          "name": "Nina",
+          "count": 28
+        },
+        {
+          "rank": 77,
+          "rank_tied": true,
+          "name": "Cadhla",
+          "count": 27
+        },
+        {
+          "rank": 77,
+          "rank_tied": true,
+          "name": "Connie",
+          "count": 27
+        },
+        {
+          "rank": 77,
+          "rank_tied": true,
+          "name": "Emma",
+          "count": 27
+        },
+        {
+          "rank": 77,
+          "rank_tied": true,
+          "name": "Niamh",
+          "count": 27
+        },
+        {
+          "rank": 77,
+          "rank_tied": true,
+          "name": "Saorlaith",
+          "count": 27
+        },
+        {
+          "rank": 82,
+          "rank_tied": true,
+          "name": "Ayla",
+          "count": 26
+        },
+        {
+          "rank": 82,
+          "rank_tied": true,
+          "name": "Raya",
+          "count": 26
+        },
+        {
+          "rank": 84,
+          "rank_tied": true,
+          "name": "Florence",
+          "count": 25
+        },
+        {
+          "rank": 84,
+          "rank_tied": true,
+          "name": "Martha",
+          "count": 25
+        },
+        {
+          "rank": 84,
+          "rank_tied": true,
+          "name": "Maya",
+          "count": 25
+        },
+        {
+          "rank": 87,
+          "rank_tied": true,
+          "name": "Arabella",
+          "count": 24
+        },
+        {
+          "rank": 87,
+          "rank_tied": true,
+          "name": "Aurora",
+          "count": 24
+        },
+        {
+          "rank": 87,
+          "rank_tied": true,
+          "name": "Eireann",
+          "count": 24
+        },
+        {
+          "rank": 87,
+          "rank_tied": true,
+          "name": "Holly",
+          "count": 24
+        },
+        {
+          "rank": 87,
+          "rank_tied": true,
+          "name": "Lainey",
+          "count": 24
+        },
+        {
+          "rank": 92,
+          "rank_tied": true,
+          "name": "Callie",
+          "count": 23
+        },
+        {
+          "rank": 92,
+          "rank_tied": true,
+          "name": "Eimear",
+          "count": 23
+        },
+        {
+          "rank": 94,
+          "rank_tied": true,
+          "name": "Emilia",
+          "count": 22
+        },
+        {
+          "rank": 94,
+          "rank_tied": true,
+          "name": "Maria",
+          "count": 22
+        },
+        {
+          "rank": 96,
+          "rank_tied": true,
+          "name": "Abigail",
+          "count": 21
+        },
+        {
+          "rank": 96,
+          "rank_tied": true,
+          "name": "Ailbhe",
+          "count": 21
+        },
+        {
+          "rank": 96,
+          "rank_tied": true,
+          "name": "Darcie",
+          "count": 21
+        },
+        {
+          "rank": 96,
+          "rank_tied": true,
+          "name": "Eliza",
+          "count": 21
+        },
+        {
+          "rank": 96,
+          "rank_tied": true,
+          "name": "Evelyn",
+          "count": 21
+        },
+        {
+          "rank": 96,
+          "rank_tied": true,
+          "name": "Jessica",
+          "count": 21
+        },
+        {
+          "rank": 96,
+          "rank_tied": true,
+          "name": "Millie",
+          "count": 21
+        },
+        {
+          "rank": 96,
+          "rank_tied": true,
+          "name": "Nancy",
+          "count": 21
+        },
+        {
+          "rank": 96,
+          "rank_tied": true,
+          "name": "Roise",
+          "count": 21
+        },
+        {
+          "rank": 96,
+          "rank_tied": true,
+          "name": "Thea",
+          "count": 21
+        }
+      ]
+    },
+    {
+      "country": "France",
+      "jurisdiction": "France",
+      "year": 2025,
+      "sex": "male",
+      "source_url": "https://www.insee.fr/fr/statistiques/8595130",
+      "data_url": "https://www.insee.fr/fr/statistiques/fichier/8595130/prenoms-2025-nat_csv.zip",
+      "format": "CSV in ZIP",
+      "count_note": "INSEE counts rounded to nearest 5; rare names suppressed/grouped. Published ranks use unrounded counts.",
+      "entry_count": 100,
+      "entries": [
+        {
+          "rank": 1,
+          "rank_tied": false,
+          "name": "GABRIEL",
+          "count": 4625
+        },
+        {
+          "rank": 2,
+          "rank_tied": false,
+          "name": "NOAH",
+          "count": 3465
+        },
+        {
+          "rank": 3,
+          "rank_tied": false,
+          "name": "LÉO",
+          "count": 3420
+        },
+        {
+          "rank": 4,
+          "rank_tied": false,
+          "name": "RAPHAËL",
+          "count": 3285
+        },
+        {
+          "rank": 5,
+          "rank_tied": false,
+          "name": "LOUIS",
+          "count": 3260
+        },
+        {
+          "rank": 6,
+          "rank_tied": false,
+          "name": "JULES",
+          "count": 3040
+        },
+        {
+          "rank": 7,
+          "rank_tied": false,
+          "name": "ARTHUR",
+          "count": 2875
+        },
+        {
+          "rank": 8,
+          "rank_tied": false,
+          "name": "LÉON",
+          "count": 2835
+        },
+        {
+          "rank": 9,
+          "rank_tied": false,
+          "name": "ADAM",
+          "count": 2810
+        },
+        {
+          "rank": 10,
+          "rank_tied": false,
+          "name": "MAËL",
+          "count": 2700
+        },
+        {
+          "rank": 11,
+          "rank_tied": false,
+          "name": "ISAAC",
+          "count": 2660
+        },
+        {
+          "rank": 12,
+          "rank_tied": false,
+          "name": "SACHA",
+          "count": 2415
+        },
+        {
+          "rank": 13,
+          "rank_tied": false,
+          "name": "MARCEAU",
+          "count": 2405
+        },
+        {
+          "rank": 14,
+          "rank_tied": false,
+          "name": "LIAM",
+          "count": 2340
+        },
+        {
+          "rank": 15,
+          "rank_tied": false,
+          "name": "EDEN",
+          "count": 2315
+        },
+        {
+          "rank": 16,
+          "rank_tied": false,
+          "name": "NOÉ",
+          "count": 2035
+        },
+        {
+          "rank": 17,
+          "rank_tied": false,
+          "name": "ELIO",
+          "count": 2005
+        },
+        {
+          "rank": 18,
+          "rank_tied": false,
+          "name": "GABIN",
+          "count": 1925
+        },
+        {
+          "rank": 19,
+          "rank_tied": false,
+          "name": "LUCAS",
+          "count": 1875
+        },
+        {
+          "rank": 20,
+          "rank_tied": false,
+          "name": "AARON",
+          "count": 1850
+        },
+        {
+          "rank": 21,
+          "rank_tied": false,
+          "name": "MOHAMED",
+          "count": 1790
+        },
+        {
+          "rank": 22,
+          "rank_tied": false,
+          "name": "MALO",
+          "count": 1730
+        },
+        {
+          "rank": 23,
+          "rank_tied": false,
+          "name": "PAUL",
+          "count": 1725
+        },
+        {
+          "rank": 24,
+          "rank_tied": false,
+          "name": "AYDEN",
+          "count": 1710
+        },
+        {
+          "rank": 25,
+          "rank_tied": false,
+          "name": "HUGO",
+          "count": 1600
+        },
+        {
+          "rank": 26,
+          "rank_tied": false,
+          "name": "IBRAHIM",
+          "count": 1575
+        },
+        {
+          "rank": 27,
+          "rank_tied": false,
+          "name": "MARIUS",
+          "count": 1530
+        },
+        {
+          "rank": 28,
+          "rank_tied": false,
+          "name": "VICTOR",
+          "count": 1470
+        },
+        {
+          "rank": 29,
+          "rank_tied": false,
+          "name": "ELIOTT",
+          "count": 1395
+        },
+        {
+          "rank": 30,
+          "rank_tied": false,
+          "name": "ETHAN",
+          "count": 1375
+        },
+        {
+          "rank": 31,
+          "rank_tied": false,
+          "name": "IMRAN",
+          "count": 1360
+        },
+        {
+          "rank": 32,
+          "rank_tied": false,
+          "name": "AYLAN",
+          "count": 1320
+        },
+        {
+          "rank": 33,
+          "rank_tied": false,
+          "name": "NAËL",
+          "count": 1320
+        },
+        {
+          "rank": 34,
+          "rank_tied": false,
+          "name": "MARTIN",
+          "count": 1290
+        },
+        {
+          "rank": 35,
+          "rank_tied": false,
+          "name": "EZIO",
+          "count": 1275
+        },
+        {
+          "rank": 36,
+          "rank_tied": false,
+          "name": "CÔME",
+          "count": 1265
+        },
+        {
+          "rank": 37,
+          "rank_tied": false,
+          "name": "GASPARD",
+          "count": 1255
+        },
+        {
+          "rank": 38,
+          "rank_tied": false,
+          "name": "ZAYN",
+          "count": 1245
+        },
+        {
+          "rank": 39,
+          "rank_tied": false,
+          "name": "NATHAN",
+          "count": 1235
+        },
+        {
+          "rank": 40,
+          "rank_tied": false,
+          "name": "LÉANDRE",
+          "count": 1210
+        },
+        {
+          "rank": 41,
+          "rank_tied": false,
+          "name": "BASILE",
+          "count": 1150
+        },
+        {
+          "rank": 42,
+          "rank_tied": false,
+          "name": "THÉO",
+          "count": 1150
+        },
+        {
+          "rank": 43,
+          "rank_tied": false,
+          "name": "AUGUSTIN",
+          "count": 1110
+        },
+        {
+          "rank": 44,
+          "rank_tied": false,
+          "name": "NINO",
+          "count": 1100
+        },
+        {
+          "rank": 45,
+          "rank_tied": false,
+          "name": "MILO",
+          "count": 1095
+        },
+        {
+          "rank": 46,
+          "rank_tied": false,
+          "name": "MATHIS",
+          "count": 1090
+        },
+        {
+          "rank": 47,
+          "rank_tied": false,
+          "name": "LYAM",
+          "count": 1090
+        },
+        {
+          "rank": 48,
+          "rank_tied": false,
+          "name": "OSCAR",
+          "count": 1080
+        },
+        {
+          "rank": 49,
+          "rank_tied": false,
+          "name": "ISMAËL",
+          "count": 1060
+        },
+        {
+          "rank": 50,
+          "rank_tied": false,
+          "name": "SIMON",
+          "count": 1055
+        },
+        {
+          "rank": 51,
+          "rank_tied": false,
+          "name": "CHARLIE",
+          "count": 1050
+        },
+        {
+          "rank": 52,
+          "rank_tied": false,
+          "name": "CHARLES",
+          "count": 1040
+        },
+        {
+          "rank": 53,
+          "rank_tied": false,
+          "name": "ANDREA",
+          "count": 1030
+        },
+        {
+          "rank": 54,
+          "rank_tied": false,
+          "name": "TOM",
+          "count": 1025
+        },
+        {
+          "rank": 55,
+          "rank_tied": false,
+          "name": "KAÏS",
+          "count": 1020
+        },
+        {
+          "rank": 56,
+          "rank_tied": false,
+          "name": "AMIR",
+          "count": 1015
+        },
+        {
+          "rank": 57,
+          "rank_tied": false,
+          "name": "ROBIN",
+          "count": 1005
+        },
+        {
+          "rank": 58,
+          "rank_tied": false,
+          "name": "RAYAN",
+          "count": 945
+        },
+        {
+          "rank": 59,
+          "rank_tied": false,
+          "name": "VALENTIN",
+          "count": 935
+        },
+        {
+          "rank": 60,
+          "rank_tied": false,
+          "name": "CHARLY",
+          "count": 925
+        },
+        {
+          "rank": 61,
+          "rank_tied": false,
+          "name": "CAMILLE",
+          "count": 915
+        },
+        {
+          "rank": 62,
+          "rank_tied": false,
+          "name": "ANTOINE",
+          "count": 895
+        },
+        {
+          "rank": 63,
+          "rank_tied": false,
+          "name": "AUGUSTE",
+          "count": 895
+        },
+        {
+          "rank": 64,
+          "rank_tied": false,
+          "name": "ALESSIO",
+          "count": 875
+        },
+        {
+          "rank": 65,
+          "rank_tied": false,
+          "name": "SOHAN",
+          "count": 870
+        },
+        {
+          "rank": 66,
+          "rank_tied": false,
+          "name": "KAYDEN",
+          "count": 865
+        },
+        {
+          "rank": 67,
+          "rank_tied": false,
+          "name": "NAÏM",
+          "count": 860
+        },
+        {
+          "rank": 68,
+          "rank_tied": false,
+          "name": "PABLO",
+          "count": 855
+        },
+        {
+          "rank": 69,
+          "rank_tied": false,
+          "name": "MAHÉ",
+          "count": 855
+        },
+        {
+          "rank": 70,
+          "rank_tied": false,
+          "name": "SAMUEL",
+          "count": 850
+        },
+        {
+          "rank": 71,
+          "rank_tied": false,
+          "name": "AXEL",
+          "count": 830
+        },
+        {
+          "rank": 72,
+          "rank_tied": false,
+          "name": "OWEN",
+          "count": 825
+        },
+        {
+          "rank": 73,
+          "rank_tied": false,
+          "name": "ALI",
+          "count": 810
+        },
+        {
+          "rank": 74,
+          "rank_tied": false,
+          "name": "ISSA",
+          "count": 800
+        },
+        {
+          "rank": 75,
+          "rank_tied": false,
+          "name": "TIMÉO",
+          "count": 800
+        },
+        {
+          "rank": 76,
+          "rank_tied": false,
+          "name": "ACHILLE",
+          "count": 790
+        },
+        {
+          "rank": 77,
+          "rank_tied": false,
+          "name": "JOSEPH",
+          "count": 785
+        },
+        {
+          "rank": 78,
+          "rank_tied": false,
+          "name": "NOLAN",
+          "count": 780
+        },
+        {
+          "rank": 79,
+          "rank_tied": false,
+          "name": "TIAGO",
+          "count": 770
+        },
+        {
+          "rank": 80,
+          "rank_tied": false,
+          "name": "LUCIEN",
+          "count": 755
+        },
+        {
+          "rank": 81,
+          "rank_tied": false,
+          "name": "SOAN",
+          "count": 755
+        },
+        {
+          "rank": 82,
+          "rank_tied": false,
+          "name": "ROMÉO",
+          "count": 755
+        },
+        {
+          "rank": 83,
+          "rank_tied": false,
+          "name": "YANIS",
+          "count": 735
+        },
+        {
+          "rank": 84,
+          "rank_tied": false,
+          "name": "ELYO",
+          "count": 715
+        },
+        {
+          "rank": 85,
+          "rank_tied": false,
+          "name": "NOA",
+          "count": 715
+        },
+        {
+          "rank": 86,
+          "rank_tied": false,
+          "name": "ANDRÉA",
+          "count": 700
+        },
+        {
+          "rank": 87,
+          "rank_tied": false,
+          "name": "ALEXANDRE",
+          "count": 700
+        },
+        {
+          "rank": 88,
+          "rank_tied": false,
+          "name": "MARIN",
+          "count": 695
+        },
+        {
+          "rank": 89,
+          "rank_tied": false,
+          "name": "MATHÉO",
+          "count": 695
+        },
+        {
+          "rank": 90,
+          "rank_tied": false,
+          "name": "ANAS",
+          "count": 685
+        },
+        {
+          "rank": 91,
+          "rank_tied": false,
+          "name": "ENZO",
+          "count": 685
+        },
+        {
+          "rank": 92,
+          "rank_tied": false,
+          "name": "MAXENCE",
+          "count": 675
+        },
+        {
+          "rank": 93,
+          "rank_tied": false,
+          "name": "LIVIO",
+          "count": 665
+        },
+        {
+          "rank": 94,
+          "rank_tied": false,
+          "name": "MAÉ",
+          "count": 645
+        },
+        {
+          "rank": 95,
+          "rank_tied": false,
+          "name": "NOAM",
+          "count": 640
+        },
+        {
+          "rank": 96,
+          "rank_tied": false,
+          "name": "IMRÂN",
+          "count": 625
+        },
+        {
+          "rank": 97,
+          "rank_tied": false,
+          "name": "EVAN",
+          "count": 625
+        },
+        {
+          "rank": 98,
+          "rank_tied": false,
+          "name": "ABEL",
+          "count": 610
+        },
+        {
+          "rank": 99,
+          "rank_tied": false,
+          "name": "MILAN",
+          "count": 600
+        },
+        {
+          "rank": 100,
+          "rank_tied": false,
+          "name": "MARCEL",
+          "count": 585
+        }
+      ]
+    },
+    {
+      "country": "France",
+      "jurisdiction": "France",
+      "year": 2025,
+      "sex": "female",
+      "source_url": "https://www.insee.fr/fr/statistiques/8595130",
+      "data_url": "https://www.insee.fr/fr/statistiques/fichier/8595130/prenoms-2025-nat_csv.zip",
+      "format": "CSV in ZIP",
+      "count_note": "INSEE counts rounded to nearest 5; rare names suppressed/grouped. Published ranks use unrounded counts.",
+      "entry_count": 100,
+      "entries": [
+        {
+          "rank": 1,
+          "rank_tied": false,
+          "name": "LOUISE",
+          "count": 3070
+        },
+        {
+          "rank": 2,
+          "rank_tied": false,
+          "name": "JADE",
+          "count": 2925
+        },
+        {
+          "rank": 3,
+          "rank_tied": false,
+          "name": "AMBRE",
+          "count": 2805
+        },
+        {
+          "rank": 4,
+          "rank_tied": false,
+          "name": "ALMA",
+          "count": 2500
+        },
+        {
+          "rank": 5,
+          "rank_tied": false,
+          "name": "ALBA",
+          "count": 2360
+        },
+        {
+          "rank": 6,
+          "rank_tied": false,
+          "name": "ROSE",
+          "count": 2320
+        },
+        {
+          "rank": 7,
+          "rank_tied": false,
+          "name": "EMMA",
+          "count": 2310
+        },
+        {
+          "rank": 8,
+          "rank_tied": false,
+          "name": "ROMY",
+          "count": 2245
+        },
+        {
+          "rank": 9,
+          "rank_tied": false,
+          "name": "ADÈLE",
+          "count": 2225
+        },
+        {
+          "rank": 10,
+          "rank_tied": false,
+          "name": "ALICE",
+          "count": 2130
+        },
+        {
+          "rank": 11,
+          "rank_tied": false,
+          "name": "IRIS",
+          "count": 2105
+        },
+        {
+          "rank": 12,
+          "rank_tied": false,
+          "name": "LOU",
+          "count": 2040
+        },
+        {
+          "rank": 13,
+          "rank_tied": false,
+          "name": "AGATHE",
+          "count": 2000
+        },
+        {
+          "rank": 14,
+          "rank_tied": false,
+          "name": "INAYA",
+          "count": 1990
+        },
+        {
+          "rank": 15,
+          "rank_tied": false,
+          "name": "ANNA",
+          "count": 1925
+        },
+        {
+          "rank": 16,
+          "rank_tied": false,
+          "name": "NOUR",
+          "count": 1750
+        },
+        {
+          "rank": 17,
+          "rank_tied": false,
+          "name": "LINA",
+          "count": 1740
+        },
+        {
+          "rank": 18,
+          "rank_tied": false,
+          "name": "CHARLIE",
+          "count": 1715
+        },
+        {
+          "rank": 19,
+          "rank_tied": false,
+          "name": "OLIVIA",
+          "count": 1685
+        },
+        {
+          "rank": 20,
+          "rank_tied": false,
+          "name": "JULIA",
+          "count": 1685
+        },
+        {
+          "rank": 21,
+          "rank_tied": false,
+          "name": "MIA",
+          "count": 1665
+        },
+        {
+          "rank": 22,
+          "rank_tied": false,
+          "name": "VICTOIRE",
+          "count": 1610
+        },
+        {
+          "rank": 23,
+          "rank_tied": false,
+          "name": "JEANNE",
+          "count": 1605
+        },
+        {
+          "rank": 24,
+          "rank_tied": false,
+          "name": "GIULIA",
+          "count": 1600
+        },
+        {
+          "rank": 25,
+          "rank_tied": false,
+          "name": "LÉONIE",
+          "count": 1555
+        },
+        {
+          "rank": 26,
+          "rank_tied": false,
+          "name": "EVA",
+          "count": 1535
+        },
+        {
+          "rank": 27,
+          "rank_tied": false,
+          "name": "ESMÉE",
+          "count": 1530
+        },
+        {
+          "rank": 28,
+          "rank_tied": false,
+          "name": "JULIETTE",
+          "count": 1505
+        },
+        {
+          "rank": 29,
+          "rank_tied": false,
+          "name": "SOFIA",
+          "count": 1500
+        },
+        {
+          "rank": 30,
+          "rank_tied": false,
+          "name": "ZOÉ",
+          "count": 1430
+        },
+        {
+          "rank": 31,
+          "rank_tied": false,
+          "name": "LÉNA",
+          "count": 1340
+        },
+        {
+          "rank": 32,
+          "rank_tied": false,
+          "name": "ALYA",
+          "count": 1315
+        },
+        {
+          "rank": 33,
+          "rank_tied": false,
+          "name": "LUNA",
+          "count": 1295
+        },
+        {
+          "rank": 34,
+          "rank_tied": false,
+          "name": "CHLOÉ",
+          "count": 1275
+        },
+        {
+          "rank": 35,
+          "rank_tied": false,
+          "name": "NINA",
+          "count": 1235
+        },
+        {
+          "rank": 36,
+          "rank_tied": false,
+          "name": "VICTORIA",
+          "count": 1215
+        },
+        {
+          "rank": 37,
+          "rank_tied": false,
+          "name": "ALIX",
+          "count": 1120
+        },
+        {
+          "rank": 38,
+          "rank_tied": false,
+          "name": "LÉA",
+          "count": 1110
+        },
+        {
+          "rank": 39,
+          "rank_tied": false,
+          "name": "ROMANE",
+          "count": 1095
+        },
+        {
+          "rank": 40,
+          "rank_tied": false,
+          "name": "AVA",
+          "count": 1075
+        },
+        {
+          "rank": 41,
+          "rank_tied": false,
+          "name": "CHARLOTTE",
+          "count": 1075
+        },
+        {
+          "rank": 42,
+          "rank_tied": false,
+          "name": "ELENA",
+          "count": 1065
+        },
+        {
+          "rank": 43,
+          "rank_tied": false,
+          "name": "LUCIE",
+          "count": 1015
+        },
+        {
+          "rank": 44,
+          "rank_tied": false,
+          "name": "ALBANE",
+          "count": 950
+        },
+        {
+          "rank": 45,
+          "rank_tied": false,
+          "name": "LYANA",
+          "count": 910
+        },
+        {
+          "rank": 46,
+          "rank_tied": false,
+          "name": "MARGOT",
+          "count": 905
+        },
+        {
+          "rank": 47,
+          "rank_tied": false,
+          "name": "GABRIELLE",
+          "count": 885
+        },
+        {
+          "rank": 48,
+          "rank_tied": false,
+          "name": "EMY",
+          "count": 855
+        },
+        {
+          "rank": 49,
+          "rank_tied": false,
+          "name": "AYA",
+          "count": 835
+        },
+        {
+          "rank": 50,
+          "rank_tied": false,
+          "name": "LIVIA",
+          "count": 830
+        },
+        {
+          "rank": 51,
+          "rank_tied": false,
+          "name": "THÉA",
+          "count": 825
+        },
+        {
+          "rank": 52,
+          "rank_tied": false,
+          "name": "YASMINE",
+          "count": 820
+        },
+        {
+          "rank": 53,
+          "rank_tied": false,
+          "name": "LOLA",
+          "count": 815
+        },
+        {
+          "rank": 54,
+          "rank_tied": false,
+          "name": "MILA",
+          "count": 815
+        },
+        {
+          "rank": 55,
+          "rank_tied": false,
+          "name": "CÉLESTE",
+          "count": 795
+        },
+        {
+          "rank": 56,
+          "rank_tied": false,
+          "name": "LYNA",
+          "count": 780
+        },
+        {
+          "rank": 57,
+          "rank_tied": false,
+          "name": "MARGAUX",
+          "count": 775
+        },
+        {
+          "rank": 58,
+          "rank_tied": false,
+          "name": "APOLLINE",
+          "count": 745
+        },
+        {
+          "rank": 59,
+          "rank_tied": false,
+          "name": "ARIA",
+          "count": 740
+        },
+        {
+          "rank": 60,
+          "rank_tied": false,
+          "name": "MARIA",
+          "count": 735
+        },
+        {
+          "rank": 61,
+          "rank_tied": false,
+          "name": "ARYA",
+          "count": 725
+        },
+        {
+          "rank": 62,
+          "rank_tied": false,
+          "name": "SUZANNE",
+          "count": 720
+        },
+        {
+          "rank": 63,
+          "rank_tied": false,
+          "name": "CAPUCINE",
+          "count": 710
+        },
+        {
+          "rank": 64,
+          "rank_tied": false,
+          "name": "SARAH",
+          "count": 705
+        },
+        {
+          "rank": 65,
+          "rank_tied": false,
+          "name": "ELLA",
+          "count": 700
+        },
+        {
+          "rank": 66,
+          "rank_tied": false,
+          "name": "JANNAH",
+          "count": 690
+        },
+        {
+          "rank": 67,
+          "rank_tied": false,
+          "name": "INÈS",
+          "count": 690
+        },
+        {
+          "rank": 68,
+          "rank_tied": false,
+          "name": "MYA",
+          "count": 680
+        },
+        {
+          "rank": 69,
+          "rank_tied": false,
+          "name": "DIANE",
+          "count": 680
+        },
+        {
+          "rank": 70,
+          "rank_tied": false,
+          "name": "LILY",
+          "count": 670
+        },
+        {
+          "rank": 71,
+          "rank_tied": false,
+          "name": "AYLA",
+          "count": 665
+        },
+        {
+          "rank": 72,
+          "rank_tied": false,
+          "name": "CONSTANCE",
+          "count": 660
+        },
+        {
+          "rank": 73,
+          "rank_tied": false,
+          "name": "LOUNA",
+          "count": 655
+        },
+        {
+          "rank": 74,
+          "rank_tied": false,
+          "name": "LYA",
+          "count": 650
+        },
+        {
+          "rank": 75,
+          "rank_tied": false,
+          "name": "CAMILLE",
+          "count": 640
+        },
+        {
+          "rank": 76,
+          "rank_tied": false,
+          "name": "MAYA",
+          "count": 635
+        },
+        {
+          "rank": 77,
+          "rank_tied": false,
+          "name": "VALENTINA",
+          "count": 635
+        },
+        {
+          "rank": 78,
+          "rank_tied": false,
+          "name": "CLÉMENCE",
+          "count": 635
+        },
+        {
+          "rank": 79,
+          "rank_tied": false,
+          "name": "MARYAM",
+          "count": 605
+        },
+        {
+          "rank": 80,
+          "rank_tied": false,
+          "name": "JUDITH",
+          "count": 595
+        },
+        {
+          "rank": 81,
+          "rank_tied": false,
+          "name": "AMÉLIA",
+          "count": 590
+        },
+        {
+          "rank": 82,
+          "rank_tied": false,
+          "name": "VALENTINE",
+          "count": 585
+        },
+        {
+          "rank": 83,
+          "rank_tied": false,
+          "name": "ELLIE",
+          "count": 580
+        },
+        {
+          "rank": 84,
+          "rank_tied": false,
+          "name": "NORA",
+          "count": 570
+        },
+        {
+          "rank": 85,
+          "rank_tied": false,
+          "name": "THAÏS",
+          "count": 570
+        },
+        {
+          "rank": 86,
+          "rank_tied": false,
+          "name": "MARIAM",
+          "count": 570
+        },
+        {
+          "rank": 87,
+          "rank_tied": false,
+          "name": "RYM",
+          "count": 565
+        },
+        {
+          "rank": 88,
+          "rank_tied": false,
+          "name": "JOSÉPHINE",
+          "count": 560
+        },
+        {
+          "rank": 89,
+          "rank_tied": false,
+          "name": "SOPHIA",
+          "count": 560
+        },
+        {
+          "rank": 90,
+          "rank_tied": false,
+          "name": "LILA",
+          "count": 560
+        },
+        {
+          "rank": 91,
+          "rank_tied": false,
+          "name": "HÉLOÏSE",
+          "count": 560
+        },
+        {
+          "rank": 92,
+          "rank_tied": false,
+          "name": "ÉLÉONORE",
+          "count": 555
+        },
+        {
+          "rank": 93,
+          "rank_tied": false,
+          "name": "FATOUMATA",
+          "count": 550
+        },
+        {
+          "rank": 94,
+          "rank_tied": false,
+          "name": "JOY",
+          "count": 540
+        },
+        {
+          "rank": 95,
+          "rank_tied": false,
+          "name": "LISE",
+          "count": 540
+        },
+        {
+          "rank": 96,
+          "rank_tied": false,
+          "name": "ZÉLIE",
+          "count": 535
+        },
+        {
+          "rank": 97,
+          "rank_tied": false,
+          "name": "LANA",
+          "count": 530
+        },
+        {
+          "rank": 98,
+          "rank_tied": false,
+          "name": "AÏCHA",
+          "count": 530
+        },
+        {
+          "rank": 99,
+          "rank_tied": false,
+          "name": "JENNAH",
+          "count": 525
+        },
+        {
+          "rank": 100,
+          "rank_tied": false,
+          "name": "ANDRÉA",
+          "count": 515
+        }
+      ]
+    },
+    {
+      "country": "Canada",
+      "jurisdiction": "Canada",
+      "year": 2025,
+      "sex": "male",
+      "source_url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710014701",
+      "data_url": "https://www150.statcan.gc.ca/n1/tbl/csv/17100147-eng.zip",
+      "format": "CSV in ZIP",
+      "count_note": "Official frequency; omitted values are null.",
+      "entry_count": 100,
+      "entries": [
+        {
+          "rank": 1,
+          "rank_tied": false,
+          "name": "NOAH",
+          "count": 2190
+        },
+        {
+          "rank": 2,
+          "rank_tied": false,
+          "name": "THEODORE",
+          "count": 1629
+        },
+        {
+          "rank": 3,
+          "rank_tied": false,
+          "name": "LIAM",
+          "count": 1568
+        },
+        {
+          "rank": 4,
+          "rank_tied": false,
+          "name": "LEO",
+          "count": 1404
+        },
+        {
+          "rank": 5,
+          "rank_tied": false,
+          "name": "WILLIAM",
+          "count": 1285
+        },
+        {
+          "rank": 6,
+          "rank_tied": false,
+          "name": "OLIVER",
+          "count": 1269
+        },
+        {
+          "rank": 7,
+          "rank_tied": false,
+          "name": "JACK",
+          "count": 1100
+        },
+        {
+          "rank": 8,
+          "rank_tied": false,
+          "name": "BENJAMIN",
+          "count": 1091
+        },
+        {
+          "rank": 9,
+          "rank_tied": false,
+          "name": "THOMAS",
+          "count": 1087
+        },
+        {
+          "rank": 10,
+          "rank_tied": false,
+          "name": "LUCAS",
+          "count": 1074
+        },
+        {
+          "rank": 11,
+          "rank_tied": false,
+          "name": "HENRY",
+          "count": 1064
+        },
+        {
+          "rank": 12,
+          "rank_tied": false,
+          "name": "JAMES",
+          "count": 1062
+        },
+        {
+          "rank": 13,
+          "rank_tied": false,
+          "name": "ADAM",
+          "count": 996
+        },
+        {
+          "rank": 14,
+          "rank_tied": false,
+          "name": "ARTHUR",
+          "count": 989
+        },
+        {
+          "rank": 15,
+          "rank_tied": false,
+          "name": "THEO",
+          "count": 953
+        },
+        {
+          "rank": 16,
+          "rank_tied": false,
+          "name": "LEVI",
+          "count": 952
+        },
+        {
+          "rank": 17,
+          "rank_tied": false,
+          "name": "NATHAN",
+          "count": 895
+        },
+        {
+          "rank": 18,
+          "rank_tied": false,
+          "name": "ETHAN",
+          "count": 892
+        },
+        {
+          "rank": 19,
+          "rank_tied": false,
+          "name": "JACOB",
+          "count": 886
+        },
+        {
+          "rank": 20,
+          "rank_tied": false,
+          "name": "MUHAMMAD",
+          "count": 807
+        },
+        {
+          "rank": 21,
+          "rank_tied": false,
+          "name": "LUCA",
+          "count": 770
+        },
+        {
+          "rank": 22,
+          "rank_tied": false,
+          "name": "GABRIEL",
+          "count": 744
+        },
+        {
+          "rank": 23,
+          "rank_tied": false,
+          "name": "HUDSON",
+          "count": 725
+        },
+        {
+          "rank": 24,
+          "rank_tied": false,
+          "name": "LOGAN",
+          "count": 722
+        },
+        {
+          "rank": 25,
+          "rank_tied": false,
+          "name": "FELIX",
+          "count": 704
+        },
+        {
+          "rank": 26,
+          "rank_tied": false,
+          "name": "OWEN",
+          "count": 698
+        },
+        {
+          "rank": 27,
+          "rank_tied": false,
+          "name": "CHARLES",
+          "count": 672
+        },
+        {
+          "rank": 28,
+          "rank_tied": false,
+          "name": "LOUIS",
+          "count": 658
+        },
+        {
+          "rank": 29,
+          "rank_tied": false,
+          "name": "ELIJAH",
+          "count": 650
+        },
+        {
+          "rank": 30,
+          "rank_tied": false,
+          "name": "SAMUEL",
+          "count": 645
+        },
+        {
+          "rank": 31,
+          "rank_tied": false,
+          "name": "JACKSON",
+          "count": 637
+        },
+        {
+          "rank": 32,
+          "rank_tied": false,
+          "name": "DANIEL",
+          "count": 636
+        },
+        {
+          "rank": 33,
+          "rank_tied": false,
+          "name": "BENNETT",
+          "count": 596
+        },
+        {
+          "rank": 34,
+          "rank_tied": true,
+          "name": "MILES",
+          "count": 571
+        },
+        {
+          "rank": 34,
+          "rank_tied": true,
+          "name": "NOLAN",
+          "count": 571
+        },
+        {
+          "rank": 36,
+          "rank_tied": false,
+          "name": "ELIAS",
+          "count": 565
+        },
+        {
+          "rank": 37,
+          "rank_tied": false,
+          "name": "CALEB",
+          "count": 557
+        },
+        {
+          "rank": 38,
+          "rank_tied": false,
+          "name": "WESLEY",
+          "count": 552
+        },
+        {
+          "rank": 39,
+          "rank_tied": false,
+          "name": "ISAAC",
+          "count": 544
+        },
+        {
+          "rank": 40,
+          "rank_tied": false,
+          "name": "MASON",
+          "count": 534
+        },
+        {
+          "rank": 41,
+          "rank_tied": false,
+          "name": "ROWAN",
+          "count": 533
+        },
+        {
+          "rank": 42,
+          "rank_tied": false,
+          "name": "ALEXANDER",
+          "count": 530
+        },
+        {
+          "rank": 43,
+          "rank_tied": false,
+          "name": "MAVERICK",
+          "count": 529
+        },
+        {
+          "rank": 44,
+          "rank_tied": false,
+          "name": "DAVID",
+          "count": 506
+        },
+        {
+          "rank": 45,
+          "rank_tied": false,
+          "name": "LUKE",
+          "count": 501
+        },
+        {
+          "rank": 46,
+          "rank_tied": false,
+          "name": "MATEO",
+          "count": 490
+        },
+        {
+          "rank": 47,
+          "rank_tied": false,
+          "name": "JAYDEN",
+          "count": 488
+        },
+        {
+          "rank": 48,
+          "rank_tied": false,
+          "name": "MATTEO",
+          "count": 485
+        },
+        {
+          "rank": 49,
+          "rank_tied": false,
+          "name": "WYATT",
+          "count": 484
+        },
+        {
+          "rank": 50,
+          "rank_tied": false,
+          "name": "RAPHAEL",
+          "count": 479
+        },
+        {
+          "rank": 51,
+          "rank_tied": false,
+          "name": "MYLES",
+          "count": 467
+        },
+        {
+          "rank": 52,
+          "rank_tied": false,
+          "name": "CHARLIE",
+          "count": 464
+        },
+        {
+          "rank": 53,
+          "rank_tied": false,
+          "name": "COOPER",
+          "count": 460
+        },
+        {
+          "rank": 54,
+          "rank_tied": true,
+          "name": "EZRA",
+          "count": 459
+        },
+        {
+          "rank": 54,
+          "rank_tied": true,
+          "name": "MICHAEL",
+          "count": 459
+        },
+        {
+          "rank": 56,
+          "rank_tied": false,
+          "name": "EDOUARD",
+          "count": 456
+        },
+        {
+          "rank": 57,
+          "rank_tied": false,
+          "name": "ELLIOT",
+          "count": 449
+        },
+        {
+          "rank": 58,
+          "rank_tied": false,
+          "name": "ASHER",
+          "count": 447
+        },
+        {
+          "rank": 59,
+          "rank_tied": false,
+          "name": "AUSTIN",
+          "count": 442
+        },
+        {
+          "rank": 60,
+          "rank_tied": false,
+          "name": "KAI",
+          "count": 439
+        },
+        {
+          "rank": 61,
+          "rank_tied": false,
+          "name": "LEON",
+          "count": 433
+        },
+        {
+          "rank": 62,
+          "rank_tied": false,
+          "name": "RYAN",
+          "count": 432
+        },
+        {
+          "rank": 63,
+          "rank_tied": false,
+          "name": "JOHN",
+          "count": 430
+        },
+        {
+          "rank": 64,
+          "rank_tied": false,
+          "name": "BEAU",
+          "count": 429
+        },
+        {
+          "rank": 65,
+          "rank_tied": false,
+          "name": "JOSEPH",
+          "count": 426
+        },
+        {
+          "rank": 66,
+          "rank_tied": false,
+          "name": "CARTER",
+          "count": 425
+        },
+        {
+          "rank": 67,
+          "rank_tied": false,
+          "name": "ALI",
+          "count": 418
+        },
+        {
+          "rank": 68,
+          "rank_tied": false,
+          "name": "SEBASTIAN",
+          "count": 403
+        },
+        {
+          "rank": 69,
+          "rank_tied": false,
+          "name": "GRAYSON",
+          "count": 401
+        },
+        {
+          "rank": 70,
+          "rank_tied": false,
+          "name": "MATTHEW",
+          "count": 390
+        },
+        {
+          "rank": 71,
+          "rank_tied": false,
+          "name": "WESTON",
+          "count": 389
+        },
+        {
+          "rank": 72,
+          "rank_tied": false,
+          "name": "EMILE",
+          "count": 383
+        },
+        {
+          "rank": 73,
+          "rank_tied": true,
+          "name": "AIDEN",
+          "count": 377
+        },
+        {
+          "rank": 73,
+          "rank_tied": true,
+          "name": "ZAYN",
+          "count": 377
+        },
+        {
+          "rank": 75,
+          "rank_tied": true,
+          "name": "ELI",
+          "count": 370
+        },
+        {
+          "rank": 75,
+          "rank_tied": true,
+          "name": "LINCOLN",
+          "count": 370
+        },
+        {
+          "rank": 77,
+          "rank_tied": false,
+          "name": "ZORAWAR",
+          "count": 362
+        },
+        {
+          "rank": 78,
+          "rank_tied": false,
+          "name": "ROMAN",
+          "count": 361
+        },
+        {
+          "rank": 79,
+          "rank_tied": false,
+          "name": "LUKA",
+          "count": 355
+        },
+        {
+          "rank": 80,
+          "rank_tied": false,
+          "name": "BROOKS",
+          "count": 354
+        },
+        {
+          "rank": 81,
+          "rank_tied": false,
+          "name": "EVERETT",
+          "count": 353
+        },
+        {
+          "rank": 82,
+          "rank_tied": false,
+          "name": "CALLUM",
+          "count": 352
+        },
+        {
+          "rank": 83,
+          "rank_tied": false,
+          "name": "ATLAS",
+          "count": 350
+        },
+        {
+          "rank": 84,
+          "rank_tied": false,
+          "name": "VICTOR",
+          "count": 349
+        },
+        {
+          "rank": 85,
+          "rank_tied": true,
+          "name": "ENZO",
+          "count": 343
+        },
+        {
+          "rank": 85,
+          "rank_tied": true,
+          "name": "JULES",
+          "count": 343
+        },
+        {
+          "rank": 87,
+          "rank_tied": false,
+          "name": "IBRAHIM",
+          "count": 336
+        },
+        {
+          "rank": 88,
+          "rank_tied": false,
+          "name": "ARJAN",
+          "count": 334
+        },
+        {
+          "rank": 89,
+          "rank_tied": false,
+          "name": "JASPER",
+          "count": 332
+        },
+        {
+          "rank": 90,
+          "rank_tied": false,
+          "name": "MAX",
+          "count": 331
+        },
+        {
+          "rank": 91,
+          "rank_tied": false,
+          "name": "JOSHUA",
+          "count": 330
+        },
+        {
+          "rank": 92,
+          "rank_tied": false,
+          "name": "ANTHONY",
+          "count": 329
+        },
+        {
+          "rank": 93,
+          "rank_tied": false,
+          "name": "HENRI",
+          "count": 328
+        },
+        {
+          "rank": 94,
+          "rank_tied": false,
+          "name": "ZACHARY",
+          "count": 327
+        },
+        {
+          "rank": 95,
+          "rank_tied": false,
+          "name": "ISAIAH",
+          "count": 326
+        },
+        {
+          "rank": 96,
+          "rank_tied": false,
+          "name": "EVAN",
+          "count": 324
+        },
+        {
+          "rank": 97,
+          "rank_tied": false,
+          "name": "MILO",
+          "count": 323
+        },
+        {
+          "rank": 98,
+          "rank_tied": false,
+          "name": "ARNAUD",
+          "count": 313
+        },
+        {
+          "rank": 99,
+          "rank_tied": false,
+          "name": "GEORGE",
+          "count": 311
+        },
+        {
+          "rank": 100,
+          "rank_tied": false,
+          "name": "JULIAN",
+          "count": 302
+        }
+      ]
+    },
+    {
+      "country": "Canada",
+      "jurisdiction": "Canada",
+      "year": 2025,
+      "sex": "female",
+      "source_url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710014701",
+      "data_url": "https://www150.statcan.gc.ca/n1/tbl/csv/17100147-eng.zip",
+      "format": "CSV in ZIP",
+      "count_note": "Official frequency; omitted values are null.",
+      "entry_count": 100,
+      "entries": [
+        {
+          "rank": 1,
+          "rank_tied": false,
+          "name": "CHARLOTTE",
+          "count": 1502
+        },
+        {
+          "rank": 2,
+          "rank_tied": false,
+          "name": "OLIVIA",
+          "count": 1445
+        },
+        {
+          "rank": 3,
+          "rank_tied": false,
+          "name": "EMMA",
+          "count": 1372
+        },
+        {
+          "rank": 4,
+          "rank_tied": false,
+          "name": "SOPHIA",
+          "count": 1134
+        },
+        {
+          "rank": 5,
+          "rank_tied": false,
+          "name": "AMELIA",
+          "count": 1064
+        },
+        {
+          "rank": 6,
+          "rank_tied": false,
+          "name": "SOFIA",
+          "count": 997
+        },
+        {
+          "rank": 7,
+          "rank_tied": false,
+          "name": "CHLOE",
+          "count": 861
+        },
+        {
+          "rank": 8,
+          "rank_tied": false,
+          "name": "MIA",
+          "count": 856
+        },
+        {
+          "rank": 9,
+          "rank_tied": false,
+          "name": "LILY",
+          "count": 823
+        },
+        {
+          "rank": 10,
+          "rank_tied": false,
+          "name": "NORA",
+          "count": 793
+        },
+        {
+          "rank": 11,
+          "rank_tied": false,
+          "name": "ALICE",
+          "count": 792
+        },
+        {
+          "rank": 12,
+          "rank_tied": false,
+          "name": "VIOLET",
+          "count": 759
+        },
+        {
+          "rank": 13,
+          "rank_tied": false,
+          "name": "MILA",
+          "count": 748
+        },
+        {
+          "rank": 14,
+          "rank_tied": false,
+          "name": "ISLA",
+          "count": 739
+        },
+        {
+          "rank": 15,
+          "rank_tied": false,
+          "name": "EVELYN",
+          "count": 728
+        },
+        {
+          "rank": 16,
+          "rank_tied": false,
+          "name": "ELLIE",
+          "count": 677
+        },
+        {
+          "rank": 17,
+          "rank_tied": false,
+          "name": "ELIANA",
+          "count": 673
+        },
+        {
+          "rank": 18,
+          "rank_tied": false,
+          "name": "SOPHIE",
+          "count": 666
+        },
+        {
+          "rank": 19,
+          "rank_tied": false,
+          "name": "AVA",
+          "count": 655
+        },
+        {
+          "rank": 20,
+          "rank_tied": true,
+          "name": "CLARA",
+          "count": 652
+        },
+        {
+          "rank": 20,
+          "rank_tied": true,
+          "name": "MAYA",
+          "count": 652
+        },
+        {
+          "rank": 22,
+          "rank_tied": false,
+          "name": "ELLA",
+          "count": 612
+        },
+        {
+          "rank": 23,
+          "rank_tied": false,
+          "name": "HAZEL",
+          "count": 597
+        },
+        {
+          "rank": 24,
+          "rank_tied": true,
+          "name": "ARIA",
+          "count": 593
+        },
+        {
+          "rank": 24,
+          "rank_tied": true,
+          "name": "ELIZABETH",
+          "count": 593
+        },
+        {
+          "rank": 26,
+          "rank_tied": false,
+          "name": "ZOE",
+          "count": 585
+        },
+        {
+          "rank": 27,
+          "rank_tied": false,
+          "name": "ISABELLA",
+          "count": 581
+        },
+        {
+          "rank": 28,
+          "rank_tied": false,
+          "name": "ELEANOR",
+          "count": 551
+        },
+        {
+          "rank": 29,
+          "rank_tied": true,
+          "name": "AURORA",
+          "count": 530
+        },
+        {
+          "rank": 29,
+          "rank_tied": true,
+          "name": "FLORENCE",
+          "count": 530
+        },
+        {
+          "rank": 31,
+          "rank_tied": false,
+          "name": "ROSE",
+          "count": 527
+        },
+        {
+          "rank": 32,
+          "rank_tied": false,
+          "name": "LUCY",
+          "count": 518
+        },
+        {
+          "rank": 33,
+          "rank_tied": true,
+          "name": "CHARLIE",
+          "count": 516
+        },
+        {
+          "rank": 33,
+          "rank_tied": true,
+          "name": "EVA",
+          "count": 516
+        },
+        {
+          "rank": 35,
+          "rank_tied": false,
+          "name": "HANNAH",
+          "count": 509
+        },
+        {
+          "rank": 36,
+          "rank_tied": false,
+          "name": "ELOISE",
+          "count": 503
+        },
+        {
+          "rank": 37,
+          "rank_tied": false,
+          "name": "EMILY",
+          "count": 489
+        },
+        {
+          "rank": 38,
+          "rank_tied": false,
+          "name": "AYLA",
+          "count": 487
+        },
+        {
+          "rank": 39,
+          "rank_tied": false,
+          "name": "EMILIA",
+          "count": 486
+        },
+        {
+          "rank": 40,
+          "rank_tied": true,
+          "name": "ELENA",
+          "count": 484
+        },
+        {
+          "rank": 40,
+          "rank_tied": true,
+          "name": "JULIA",
+          "count": 484
+        },
+        {
+          "rank": 42,
+          "rank_tied": false,
+          "name": "ABIGAIL",
+          "count": 483
+        },
+        {
+          "rank": 43,
+          "rank_tied": false,
+          "name": "IVY",
+          "count": 475
+        },
+        {
+          "rank": 44,
+          "rank_tied": false,
+          "name": "HARPER",
+          "count": 474
+        },
+        {
+          "rank": 45,
+          "rank_tied": false,
+          "name": "AVERY",
+          "count": 470
+        },
+        {
+          "rank": 46,
+          "rank_tied": false,
+          "name": "GRACE",
+          "count": 467
+        },
+        {
+          "rank": 47,
+          "rank_tied": false,
+          "name": "GEORGIA",
+          "count": 461
+        },
+        {
+          "rank": 48,
+          "rank_tied": false,
+          "name": "JULIETTE",
+          "count": 457
+        },
+        {
+          "rank": 49,
+          "rank_tied": false,
+          "name": "VICTORIA",
+          "count": 453
+        },
+        {
+          "rank": 50,
+          "rank_tied": false,
+          "name": "MAEVE",
+          "count": 452
+        },
+        {
+          "rank": 51,
+          "rank_tied": false,
+          "name": "LUNA",
+          "count": 438
+        },
+        {
+          "rank": 52,
+          "rank_tied": false,
+          "name": "LAYLA",
+          "count": 431
+        },
+        {
+          "rank": 53,
+          "rank_tied": false,
+          "name": "LAINEY",
+          "count": 421
+        },
+        {
+          "rank": 54,
+          "rank_tied": false,
+          "name": "CLAIRE",
+          "count": 418
+        },
+        {
+          "rank": 55,
+          "rank_tied": false,
+          "name": "BEATRICE",
+          "count": 413
+        },
+        {
+          "rank": 56,
+          "rank_tied": false,
+          "name": "SCARLETT",
+          "count": 411
+        },
+        {
+          "rank": 57,
+          "rank_tied": true,
+          "name": "PENELOPE",
+          "count": 399
+        },
+        {
+          "rank": 57,
+          "rank_tied": true,
+          "name": "SARAH",
+          "count": 399
+        },
+        {
+          "rank": 59,
+          "rank_tied": false,
+          "name": "MARGOT",
+          "count": 398
+        },
+        {
+          "rank": 60,
+          "rank_tied": false,
+          "name": "ZOEY",
+          "count": 394
+        },
+        {
+          "rank": 61,
+          "rank_tied": false,
+          "name": "ANNA",
+          "count": 392
+        },
+        {
+          "rank": 62,
+          "rank_tied": false,
+          "name": "MARIA",
+          "count": 388
+        },
+        {
+          "rank": 63,
+          "rank_tied": false,
+          "name": "LIVIA",
+          "count": 363
+        },
+        {
+          "rank": 64,
+          "rank_tied": true,
+          "name": "ROMY",
+          "count": 360
+        },
+        {
+          "rank": 64,
+          "rank_tied": true,
+          "name": "SADIE",
+          "count": 360
+        },
+        {
+          "rank": 66,
+          "rank_tied": false,
+          "name": "STELLA",
+          "count": 355
+        },
+        {
+          "rank": 67,
+          "rank_tied": false,
+          "name": "LEA",
+          "count": 354
+        },
+        {
+          "rank": 68,
+          "rank_tied": false,
+          "name": "AUDREY",
+          "count": 346
+        },
+        {
+          "rank": 69,
+          "rank_tied": false,
+          "name": "MADISON",
+          "count": 344
+        },
+        {
+          "rank": 70,
+          "rank_tied": true,
+          "name": "ROSALIE",
+          "count": 334
+        },
+        {
+          "rank": 70,
+          "rank_tied": true,
+          "name": "WILLOW",
+          "count": 334
+        },
+        {
+          "rank": 72,
+          "rank_tied": false,
+          "name": "NAOMI",
+          "count": 332
+        },
+        {
+          "rank": 73,
+          "rank_tied": false,
+          "name": "ISABELLE",
+          "count": 330
+        },
+        {
+          "rank": 74,
+          "rank_tied": false,
+          "name": "LEAH",
+          "count": 317
+        },
+        {
+          "rank": 75,
+          "rank_tied": false,
+          "name": "HAILEY",
+          "count": 314
+        },
+        {
+          "rank": 76,
+          "rank_tied": true,
+          "name": "ATHENA",
+          "count": 313
+        },
+        {
+          "rank": 76,
+          "rank_tied": true,
+          "name": "JADE",
+          "count": 313
+        },
+        {
+          "rank": 78,
+          "rank_tied": false,
+          "name": "IRIS",
+          "count": 312
+        },
+        {
+          "rank": 79,
+          "rank_tied": false,
+          "name": "REHMAT",
+          "count": 303
+        },
+        {
+          "rank": 80,
+          "rank_tied": false,
+          "name": "MILLIE",
+          "count": 300
+        },
+        {
+          "rank": 81,
+          "rank_tied": false,
+          "name": "ANAYA",
+          "count": 295
+        },
+        {
+          "rank": 82,
+          "rank_tied": false,
+          "name": "SUMMER",
+          "count": 293
+        },
+        {
+          "rank": 83,
+          "rank_tied": false,
+          "name": "AMARA",
+          "count": 291
+        },
+        {
+          "rank": 84,
+          "rank_tied": false,
+          "name": "ASEES",
+          "count": 289
+        },
+        {
+          "rank": 85,
+          "rank_tied": false,
+          "name": "JASMINE",
+          "count": 285
+        },
+        {
+          "rank": 86,
+          "rank_tied": false,
+          "name": "MARYAM",
+          "count": 281
+        },
+        {
+          "rank": 87,
+          "rank_tied": false,
+          "name": "NOVA",
+          "count": 279
+        },
+        {
+          "rank": 88,
+          "rank_tied": false,
+          "name": "RUBY",
+          "count": 274
+        },
+        {
+          "rank": 89,
+          "rank_tied": true,
+          "name": "ADELINE",
+          "count": 273
+        },
+        {
+          "rank": 89,
+          "rank_tied": true,
+          "name": "FREYA",
+          "count": 273
+        },
+        {
+          "rank": 89,
+          "rank_tied": true,
+          "name": "JIND",
+          "count": 273
+        },
+        {
+          "rank": 92,
+          "rank_tied": false,
+          "name": "DAISY",
+          "count": 272
+        },
+        {
+          "rank": 93,
+          "rank_tied": false,
+          "name": "QUINN",
+          "count": 271
+        },
+        {
+          "rank": 94,
+          "rank_tied": false,
+          "name": "JOSEPHINE",
+          "count": 268
+        },
+        {
+          "rank": 95,
+          "rank_tied": false,
+          "name": "LENA",
+          "count": 266
+        },
+        {
+          "rank": 96,
+          "rank_tied": false,
+          "name": "KAIA",
+          "count": 262
+        },
+        {
+          "rank": 97,
+          "rank_tied": false,
+          "name": "RILEY",
+          "count": 261
+        },
+        {
+          "rank": 98,
+          "rank_tied": false,
+          "name": "SIENNA",
+          "count": 258
+        },
+        {
+          "rank": 99,
+          "rank_tied": false,
+          "name": "EVERLY",
+          "count": 257
+        },
+        {
+          "rank": 100,
+          "rank_tied": false,
+          "name": "CELINE",
+          "count": 255
+        }
+      ]
+    },
+    {
+      "country": "Ireland",
+      "jurisdiction": "Ireland",
+      "year": 2025,
+      "sex": "male",
+      "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-ibn/irishbabiesnames2025/data/",
+      "data_url": "https://data.cso.ie/table/VSA50",
+      "format": "Official release page embedded table",
+      "count_note": "Official 2025 occurrence count and rank from the Top 500 table.",
+      "entry_count": 101,
+      "entries": [
+        {
+          "rank": 1,
+          "rank_tied": false,
+          "name": "Rían",
+          "count": 490
+        },
+        {
+          "rank": 2,
+          "rank_tied": false,
+          "name": "Jack",
+          "count": 475
+        },
+        {
+          "rank": 3,
+          "rank_tied": false,
+          "name": "Noah",
+          "count": 436
+        },
+        {
+          "rank": 4,
+          "rank_tied": false,
+          "name": "James",
+          "count": 359
+        },
+        {
+          "rank": 5,
+          "rank_tied": false,
+          "name": "Oisín",
+          "count": 331
+        },
+        {
+          "rank": 6,
+          "rank_tied": false,
+          "name": "Fionn",
+          "count": 321
+        },
+        {
+          "rank": 7,
+          "rank_tied": false,
+          "name": "Liam",
+          "count": 313
+        },
+        {
+          "rank": 8,
+          "rank_tied": false,
+          "name": "Tadhg",
+          "count": 286
+        },
+        {
+          "rank": 9,
+          "rank_tied": false,
+          "name": "Cillian",
+          "count": 271
+        },
+        {
+          "rank": 10,
+          "rank_tied": false,
+          "name": "Leo",
+          "count": 261
+        },
+        {
+          "rank": 11,
+          "rank_tied": false,
+          "name": "Luca",
+          "count": 260
+        },
+        {
+          "rank": 12,
+          "rank_tied": false,
+          "name": "Páidí",
+          "count": 239
+        },
+        {
+          "rank": 13,
+          "rank_tied": true,
+          "name": "Charlie",
+          "count": 225
+        },
+        {
+          "rank": 13,
+          "rank_tied": true,
+          "name": "Daniel",
+          "count": 225
+        },
+        {
+          "rank": 15,
+          "rank_tied": false,
+          "name": "Finn",
+          "count": 220
+        },
+        {
+          "rank": 16,
+          "rank_tied": true,
+          "name": "Conor",
+          "count": 211
+        },
+        {
+          "rank": 16,
+          "rank_tied": true,
+          "name": "Thomas",
+          "count": 211
+        },
+        {
+          "rank": 18,
+          "rank_tied": false,
+          "name": "Oliver",
+          "count": 208
+        },
+        {
+          "rank": 19,
+          "rank_tied": false,
+          "name": "Darragh",
+          "count": 205
+        },
+        {
+          "rank": 20,
+          "rank_tied": false,
+          "name": "Adam",
+          "count": 191
+        },
+        {
+          "rank": 21,
+          "rank_tied": false,
+          "name": "Theo",
+          "count": 189
+        },
+        {
+          "rank": 22,
+          "rank_tied": false,
+          "name": "Michael",
+          "count": 188
+        },
+        {
+          "rank": 23,
+          "rank_tied": true,
+          "name": "Luke",
+          "count": 185
+        },
+        {
+          "rank": 23,
+          "rank_tied": true,
+          "name": "Seán",
+          "count": 185
+        },
+        {
+          "rank": 25,
+          "rank_tied": true,
+          "name": "Harry",
+          "count": 183
+        },
+        {
+          "rank": 25,
+          "rank_tied": true,
+          "name": "Patrick",
+          "count": 183
+        },
+        {
+          "rank": 27,
+          "rank_tied": false,
+          "name": "Tommy",
+          "count": 178
+        },
+        {
+          "rank": 28,
+          "rank_tied": false,
+          "name": "Sonny",
+          "count": 171
+        },
+        {
+          "rank": 29,
+          "rank_tied": false,
+          "name": "John",
+          "count": 164
+        },
+        {
+          "rank": 30,
+          "rank_tied": false,
+          "name": "Bobby",
+          "count": 155
+        },
+        {
+          "rank": 31,
+          "rank_tied": true,
+          "name": "Ollie",
+          "count": 149
+        },
+        {
+          "rank": 31,
+          "rank_tied": true,
+          "name": "Oscar",
+          "count": 149
+        },
+        {
+          "rank": 33,
+          "rank_tied": false,
+          "name": "Cian",
+          "count": 142
+        },
+        {
+          "rank": 34,
+          "rank_tied": false,
+          "name": "Kai",
+          "count": 140
+        },
+        {
+          "rank": 35,
+          "rank_tied": false,
+          "name": "Muhammad",
+          "count": 139
+        },
+        {
+          "rank": 36,
+          "rank_tied": false,
+          "name": "Alfie",
+          "count": 135
+        },
+        {
+          "rank": 37,
+          "rank_tied": false,
+          "name": "Alex",
+          "count": 128
+        },
+        {
+          "rank": 38,
+          "rank_tied": false,
+          "name": "Senan",
+          "count": 126
+        },
+        {
+          "rank": 39,
+          "rank_tied": false,
+          "name": "Billy",
+          "count": 122
+        },
+        {
+          "rank": 40,
+          "rank_tied": false,
+          "name": "Ben",
+          "count": 121
+        },
+        {
+          "rank": 41,
+          "rank_tied": false,
+          "name": "Max",
+          "count": 120
+        },
+        {
+          "rank": 42,
+          "rank_tied": false,
+          "name": "Hugo",
+          "count": 117
+        },
+        {
+          "rank": 43,
+          "rank_tied": false,
+          "name": "Caelan",
+          "count": 116
+        },
+        {
+          "rank": 44,
+          "rank_tied": false,
+          "name": "Theodore",
+          "count": 115
+        },
+        {
+          "rank": 45,
+          "rank_tied": false,
+          "name": "David",
+          "count": 114
+        },
+        {
+          "rank": 46,
+          "rank_tied": false,
+          "name": "Archie",
+          "count": 113
+        },
+        {
+          "rank": 47,
+          "rank_tied": false,
+          "name": "Jamie",
+          "count": 112
+        },
+        {
+          "rank": 48,
+          "rank_tied": false,
+          "name": "Tom",
+          "count": 111
+        },
+        {
+          "rank": 49,
+          "rank_tied": false,
+          "name": "Callum",
+          "count": 107
+        },
+        {
+          "rank": 50,
+          "rank_tied": false,
+          "name": "Sam",
+          "count": 106
+        },
+        {
+          "rank": 51,
+          "rank_tied": false,
+          "name": "Ethan",
+          "count": 102
+        },
+        {
+          "rank": 52,
+          "rank_tied": true,
+          "name": "Freddie",
+          "count": 101
+        },
+        {
+          "rank": 52,
+          "rank_tied": true,
+          "name": "Shay",
+          "count": 101
+        },
+        {
+          "rank": 54,
+          "rank_tied": false,
+          "name": "Arlo",
+          "count": 100
+        },
+        {
+          "rank": 55,
+          "rank_tied": true,
+          "name": "Alexander",
+          "count": 98
+        },
+        {
+          "rank": 55,
+          "rank_tied": true,
+          "name": "Matthew",
+          "count": 98
+        },
+        {
+          "rank": 57,
+          "rank_tied": true,
+          "name": "Arthur",
+          "count": 95
+        },
+        {
+          "rank": 57,
+          "rank_tied": true,
+          "name": "Ryan",
+          "count": 95
+        },
+        {
+          "rank": 59,
+          "rank_tied": false,
+          "name": "Daithí",
+          "count": 94
+        },
+        {
+          "rank": 60,
+          "rank_tied": false,
+          "name": "Rory",
+          "count": 93
+        },
+        {
+          "rank": 61,
+          "rank_tied": false,
+          "name": "Jude",
+          "count": 91
+        },
+        {
+          "rank": 62,
+          "rank_tied": false,
+          "name": "Jacob",
+          "count": 88
+        },
+        {
+          "rank": 63,
+          "rank_tied": false,
+          "name": "Frankie",
+          "count": 87
+        },
+        {
+          "rank": 64,
+          "rank_tied": true,
+          "name": "Donnacha",
+          "count": 86
+        },
+        {
+          "rank": 64,
+          "rank_tied": true,
+          "name": "Joseph",
+          "count": 86
+        },
+        {
+          "rank": 64,
+          "rank_tied": true,
+          "name": "Lucas",
+          "count": 86
+        },
+        {
+          "rank": 67,
+          "rank_tied": true,
+          "name": "Dáithí",
+          "count": 85
+        },
+        {
+          "rank": 67,
+          "rank_tied": true,
+          "name": "Ruairí",
+          "count": 85
+        },
+        {
+          "rank": 69,
+          "rank_tied": true,
+          "name": "Dylan",
+          "count": 84
+        },
+        {
+          "rank": 69,
+          "rank_tied": true,
+          "name": "Teddy",
+          "count": 84
+        },
+        {
+          "rank": 71,
+          "rank_tied": true,
+          "name": "Aaron",
+          "count": 82
+        },
+        {
+          "rank": 71,
+          "rank_tied": true,
+          "name": "Nathan",
+          "count": 82
+        },
+        {
+          "rank": 73,
+          "rank_tied": true,
+          "name": "Leon",
+          "count": 81
+        },
+        {
+          "rank": 73,
+          "rank_tied": true,
+          "name": "William",
+          "count": 81
+        },
+        {
+          "rank": 75,
+          "rank_tied": false,
+          "name": "Mason",
+          "count": 79
+        },
+        {
+          "rank": 76,
+          "rank_tied": true,
+          "name": "Danny",
+          "count": 78
+        },
+        {
+          "rank": 76,
+          "rank_tied": true,
+          "name": "Henry",
+          "count": 78
+        },
+        {
+          "rank": 76,
+          "rank_tied": true,
+          "name": "Rowan",
+          "count": 78
+        },
+        {
+          "rank": 76,
+          "rank_tied": true,
+          "name": "Samuel",
+          "count": 78
+        },
+        {
+          "rank": 80,
+          "rank_tied": false,
+          "name": "Evan",
+          "count": 76
+        },
+        {
+          "rank": 81,
+          "rank_tied": false,
+          "name": "Joshua",
+          "count": 74
+        },
+        {
+          "rank": 82,
+          "rank_tied": false,
+          "name": "Aidan",
+          "count": 72
+        },
+        {
+          "rank": 83,
+          "rank_tied": true,
+          "name": "Benjamin",
+          "count": 71
+        },
+        {
+          "rank": 83,
+          "rank_tied": true,
+          "name": "Levi",
+          "count": 71
+        },
+        {
+          "rank": 85,
+          "rank_tied": false,
+          "name": "Iarlaith",
+          "count": 68
+        },
+        {
+          "rank": 86,
+          "rank_tied": false,
+          "name": "Ronan",
+          "count": 67
+        },
+        {
+          "rank": 87,
+          "rank_tied": false,
+          "name": "Éanna",
+          "count": 66
+        },
+        {
+          "rank": 88,
+          "rank_tied": true,
+          "name": "Dáire",
+          "count": 65
+        },
+        {
+          "rank": 88,
+          "rank_tied": true,
+          "name": "Naoise",
+          "count": 65
+        },
+        {
+          "rank": 90,
+          "rank_tied": true,
+          "name": "Cathal",
+          "count": 64
+        },
+        {
+          "rank": 90,
+          "rank_tied": true,
+          "name": "Cody",
+          "count": 64
+        },
+        {
+          "rank": 90,
+          "rank_tied": true,
+          "name": "Joey",
+          "count": 64
+        },
+        {
+          "rank": 93,
+          "rank_tied": false,
+          "name": "Odhrán",
+          "count": 63
+        },
+        {
+          "rank": 94,
+          "rank_tied": false,
+          "name": "Zach",
+          "count": 62
+        },
+        {
+          "rank": 95,
+          "rank_tied": true,
+          "name": "Jake",
+          "count": 60
+        },
+        {
+          "rank": 95,
+          "rank_tied": true,
+          "name": "Tomás",
+          "count": 60
+        },
+        {
+          "rank": 97,
+          "rank_tied": true,
+          "name": "Conall",
+          "count": 59
+        },
+        {
+          "rank": 97,
+          "rank_tied": true,
+          "name": "Elijah",
+          "count": 59
+        },
+        {
+          "rank": 99,
+          "rank_tied": true,
+          "name": "Mark",
+          "count": 58
+        },
+        {
+          "rank": 99,
+          "rank_tied": true,
+          "name": "Paddy",
+          "count": 58
+        },
+        {
+          "rank": 99,
+          "rank_tied": true,
+          "name": "Teidí",
+          "count": 58
+        }
+      ]
+    },
+    {
+      "country": "Ireland",
+      "jurisdiction": "Ireland",
+      "year": 2025,
+      "sex": "female",
+      "source_url": "https://www.cso.ie/en/releasesandpublications/ep/p-ibn/irishbabiesnames2025/data/",
+      "data_url": "https://data.cso.ie/table/VSA60",
+      "format": "Official release page embedded table",
+      "count_note": "Official 2025 occurrence count and rank from the Top 500 table.",
+      "entry_count": 101,
+      "entries": [
+        {
+          "rank": 1,
+          "rank_tied": false,
+          "name": "Lily",
+          "count": 302
+        },
+        {
+          "rank": 2,
+          "rank_tied": false,
+          "name": "Éabha",
+          "count": 294
+        },
+        {
+          "rank": 3,
+          "rank_tied": false,
+          "name": "Fiadh",
+          "count": 273
+        },
+        {
+          "rank": 4,
+          "rank_tied": false,
+          "name": "Grace",
+          "count": 265
+        },
+        {
+          "rank": 5,
+          "rank_tied": false,
+          "name": "Sadie",
+          "count": 258
+        },
+        {
+          "rank": 6,
+          "rank_tied": true,
+          "name": "Emily",
+          "count": 246
+        },
+        {
+          "rank": 6,
+          "rank_tied": true,
+          "name": "Sophie",
+          "count": 246
+        },
+        {
+          "rank": 8,
+          "rank_tied": false,
+          "name": "Olivia",
+          "count": 224
+        },
+        {
+          "rank": 9,
+          "rank_tied": false,
+          "name": "Croía",
+          "count": 211
+        },
+        {
+          "rank": 10,
+          "rank_tied": false,
+          "name": "Éala",
+          "count": 209
+        },
+        {
+          "rank": 11,
+          "rank_tied": false,
+          "name": "Mia",
+          "count": 207
+        },
+        {
+          "rank": 12,
+          "rank_tied": false,
+          "name": "Amelia",
+          "count": 206
+        },
+        {
+          "rank": 13,
+          "rank_tied": false,
+          "name": "Isla",
+          "count": 203
+        },
+        {
+          "rank": 14,
+          "rank_tied": false,
+          "name": "Sophia",
+          "count": 201
+        },
+        {
+          "rank": 15,
+          "rank_tied": false,
+          "name": "Ellie",
+          "count": 193
+        },
+        {
+          "rank": 16,
+          "rank_tied": false,
+          "name": "Lucy",
+          "count": 179
+        },
+        {
+          "rank": 17,
+          "rank_tied": true,
+          "name": "Ella",
+          "count": 176
+        },
+        {
+          "rank": 17,
+          "rank_tied": true,
+          "name": "Saoirse",
+          "count": 176
+        },
+        {
+          "rank": 19,
+          "rank_tied": false,
+          "name": "Robyn",
+          "count": 175
+        },
+        {
+          "rank": 20,
+          "rank_tied": false,
+          "name": "Molly",
+          "count": 169
+        },
+        {
+          "rank": 21,
+          "rank_tied": false,
+          "name": "Hannah",
+          "count": 168
+        },
+        {
+          "rank": 22,
+          "rank_tied": false,
+          "name": "Chloe",
+          "count": 158
+        },
+        {
+          "rank": 23,
+          "rank_tied": true,
+          "name": "Rosie",
+          "count": 145
+        },
+        {
+          "rank": 23,
+          "rank_tied": true,
+          "name": "Sofia",
+          "count": 145
+        },
+        {
+          "rank": 25,
+          "rank_tied": false,
+          "name": "Freya",
+          "count": 144
+        },
+        {
+          "rank": 26,
+          "rank_tied": true,
+          "name": "Anna",
+          "count": 143
+        },
+        {
+          "rank": 26,
+          "rank_tied": true,
+          "name": "Ava",
+          "count": 143
+        },
+        {
+          "rank": 28,
+          "rank_tied": false,
+          "name": "Emma",
+          "count": 137
+        },
+        {
+          "rank": 29,
+          "rank_tied": true,
+          "name": "Evie",
+          "count": 135
+        },
+        {
+          "rank": 29,
+          "rank_tied": true,
+          "name": "Róisín",
+          "count": 135
+        },
+        {
+          "rank": 31,
+          "rank_tied": false,
+          "name": "Caoimhe",
+          "count": 130
+        },
+        {
+          "rank": 32,
+          "rank_tied": false,
+          "name": "Sadhbh",
+          "count": 129
+        },
+        {
+          "rank": 33,
+          "rank_tied": false,
+          "name": "Annie",
+          "count": 127
+        },
+        {
+          "rank": 34,
+          "rank_tied": true,
+          "name": "Aoife",
+          "count": 121
+        },
+        {
+          "rank": 34,
+          "rank_tied": true,
+          "name": "Isabelle",
+          "count": 121
+        },
+        {
+          "rank": 36,
+          "rank_tied": true,
+          "name": "Millie",
+          "count": 119
+        },
+        {
+          "rank": 36,
+          "rank_tied": true,
+          "name": "Ruby",
+          "count": 119
+        },
+        {
+          "rank": 38,
+          "rank_tied": false,
+          "name": "Méabh",
+          "count": 116
+        },
+        {
+          "rank": 39,
+          "rank_tied": false,
+          "name": "Ayla",
+          "count": 112
+        },
+        {
+          "rank": 40,
+          "rank_tied": false,
+          "name": "Maya",
+          "count": 108
+        },
+        {
+          "rank": 41,
+          "rank_tied": true,
+          "name": "Alice",
+          "count": 107
+        },
+        {
+          "rank": 41,
+          "rank_tied": true,
+          "name": "Katie",
+          "count": 107
+        },
+        {
+          "rank": 43,
+          "rank_tied": true,
+          "name": "Charlotte",
+          "count": 105
+        },
+        {
+          "rank": 43,
+          "rank_tied": true,
+          "name": "Daisy",
+          "count": 105
+        },
+        {
+          "rank": 45,
+          "rank_tied": false,
+          "name": "Ada",
+          "count": 104
+        },
+        {
+          "rank": 46,
+          "rank_tied": false,
+          "name": "Zoe",
+          "count": 102
+        },
+        {
+          "rank": 47,
+          "rank_tied": false,
+          "name": "Clodagh",
+          "count": 100
+        },
+        {
+          "rank": 48,
+          "rank_tied": false,
+          "name": "Isabella",
+          "count": 99
+        },
+        {
+          "rank": 49,
+          "rank_tied": false,
+          "name": "Maisie",
+          "count": 98
+        },
+        {
+          "rank": 50,
+          "rank_tied": true,
+          "name": "Ailbhe",
+          "count": 95
+        },
+        {
+          "rank": 50,
+          "rank_tied": true,
+          "name": "Ivy",
+          "count": 95
+        },
+        {
+          "rank": 52,
+          "rank_tied": true,
+          "name": "Cara",
+          "count": 94
+        },
+        {
+          "rank": 52,
+          "rank_tied": true,
+          "name": "Kate",
+          "count": 94
+        },
+        {
+          "rank": 54,
+          "rank_tied": false,
+          "name": "Harper",
+          "count": 90
+        },
+        {
+          "rank": 55,
+          "rank_tied": true,
+          "name": "Elsie",
+          "count": 88
+        },
+        {
+          "rank": 55,
+          "rank_tied": true,
+          "name": "Hazel",
+          "count": 88
+        },
+        {
+          "rank": 55,
+          "rank_tied": true,
+          "name": "Leah",
+          "count": 88
+        },
+        {
+          "rank": 58,
+          "rank_tied": false,
+          "name": "Willow",
+          "count": 85
+        },
+        {
+          "rank": 59,
+          "rank_tied": false,
+          "name": "Rose",
+          "count": 84
+        },
+        {
+          "rank": 60,
+          "rank_tied": true,
+          "name": "Layla",
+          "count": 83
+        },
+        {
+          "rank": 60,
+          "rank_tied": true,
+          "name": "Maeve",
+          "count": 83
+        },
+        {
+          "rank": 62,
+          "rank_tied": true,
+          "name": "Aoibhín",
+          "count": 82
+        },
+        {
+          "rank": 62,
+          "rank_tied": true,
+          "name": "Sienna",
+          "count": 82
+        },
+        {
+          "rank": 64,
+          "rank_tied": false,
+          "name": "Bonnie",
+          "count": 80
+        },
+        {
+          "rank": 65,
+          "rank_tied": false,
+          "name": "Fíadh",
+          "count": 79
+        },
+        {
+          "rank": 66,
+          "rank_tied": true,
+          "name": "Emilia",
+          "count": 78
+        },
+        {
+          "rank": 66,
+          "rank_tied": true,
+          "name": "Sarah",
+          "count": 78
+        },
+        {
+          "rank": 66,
+          "rank_tied": true,
+          "name": "Zara",
+          "count": 78
+        },
+        {
+          "rank": 69,
+          "rank_tied": true,
+          "name": "Eva",
+          "count": 77
+        },
+        {
+          "rank": 69,
+          "rank_tied": true,
+          "name": "Holly",
+          "count": 77
+        },
+        {
+          "rank": 71,
+          "rank_tied": false,
+          "name": "Erin",
+          "count": 75
+        },
+        {
+          "rank": 72,
+          "rank_tied": false,
+          "name": "Aria",
+          "count": 72
+        },
+        {
+          "rank": 73,
+          "rank_tied": false,
+          "name": "Clara",
+          "count": 70
+        },
+        {
+          "rank": 74,
+          "rank_tied": false,
+          "name": "Maria",
+          "count": 68
+        },
+        {
+          "rank": 75,
+          "rank_tied": false,
+          "name": "Eve",
+          "count": 66
+        },
+        {
+          "rank": 76,
+          "rank_tied": true,
+          "name": "Aurora",
+          "count": 65
+        },
+        {
+          "rank": 76,
+          "rank_tied": true,
+          "name": "Elizabeth",
+          "count": 65
+        },
+        {
+          "rank": 76,
+          "rank_tied": true,
+          "name": "Nora",
+          "count": 65
+        },
+        {
+          "rank": 79,
+          "rank_tied": false,
+          "name": "Hailey",
+          "count": 62
+        },
+        {
+          "rank": 80,
+          "rank_tied": true,
+          "name": "Caragh",
+          "count": 61
+        },
+        {
+          "rank": 80,
+          "rank_tied": true,
+          "name": "Faye",
+          "count": 61
+        },
+        {
+          "rank": 80,
+          "rank_tied": true,
+          "name": "Mila",
+          "count": 61
+        },
+        {
+          "rank": 80,
+          "rank_tied": true,
+          "name": "Ríadh",
+          "count": 61
+        },
+        {
+          "rank": 84,
+          "rank_tied": false,
+          "name": "Luna",
+          "count": 60
+        },
+        {
+          "rank": 85,
+          "rank_tied": false,
+          "name": "Rhea",
+          "count": 59
+        },
+        {
+          "rank": 86,
+          "rank_tied": true,
+          "name": "Cora",
+          "count": 58
+        },
+        {
+          "rank": 86,
+          "rank_tied": true,
+          "name": "Mollie",
+          "count": 58
+        },
+        {
+          "rank": 88,
+          "rank_tied": false,
+          "name": "Gracie",
+          "count": 57
+        },
+        {
+          "rank": 89,
+          "rank_tied": false,
+          "name": "Cadhla",
+          "count": 55
+        },
+        {
+          "rank": 90,
+          "rank_tied": false,
+          "name": "Niamh",
+          "count": 54
+        },
+        {
+          "rank": 91,
+          "rank_tied": true,
+          "name": "Georgia",
+          "count": 53
+        },
+        {
+          "rank": 91,
+          "rank_tied": true,
+          "name": "Heidi",
+          "count": 53
+        },
+        {
+          "rank": 91,
+          "rank_tied": true,
+          "name": "Áine",
+          "count": 53
+        },
+        {
+          "rank": 94,
+          "rank_tied": true,
+          "name": "Evelyn",
+          "count": 52
+        },
+        {
+          "rank": 94,
+          "rank_tied": true,
+          "name": "Mabel",
+          "count": 52
+        },
+        {
+          "rank": 96,
+          "rank_tied": false,
+          "name": "Arabella",
+          "count": 51
+        },
+        {
+          "rank": 97,
+          "rank_tied": true,
+          "name": "Lottie",
+          "count": 49
+        },
+        {
+          "rank": 97,
+          "rank_tied": true,
+          "name": "Phoebe",
+          "count": 49
+        },
+        {
+          "rank": 99,
+          "rank_tied": true,
+          "name": "Hallie",
+          "count": 48
+        },
+        {
+          "rank": 99,
+          "rank_tied": true,
+          "name": "Nancy",
+          "count": 48
+        },
+        {
+          "rank": 99,
+          "rank_tied": true,
+          "name": "Raya",
+          "count": 48
+        }
+      ]
+    },
+    {
+      "country": "New Zealand",
+      "jurisdiction": "New Zealand",
+      "year": 2025,
+      "sex": "male",
+      "source_url": "https://smartstart.services.govt.nz/news/baby-names",
+      "data_url": "https://smartstart.services.govt.nz/assets/files/Top-100-boys-names.pdf",
+      "format": "PDF",
+      "count_note": "Counts are printed as 'No.' in the 2025 column; rank is printed.",
+      "entry_count": 100,
+      "entries": [
+        {
+          "rank": 1,
+          "rank_tied": false,
+          "name": "Noah",
+          "count": 244
+        },
+        {
+          "rank": 2,
+          "rank_tied": false,
+          "name": "Luca",
+          "count": 236
+        },
+        {
+          "rank": 3,
+          "rank_tied": false,
+          "name": "Oliver",
+          "count": 234
+        },
+        {
+          "rank": 4,
+          "rank_tied": false,
+          "name": "George",
+          "count": 178
+        },
+        {
+          "rank": 5,
+          "rank_tied": false,
+          "name": "Theodore",
+          "count": 173
+        },
+        {
+          "rank": 6,
+          "rank_tied": false,
+          "name": "Leo",
+          "count": 168
+        },
+        {
+          "rank": 7,
+          "rank_tied": false,
+          "name": "Charlie",
+          "count": 156
+        },
+        {
+          "rank": 8,
+          "rank_tied": false,
+          "name": "Jack",
+          "count": 156
+        },
+        {
+          "rank": 9,
+          "rank_tied": false,
+          "name": "Elijah",
+          "count": 151
+        },
+        {
+          "rank": 10,
+          "rank_tied": false,
+          "name": "Theo",
+          "count": 149
+        },
+        {
+          "rank": 11,
+          "rank_tied": false,
+          "name": "Arthur",
+          "count": 145
+        },
+        {
+          "rank": 12,
+          "rank_tied": false,
+          "name": "Hudson",
+          "count": 143
+        },
+        {
+          "rank": 13,
+          "rank_tied": false,
+          "name": "James",
+          "count": 138
+        },
+        {
+          "rank": 14,
+          "rank_tied": false,
+          "name": "Henry",
+          "count": 137
+        },
+        {
+          "rank": 15,
+          "rank_tied": false,
+          "name": "Cooper",
+          "count": 126
+        },
+        {
+          "rank": 16,
+          "rank_tied": false,
+          "name": "William",
+          "count": 125
+        },
+        {
+          "rank": 17,
+          "rank_tied": false,
+          "name": "Lachlan",
+          "count": 120
+        },
+        {
+          "rank": 18,
+          "rank_tied": false,
+          "name": "Lucas",
+          "count": 119
+        },
+        {
+          "rank": 19,
+          "rank_tied": false,
+          "name": "Archie",
+          "count": 117
+        },
+        {
+          "rank": 20,
+          "rank_tied": false,
+          "name": "Liam",
+          "count": 117
+        },
+        {
+          "rank": 21,
+          "rank_tied": false,
+          "name": "Oscar",
+          "count": 116
+        },
+        {
+          "rank": 22,
+          "rank_tied": false,
+          "name": "Hugo",
+          "count": 113
+        },
+        {
+          "rank": 23,
+          "rank_tied": false,
+          "name": "Levi",
+          "count": 113
+        },
+        {
+          "rank": 24,
+          "rank_tied": false,
+          "name": "Beau",
+          "count": 107
+        },
+        {
+          "rank": 25,
+          "rank_tied": false,
+          "name": "Ezra",
+          "count": 106
+        },
+        {
+          "rank": 26,
+          "rank_tied": false,
+          "name": "Hunter",
+          "count": 105
+        },
+        {
+          "rank": 27,
+          "rank_tied": false,
+          "name": "Thomas",
+          "count": 101
+        },
+        {
+          "rank": 28,
+          "rank_tied": false,
+          "name": "Benjamin",
+          "count": 96
+        },
+        {
+          "rank": 29,
+          "rank_tied": false,
+          "name": "Archer",
+          "count": 95
+        },
+        {
+          "rank": 30,
+          "rank_tied": false,
+          "name": "Louie",
+          "count": 90
+        },
+        {
+          "rank": 31,
+          "rank_tied": false,
+          "name": "Felix",
+          "count": 88
+        },
+        {
+          "rank": 32,
+          "rank_tied": false,
+          "name": "Ethan",
+          "count": 87
+        },
+        {
+          "rank": 33,
+          "rank_tied": false,
+          "name": "Carter",
+          "count": 85
+        },
+        {
+          "rank": 34,
+          "rank_tied": false,
+          "name": "Louis",
+          "count": 85
+        },
+        {
+          "rank": 35,
+          "rank_tied": false,
+          "name": "Max",
+          "count": 85
+        },
+        {
+          "rank": 36,
+          "rank_tied": false,
+          "name": "Asher",
+          "count": 84
+        },
+        {
+          "rank": 37,
+          "rank_tied": false,
+          "name": "Finn",
+          "count": 84
+        },
+        {
+          "rank": 38,
+          "rank_tied": false,
+          "name": "Arlo",
+          "count": 83
+        },
+        {
+          "rank": 39,
+          "rank_tied": false,
+          "name": "Mason",
+          "count": 82
+        },
+        {
+          "rank": 40,
+          "rank_tied": false,
+          "name": "Ezekiel",
+          "count": 79
+        },
+        {
+          "rank": 41,
+          "rank_tied": false,
+          "name": "Alexander",
+          "count": 78
+        },
+        {
+          "rank": 42,
+          "rank_tied": false,
+          "name": "Austin",
+          "count": 78
+        },
+        {
+          "rank": 43,
+          "rank_tied": false,
+          "name": "Luka",
+          "count": 76
+        },
+        {
+          "rank": 44,
+          "rank_tied": false,
+          "name": "Harry",
+          "count": 75
+        },
+        {
+          "rank": 45,
+          "rank_tied": false,
+          "name": "Isaac",
+          "count": 75
+        },
+        {
+          "rank": 46,
+          "rank_tied": false,
+          "name": "Luke",
+          "count": 75
+        },
+        {
+          "rank": 47,
+          "rank_tied": false,
+          "name": "Eli",
+          "count": 74
+        },
+        {
+          "rank": 48,
+          "rank_tied": false,
+          "name": "Joshua",
+          "count": 72
+        },
+        {
+          "rank": 49,
+          "rank_tied": false,
+          "name": "Elias",
+          "count": 69
+        },
+        {
+          "rank": 50,
+          "rank_tied": false,
+          "name": "Zion",
+          "count": 69
+        },
+        {
+          "rank": 51,
+          "rank_tied": false,
+          "name": "Harvey",
+          "count": 68
+        },
+        {
+          "rank": 52,
+          "rank_tied": false,
+          "name": "Koa",
+          "count": 68
+        },
+        {
+          "rank": 53,
+          "rank_tied": false,
+          "name": "Miles",
+          "count": 66
+        },
+        {
+          "rank": 54,
+          "rank_tied": false,
+          "name": "Samuel",
+          "count": 65
+        },
+        {
+          "rank": 55,
+          "rank_tied": false,
+          "name": "Harrison",
+          "count": 63
+        },
+        {
+          "rank": 56,
+          "rank_tied": false,
+          "name": "Ryan",
+          "count": 63
+        },
+        {
+          "rank": 57,
+          "rank_tied": false,
+          "name": "Bodhi",
+          "count": 62
+        },
+        {
+          "rank": 58,
+          "rank_tied": false,
+          "name": "Isaiah",
+          "count": 62
+        },
+        {
+          "rank": 59,
+          "rank_tied": false,
+          "name": "Jackson",
+          "count": 62
+        },
+        {
+          "rank": 60,
+          "rank_tied": false,
+          "name": "Roman",
+          "count": 62
+        },
+        {
+          "rank": 61,
+          "rank_tied": false,
+          "name": "Oakley",
+          "count": 61
+        },
+        {
+          "rank": 62,
+          "rank_tied": false,
+          "name": "Caleb",
+          "count": 60
+        },
+        {
+          "rank": 63,
+          "rank_tied": false,
+          "name": "Jasper",
+          "count": 60
+        },
+        {
+          "rank": 64,
+          "rank_tied": false,
+          "name": "Joseph",
+          "count": 60
+        },
+        {
+          "rank": 65,
+          "rank_tied": false,
+          "name": "Daniel",
+          "count": 59
+        },
+        {
+          "rank": 66,
+          "rank_tied": false,
+          "name": "Riley",
+          "count": 59
+        },
+        {
+          "rank": 67,
+          "rank_tied": false,
+          "name": "Micah",
+          "count": 58
+        },
+        {
+          "rank": 68,
+          "rank_tied": false,
+          "name": "Atlas",
+          "count": 55
+        },
+        {
+          "rank": 69,
+          "rank_tied": false,
+          "name": "Leon",
+          "count": 55
+        },
+        {
+          "rank": 70,
+          "rank_tied": false,
+          "name": "Michael",
+          "count": 55
+        },
+        {
+          "rank": 71,
+          "rank_tied": false,
+          "name": "Angus",
+          "count": 54
+        },
+        {
+          "rank": 72,
+          "rank_tied": false,
+          "name": "Tobias",
+          "count": 54
+        },
+        {
+          "rank": 73,
+          "rank_tied": false,
+          "name": "Kiwa",
+          "count": 53
+        },
+        {
+          "rank": 74,
+          "rank_tied": false,
+          "name": "Toby",
+          "count": 53
+        },
+        {
+          "rank": 75,
+          "rank_tied": false,
+          "name": "Tommy",
+          "count": 53
+        },
+        {
+          "rank": 76,
+          "rank_tied": false,
+          "name": "Zorawar",
+          "count": 53
+        },
+        {
+          "rank": 77,
+          "rank_tied": false,
+          "name": "Edward",
+          "count": 52
+        },
+        {
+          "rank": 78,
+          "rank_tied": false,
+          "name": "Charles",
+          "count": 51
+        },
+        {
+          "rank": 79,
+          "rank_tied": false,
+          "name": "Sebastian",
+          "count": 51
+        },
+        {
+          "rank": 80,
+          "rank_tied": false,
+          "name": "Beauden",
+          "count": 50
+        },
+        {
+          "rank": 81,
+          "rank_tied": false,
+          "name": "Nico",
+          "count": 50
+        },
+        {
+          "rank": 82,
+          "rank_tied": false,
+          "name": "River",
+          "count": 50
+        },
+        {
+          "rank": 83,
+          "rank_tied": false,
+          "name": "Aiden",
+          "count": 49
+        },
+        {
+          "rank": 84,
+          "rank_tied": false,
+          "name": "Billy",
+          "count": 49
+        },
+        {
+          "rank": 85,
+          "rank_tied": false,
+          "name": "Jacob",
+          "count": 49
+        },
+        {
+          "rank": 86,
+          "rank_tied": false,
+          "name": "Myles",
+          "count": 49
+        },
+        {
+          "rank": 87,
+          "rank_tied": false,
+          "name": "Spencer",
+          "count": 49
+        },
+        {
+          "rank": 88,
+          "rank_tied": false,
+          "name": "Adam",
+          "count": 48
+        },
+        {
+          "rank": 89,
+          "rank_tied": false,
+          "name": "John",
+          "count": 48
+        },
+        {
+          "rank": 90,
+          "rank_tied": false,
+          "name": "Rowan",
+          "count": 48
+        },
+        {
+          "rank": 91,
+          "rank_tied": false,
+          "name": "Grayson",
+          "count": 47
+        },
+        {
+          "rank": 92,
+          "rank_tied": false,
+          "name": "Nathan",
+          "count": 47
+        },
+        {
+          "rank": 93,
+          "rank_tied": false,
+          "name": "David",
+          "count": 46
+        },
+        {
+          "rank": 94,
+          "rank_tied": false,
+          "name": "Freddie",
+          "count": 46
+        },
+        {
+          "rank": 95,
+          "rank_tied": false,
+          "name": "Jett",
+          "count": 46
+        },
+        {
+          "rank": 96,
+          "rank_tied": false,
+          "name": "Keanu",
+          "count": 46
+        },
+        {
+          "rank": 97,
+          "rank_tied": false,
+          "name": "Mateo",
+          "count": 46
+        },
+        {
+          "rank": 98,
+          "rank_tied": false,
+          "name": "Ryder",
+          "count": 46
+        },
+        {
+          "rank": 99,
+          "rank_tied": false,
+          "name": "Alfred",
+          "count": 45
+        },
+        {
+          "rank": 100,
+          "rank_tied": false,
+          "name": "Arjan",
+          "count": 45
+        }
+      ]
+    },
+    {
+      "country": "New Zealand",
+      "jurisdiction": "New Zealand",
+      "year": 2025,
+      "sex": "female",
+      "source_url": "https://smartstart.services.govt.nz/news/baby-names",
+      "data_url": "https://smartstart.services.govt.nz/assets/files/Top-100-girls-names.pdf",
+      "format": "PDF",
+      "count_note": "Counts are printed as 'No.' in the 2025 column; rank is printed.",
+      "entry_count": 100,
+      "entries": [
+        {
+          "rank": 1,
+          "rank_tied": false,
+          "name": "Isla",
+          "count": 179
+        },
+        {
+          "rank": 2,
+          "rank_tied": false,
+          "name": "Charlotte",
+          "count": 178
+        },
+        {
+          "rank": 3,
+          "rank_tied": false,
+          "name": "Amelia",
+          "count": 161
+        },
+        {
+          "rank": 4,
+          "rank_tied": false,
+          "name": "Hazel",
+          "count": 157
+        },
+        {
+          "rank": 5,
+          "rank_tied": false,
+          "name": "Olivia",
+          "count": 156
+        },
+        {
+          "rank": 6,
+          "rank_tied": false,
+          "name": "Lily",
+          "count": 155
+        },
+        {
+          "rank": 7,
+          "rank_tied": false,
+          "name": "Lucy",
+          "count": 135
+        },
+        {
+          "rank": 8,
+          "rank_tied": false,
+          "name": "Mila",
+          "count": 131
+        },
+        {
+          "rank": 9,
+          "rank_tied": false,
+          "name": "Aria",
+          "count": 125
+        },
+        {
+          "rank": 10,
+          "rank_tied": false,
+          "name": "Mia",
+          "count": 125
+        },
+        {
+          "rank": 11,
+          "rank_tied": false,
+          "name": "Sophia",
+          "count": 124
+        },
+        {
+          "rank": 12,
+          "rank_tied": false,
+          "name": "Sophie",
+          "count": 124
+        },
+        {
+          "rank": 13,
+          "rank_tied": false,
+          "name": "Ella",
+          "count": 121
+        },
+        {
+          "rank": 14,
+          "rank_tied": false,
+          "name": "Ruby",
+          "count": 121
+        },
+        {
+          "rank": 15,
+          "rank_tied": false,
+          "name": "Isabella",
+          "count": 118
+        },
+        {
+          "rank": 16,
+          "rank_tied": false,
+          "name": "Millie",
+          "count": 117
+        },
+        {
+          "rank": 17,
+          "rank_tied": false,
+          "name": "Harper",
+          "count": 115
+        },
+        {
+          "rank": 18,
+          "rank_tied": false,
+          "name": "Freya",
+          "count": 109
+        },
+        {
+          "rank": 19,
+          "rank_tied": false,
+          "name": "Sadie",
+          "count": 108
+        },
+        {
+          "rank": 20,
+          "rank_tied": false,
+          "name": "Ava",
+          "count": 104
+        },
+        {
+          "rank": 21,
+          "rank_tied": false,
+          "name": "Grace",
+          "count": 102
+        },
+        {
+          "rank": 22,
+          "rank_tied": false,
+          "name": "Matilda",
+          "count": 102
+        },
+        {
+          "rank": 23,
+          "rank_tied": false,
+          "name": "Evelyn",
+          "count": 100
+        },
+        {
+          "rank": 24,
+          "rank_tied": false,
+          "name": "Chloe",
+          "count": 99
+        },
+        {
+          "rank": 25,
+          "rank_tied": false,
+          "name": "Florence",
+          "count": 97
+        },
+        {
+          "rank": 26,
+          "rank_tied": false,
+          "name": "Emily",
+          "count": 93
+        },
+        {
+          "rank": 27,
+          "rank_tied": false,
+          "name": "Willow",
+          "count": 93
+        },
+        {
+          "rank": 28,
+          "rank_tied": false,
+          "name": "Violet",
+          "count": 92
+        },
+        {
+          "rank": 29,
+          "rank_tied": false,
+          "name": "Ivy",
+          "count": 91
+        },
+        {
+          "rank": 30,
+          "rank_tied": false,
+          "name": "Maeve",
+          "count": 91
+        },
+        {
+          "rank": 31,
+          "rank_tied": false,
+          "name": "Olive",
+          "count": 91
+        },
+        {
+          "rank": 32,
+          "rank_tied": false,
+          "name": "Layla",
+          "count": 89
+        },
+        {
+          "rank": 33,
+          "rank_tied": false,
+          "name": "Maia",
+          "count": 89
+        },
+        {
+          "rank": 34,
+          "rank_tied": false,
+          "name": "Billie",
+          "count": 82
+        },
+        {
+          "rank": 35,
+          "rank_tied": false,
+          "name": "Aurora",
+          "count": 80
+        },
+        {
+          "rank": 36,
+          "rank_tied": false,
+          "name": "Daisy",
+          "count": 80
+        },
+        {
+          "rank": 37,
+          "rank_tied": false,
+          "name": "Ayla",
+          "count": 77
+        },
+        {
+          "rank": 38,
+          "rank_tied": false,
+          "name": "Eden",
+          "count": 77
+        },
+        {
+          "rank": 39,
+          "rank_tied": false,
+          "name": "Frankie",
+          "count": 77
+        },
+        {
+          "rank": 40,
+          "rank_tied": false,
+          "name": "Margot",
+          "count": 76
+        },
+        {
+          "rank": 41,
+          "rank_tied": false,
+          "name": "Sienna",
+          "count": 76
+        },
+        {
+          "rank": 42,
+          "rank_tied": false,
+          "name": "Elsie",
+          "count": 74
+        },
+        {
+          "rank": 43,
+          "rank_tied": false,
+          "name": "Penelope",
+          "count": 73
+        },
+        {
+          "rank": 44,
+          "rank_tied": false,
+          "name": "Sofia",
+          "count": 73
+        },
+        {
+          "rank": 45,
+          "rank_tied": false,
+          "name": "Kaia",
+          "count": 71
+        },
+        {
+          "rank": 46,
+          "rank_tied": false,
+          "name": "Ellie",
+          "count": 70
+        },
+        {
+          "rank": 47,
+          "rank_tied": false,
+          "name": "Phoebe",
+          "count": 70
+        },
+        {
+          "rank": 48,
+          "rank_tied": false,
+          "name": "Alice",
+          "count": 69
+        },
+        {
+          "rank": 49,
+          "rank_tied": false,
+          "name": "Zoe",
+          "count": 69
+        },
+        {
+          "rank": 50,
+          "rank_tied": false,
+          "name": "Luna",
+          "count": 68
+        },
+        {
+          "rank": 51,
+          "rank_tied": false,
+          "name": "Riley",
+          "count": 68
+        },
+        {
+          "rank": 52,
+          "rank_tied": false,
+          "name": "Eliana",
+          "count": 66
+        },
+        {
+          "rank": 53,
+          "rank_tied": false,
+          "name": "Poppy",
+          "count": 66
+        },
+        {
+          "rank": 54,
+          "rank_tied": false,
+          "name": "Eleanor",
+          "count": 65
+        },
+        {
+          "rank": 55,
+          "rank_tied": false,
+          "name": "Kiara",
+          "count": 65
+        },
+        {
+          "rank": 56,
+          "rank_tied": false,
+          "name": "Harriet",
+          "count": 62
+        },
+        {
+          "rank": 57,
+          "rank_tied": false,
+          "name": "Amaia",
+          "count": 61
+        },
+        {
+          "rank": 58,
+          "rank_tied": false,
+          "name": "Isabelle",
+          "count": 60
+        },
+        {
+          "rank": 59,
+          "rank_tied": false,
+          "name": "Evie",
+          "count": 59
+        },
+        {
+          "rank": 60,
+          "rank_tied": false,
+          "name": "Maisie",
+          "count": 59
+        },
+        {
+          "rank": 61,
+          "rank_tied": false,
+          "name": "Elizabeth",
+          "count": 58
+        },
+        {
+          "rank": 62,
+          "rank_tied": false,
+          "name": "Emma",
+          "count": 58
+        },
+        {
+          "rank": 63,
+          "rank_tied": false,
+          "name": "Eva",
+          "count": 58
+        },
+        {
+          "rank": 64,
+          "rank_tied": false,
+          "name": "Georgia",
+          "count": 58
+        },
+        {
+          "rank": 65,
+          "rank_tied": false,
+          "name": "Zara",
+          "count": 58
+        },
+        {
+          "rank": 66,
+          "rank_tied": false,
+          "name": "Mabel",
+          "count": 56
+        },
+        {
+          "rank": 67,
+          "rank_tied": false,
+          "name": "Hannah",
+          "count": 54
+        },
+        {
+          "rank": 68,
+          "rank_tied": false,
+          "name": "Mackenzie",
+          "count": 54
+        },
+        {
+          "rank": 69,
+          "rank_tied": false,
+          "name": "Nora",
+          "count": 54
+        },
+        {
+          "rank": 70,
+          "rank_tied": false,
+          "name": "Aaliyah",
+          "count": 52
+        },
+        {
+          "rank": 71,
+          "rank_tied": false,
+          "name": "Scarlett",
+          "count": 52
+        },
+        {
+          "rank": 72,
+          "rank_tied": false,
+          "name": "Delilah",
+          "count": 51
+        },
+        {
+          "rank": 73,
+          "rank_tied": false,
+          "name": "Eloise",
+          "count": 51
+        },
+        {
+          "rank": 74,
+          "rank_tied": false,
+          "name": "Ada",
+          "count": 50
+        },
+        {
+          "rank": 75,
+          "rank_tied": false,
+          "name": "Indie",
+          "count": 50
+        },
+        {
+          "rank": 76,
+          "rank_tied": false,
+          "name": "Madison",
+          "count": 50
+        },
+        {
+          "rank": 77,
+          "rank_tied": false,
+          "name": "Maya",
+          "count": 50
+        },
+        {
+          "rank": 78,
+          "rank_tied": false,
+          "name": "Arabella",
+          "count": 49
+        },
+        {
+          "rank": 79,
+          "rank_tied": false,
+          "name": "Iris",
+          "count": 48
+        },
+        {
+          "rank": 80,
+          "rank_tied": false,
+          "name": "Leah",
+          "count": 48
+        },
+        {
+          "rank": 81,
+          "rank_tied": false,
+          "name": "Molly",
+          "count": 48
+        },
+        {
+          "rank": 82,
+          "rank_tied": false,
+          "name": "Emilia",
+          "count": 46
+        },
+        {
+          "rank": 83,
+          "rank_tied": false,
+          "name": "Rosie",
+          "count": 46
+        },
+        {
+          "rank": 84,
+          "rank_tied": false,
+          "name": "Lottie",
+          "count": 45
+        },
+        {
+          "rank": 85,
+          "rank_tied": false,
+          "name": "Stella",
+          "count": 45
+        },
+        {
+          "rank": 86,
+          "rank_tied": false,
+          "name": "Thea",
+          "count": 45
+        },
+        {
+          "rank": 87,
+          "rank_tied": false,
+          "name": "Quinn",
+          "count": 44
+        },
+        {
+          "rank": 88,
+          "rank_tied": false,
+          "name": "Abigail",
+          "count": 43
+        },
+        {
+          "rank": 89,
+          "rank_tied": false,
+          "name": "Anna",
+          "count": 43
+        },
+        {
+          "rank": 90,
+          "rank_tied": false,
+          "name": "Bella",
+          "count": 43
+        },
+        {
+          "rank": 91,
+          "rank_tied": false,
+          "name": "Esther",
+          "count": 41
+        },
+        {
+          "rank": 92,
+          "rank_tied": false,
+          "name": "Rose",
+          "count": 41
+        },
+        {
+          "rank": 93,
+          "rank_tied": false,
+          "name": "Athena",
+          "count": 40
+        },
+        {
+          "rank": 94,
+          "rank_tied": false,
+          "name": "Jasmine",
+          "count": 40
+        },
+        {
+          "rank": 95,
+          "rank_tied": false,
+          "name": "Manaia",
+          "count": 40
+        },
+        {
+          "rank": 96,
+          "rank_tied": false,
+          "name": "Esme",
+          "count": 39
+        },
+        {
+          "rank": 97,
+          "rank_tied": false,
+          "name": "Lola",
+          "count": 39
+        },
+        {
+          "rank": 98,
+          "rank_tied": false,
+          "name": "Lucia",
+          "count": 39
+        },
+        {
+          "rank": 99,
+          "rank_tied": false,
+          "name": "Malia",
+          "count": 39
+        },
+        {
+          "rank": 100,
+          "rank_tied": false,
+          "name": "Addison",
+          "count": 38
+        }
+      ]
+    }
+  ]
+}

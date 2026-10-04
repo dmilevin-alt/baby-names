@@ -187,7 +187,9 @@ The `icon.svg` file is used as the app icon. For the best iOS home screen experi
 | `config.js` | **Edit this.** Your Supabase URL + key |
 | `index.html` | Login / Sign-up page |
 | `app.html` | Main app (all screens in one page) |
-| `names.js` | 1,000+ name database |
+| `names.js` | 1,400+ name database |
+| `popular-names.js` | Official 2025 baby-name rankings for Canada, UK jurisdictions, France, Ireland, New Zealand, and Australian states |
+| `official-baby-names-top-100.json` | Source ranks, counts, and URLs for Canada, France, Ireland, Northern Ireland, New Zealand, Scotland, and England and Wales |
 | `css/style.css` | All visual styles |
 | `js/app.js` | Global state + screen routing |
 | `js/auth.js` | Login / sign-up logic |
