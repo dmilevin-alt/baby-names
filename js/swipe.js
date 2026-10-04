@@ -40,13 +40,28 @@ const SWIPE = {
 
     if (!name) {
       // All names voted
-      stage.innerHTML = '';
       document.getElementById('vote-buttons').style.display = 'none';
+
+      const votes = STATE.myVotes;
+      const loved  = Object.values(votes).filter(v => v === 'love').length;
+      const maybe  = Object.values(votes).filter(v => v === 'maybe').length;
+      const passed = Object.values(votes).filter(v => v === 'pass').length;
+
+      const passedNames = STATE.deck.filter(d => votes[d.name] === 'pass');
+
       stage.innerHTML = `
         <div class="swipe-done">
           <div class="big-icon">🎉</div>
           <h3>You've seen all the names!</h3>
-          <p>Check your shortlist for matches, or ask your partner if they've finished too.</p>
+          <div class="swipe-done-stats">
+            <div class="swipe-done-stat"><span class="swipe-done-stat-num">${loved}</span><span class="swipe-done-stat-label">❤️ Loved</span></div>
+            <div class="swipe-done-stat"><span class="swipe-done-stat-num">${maybe}</span><span class="swipe-done-stat-label">🤔 Maybe</span></div>
+            <div class="swipe-done-stat"><span class="swipe-done-stat-num">${passed}</span><span class="swipe-done-stat-label">✕ Passed</span></div>
+          </div>
+          ${passedNames.length > 0 ? `
+          <button class="btn btn-secondary" onclick="restartWithPassed()" style="margin-top:4px">
+            Review ${passedNames.length} passed names →
+          </button>` : ''}
           <button class="btn btn-primary" onclick="showMainScreen('shortlist-screen')" style="margin-top:8px">
             View Shortlist ⭐
           </button>
@@ -275,6 +290,20 @@ async function checkForNewMatches() {
   });
 
   SWIPE.updateProgress();
+}
+
+function restartWithPassed() {
+  const passedNames = STATE.deck.filter(d => STATE.myVotes[d.name] === 'pass');
+  if (passedNames.length === 0) return;
+
+  // Remove passed votes from local cache so the deck-advance logic won't skip them
+  passedNames.forEach(d => delete STATE.myVotes[d.name]);
+
+  STATE.deck = passedNames;
+  STATE.deckIndex = 0;
+
+  document.getElementById('vote-buttons').style.display = '';
+  SWIPE.render();
 }
 
 function capitalize(str) {
