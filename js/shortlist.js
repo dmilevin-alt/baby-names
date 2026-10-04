@@ -7,23 +7,20 @@ const SHORTLIST = {
     if (!body) return;
 
     const matchesTab = document.getElementById('matches-tab');
-    const maybesTab = document.getElementById('maybes-tab');
+    const maybesTab  = document.getElementById('maybes-tab');
+    const foryouTab  = document.getElementById('foryou-tab');
     const maybeCount = Object.values(STATE.myVotes).filter(vote => vote === 'maybe').length;
     if (matchesTab) matchesTab.textContent = `❤️ Matches (${STATE.shortlist.length})`;
-    if (maybesTab) maybesTab.textContent = `🤔 Maybes (${maybeCount})`;
-    if (matchesTab) {
-      matchesTab.classList.toggle('active', this.view === 'matches');
-      matchesTab.setAttribute('aria-selected', String(this.view === 'matches'));
-    }
-    if (maybesTab) {
-      maybesTab.classList.toggle('active', this.view === 'maybes');
-      maybesTab.setAttribute('aria-selected', String(this.view === 'maybes'));
-    }
+    if (maybesTab)  maybesTab.textContent  = `🤔 Maybes (${maybeCount})`;
+    [matchesTab, maybesTab, foryouTab].forEach(tab => {
+      if (!tab) return;
+      const v = tab.id.replace('-tab', '');
+      tab.classList.toggle('active', this.view === v);
+      tab.setAttribute('aria-selected', String(this.view === v));
+    });
 
-    if (this.view === 'maybes') {
-      this.renderMaybes(body);
-      return;
-    }
+    if (this.view === 'maybes') { this.renderMaybes(body); return; }
+    if (this.view === 'foryou') { RECOMMEND.render(body);  return; }
 
     const items = STATE.shortlist;
 

@@ -1429,3 +1429,65 @@ a { color: var(--primary); text-decoration: none; }
     transform: translateX(-50%);
   }
 }
+
+/* ── RECOMMENDATION ENGINE ───────────────────────────────────────────────── */
+.recommend-intro {
+  padding: 16px 20px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.recommend-intro-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: .7px;
+  margin-bottom: 4px;
+}
+
+.recommend-intro-tags {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.recommend-intro-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+
+.recommend-item .shortlist-item-head {
+  align-items: flex-start;
+}
+
+.recommend-meaning {
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.recommend-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+  padding-left: 8px;
+}
+
+.rec-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: transform .15s, background .15s;
+  flex-shrink: 0;
+}
+
+.rec-btn:active { transform: scale(.9); }
+.rec-love:active  { background: #FFE0DC; }
+.rec-maybe:active { background: #FFF0DC; }
+.rec-pass:active  { background: #EEE; font-size: 13px; font-weight: 700; color: var(--text-muted); }
