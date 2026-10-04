@@ -1491,3 +1491,20 @@ a { color: var(--primary); text-decoration: none; }
 .rec-love:active  { background: #FFE0DC; }
 .rec-maybe:active { background: #FFF0DC; }
 .rec-pass:active  { background: #EEE; font-size: 13px; font-weight: 700; color: var(--text-muted); }
+
+.recommend-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 60px 24px;
+  color: var(--text-muted);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.recommend-reason {
+  color: var(--primary);
+  font-style: italic;
+  margin-top: 2px;
+}
