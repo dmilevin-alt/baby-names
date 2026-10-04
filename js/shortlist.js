@@ -78,18 +78,56 @@ const SHORTLIST = {
       : 'Not in tracked top 100s';
 
     return `
-      <div class="shortlist-item maybe-item">
+      <div class="shortlist-item maybe-item" id="maybe-${name.replace(/\W/g, '_')}">
         <div class="shortlist-item-head">
-          <div>
+          <div style="flex:1;min-width:0">
             <div class="shortlist-item-name">${name}</div>
             <div class="shortlist-item-sub">${origin || rankingText}</div>
             ${origin && rankings.length
               ? `<div class="shortlist-item-sub">${rankingText}</div>`
               : ''}
           </div>
-          <span class="shortlist-item-badge maybe">🤔 Maybe</span>
+          <div class="recommend-actions">
+            <button class="rec-btn rec-love" data-name="${name}"
+              onclick="SHORTLIST.resolveMaybe(this.dataset.name, 'love')"
+              title="Love" aria-label="Love ${name}">❤️</button>
+            <button class="rec-btn rec-pass" data-name="${name}"
+              onclick="SHORTLIST.resolveMaybe(this.dataset.name, 'pass')"
+              title="Dismiss" aria-label="Dismiss ${name}">✕</button>
+          </div>
         </div>
       </div>`;
+  },
+
+  async resolveMaybe(name, voteType) {
+    const previous = STATE.myVotes[name];
+    STATE.myVotes[name] = voteType;
+
+    const { error } = await STATE.db.from('votes').upsert({
+      room_id: STATE.room.id,
+      user_id: STATE.user.id,
+      name:    name,
+      vote:    voteType
+    }, { onConflict: 'room_id,user_id,name' });
+
+    if (error) {
+      STATE.myVotes[name] = previous;
+      showToast('Could not save. Try again.');
+      return;
+    }
+
+    if (voteType === 'love') await checkForNewMatches();
+    showToast(voteType === 'love' ? `${name} ❤️ Loved` : `${name} dismissed`);
+
+    const el = document.getElementById('maybe-' + name.replace(/\W/g, '_'));
+    if (el) {
+      el.style.transition = 'opacity .25s';
+      el.style.opacity    = '0';
+      setTimeout(() => { this.render(); SWIPE.updateProgress(); }, 280);
+    } else {
+      this.render();
+      SWIPE.updateProgress();
+    }
   },
 
   renderItem(item) {
