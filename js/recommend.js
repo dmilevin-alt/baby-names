@@ -1,14 +1,4 @@
 // ── RECOMMENDATION ENGINE ─────────────────────────────────────────────────────
-const AI_NAMES_KEY = 'aiSuggestedNames';
-
-// Names the AI invented (not in names.js) that this person loved or maybe'd,
-// so their origin and meaning still show up in other tabs after a reload
-try {
-  const saved = JSON.parse(localStorage.getItem(AI_NAMES_KEY) || '[]');
-  const known = new Set(NAMES.map(n => n.name));
-  saved.forEach(n => { if (n && n.name && !known.has(n.name)) NAMES.push(n); });
-} catch (e) { /* storage unavailable: those names just show without details */ }
-
 function escapeHtml(str) {
   return String(str ?? '').replace(/[&<>"']/g, c =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
@@ -16,6 +6,71 @@ function escapeHtml(str) {
 
 const RECOMMEND = {
   _newNames: new Map(),   // AI-invented names from the latest picks, by name
+
+  // Turn a stored or AI-returned name into the same shape as names.js entries
+  // (AI text, so tags are cleaned to plain words and the meaning can't carry HTML)
+  _toNameEntry(n) {
+    const words = arr => (Array.isArray(arr) ? arr : [])
+      .map(w => String(w).toLowerCase().trim()).filter(w => /^[a-z][a-z -]*$/.test(w));
+    return {
+      name:      n.name,
+      gender:    ['girl', 'boy', 'either'].includes(n.gender) ? n.gender : 'either',
+      origin:    words(n.origin),
+      tradition: [],
+      style:     words(n.style),
+      meaning:   String(n.meaning || '').replace(/[<>]/g, ''),
+      syllables: Number.isFinite(n.syllables) ? n.syllables : null,
+      aiSuggested: true,
+    };
+  },
+
+  // Add names to NAMES (skipping ones already there); returns the ones added
+  addToNamesList(names) {
+    const known = new Set(NAMES.map(n => n.name.toLowerCase()));
+    const added = [];
+    for (const n of names) {
+      if (!n?.name || !/^\p{L}[\p{L}' -]{0,29}$/u.test(n.name) ||
+          known.has(n.name.toLowerCase())) continue;
+      const entry = this._toNameEntry(n);
+      NAMES.push(entry);
+      known.add(entry.name.toLowerCase());
+      added.push(entry);
+    }
+    return added;
+  },
+
+  // Save the AI's new names for this room and add them to the swipe deck
+  async _saveNewNames(newNames) {
+    const added = this.addToNamesList(newNames);
+    if (added.length === 0) return;
+
+    const { error } = await STATE.db.from('ai_names').upsert(
+      added.map(n => ({
+        room_id:   STATE.room.id,
+        name:      n.name,
+        gender:    n.gender,
+        origin:    n.origin,
+        style:     n.style,
+        meaning:   n.meaning,
+        syllables: n.syllables,
+        added_by:  STATE.user.id,
+      })),
+      { onConflict: 'room_id,name', ignoreDuplicates: true }
+    );
+    if (error) console.warn('Could not save AI-suggested names:', error);
+
+    // Passes-only review decks stay as they are; new names join the main deck
+    if (STATE.reviewMode) return;
+    const wasDone = STATE.deckIndex >= STATE.deck.length;
+    const inDeck  = new Set(STATE.deck.map(d => d.name));
+    STATE.deck.push(...added.filter(n => !inDeck.has(n.name)).map(n => ({ ...n, score: 0 })));
+    while (STATE.deckIndex < STATE.deck.length &&
+           STATE.myVotes[STATE.deck[STATE.deckIndex].name]) {
+      STATE.deckIndex++;
+    }
+    if (wasDone && STATE.deckIndex < STATE.deck.length) SWIPE.render();
+    else SWIPE.updateProgress();
+  },
 
   // Hard-filter helpers — identical logic to deck.js
   _buildFilters() {
@@ -158,18 +213,9 @@ const RECOMMEND = {
       return;
     }
 
-    this._newNames = new Map(
-      picks.filter(p => p.source === 'new').map(p => [p.name, {
-        name: p.name,
-        gender: p.gender || 'either',
-        origin: p.origin || [],
-        tradition: [],
-        style: [],
-        meaning: p.meaning || '',
-        syllables: null,
-        aiSuggested: true,
-      }])
-    );
+    const newNames = picks.filter(p => p.source === 'new').map(p => this._toNameEntry(p));
+    this._newNames = new Map(newNames.map(n => [n.name, n]));
+    await this._saveNewNames(newNames);
 
     this._renderResults(body, picks, candidates, filters);
   },
@@ -232,7 +278,7 @@ const RECOMMEND = {
     const sub    = [origin, ranks].filter(Boolean).join(' · ');
     const name   = escapeHtml(n.name);
     const tag    = source === 'maybe' ? '🤔 From your Maybes'
-                 : source === 'new'   ? '✨ New name, not in the app' : '';
+                 : source === 'new'   ? '✨ New name, added to your deck' : '';
     const isMaybe = source === 'maybe';
 
     return `
@@ -258,18 +304,6 @@ const RECOMMEND = {
       </div>`;
   },
 
-  // Keep an AI-invented name's details once they've loved or maybe'd it
-  _rememberNewName(nameStr) {
-    const info = this._newNames.get(nameStr);
-    if (!info || NAMES.some(n => n.name === nameStr)) return;
-    NAMES.push(info);
-    try {
-      const saved = JSON.parse(localStorage.getItem(AI_NAMES_KEY) || '[]');
-      saved.push(info);
-      localStorage.setItem(AI_NAMES_KEY, JSON.stringify(saved));
-    } catch (e) { /* storage unavailable */ }
-  },
-
   async quickVote(nameStr, voteType) {
     const previous = STATE.myVotes[nameStr];
     STATE.myVotes[nameStr] = voteType;
@@ -293,10 +327,7 @@ const RECOMMEND = {
            STATE.myVotes[STATE.deck[STATE.deckIndex].name]) {
       STATE.deckIndex++;
     }
-    if (voteType !== 'pass') {
-      this._rememberNewName(nameStr);
-      await checkForNewMatches();
-    }
+    if (voteType !== 'pass') await checkForNewMatches();
 
     const label = voteType === 'love' ? '❤️' : voteType === 'maybe' ? '🤔' : '✕';
     showToast(`${nameStr} ${label}`);

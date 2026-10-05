@@ -65,6 +65,21 @@ CREATE TABLE IF NOT EXISTS shortlist (
   UNIQUE(room_id, name)
 );
 
+-- Names the AI recommender suggested that aren't in names.js.
+-- Shared by both partners so the names join everyone's swipe deck.
+CREATE TABLE IF NOT EXISTS ai_names (
+  id         UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  room_id    UUID NOT NULL REFERENCES rooms(id) ON DELETE CASCADE,
+  name       TEXT NOT NULL,
+  gender     TEXT NOT NULL DEFAULT 'either' CHECK (gender IN ('girl','boy','either')),
+  origin     TEXT[] NOT NULL DEFAULT '{}',
+  style      TEXT[] NOT NULL DEFAULT '{}',
+  meaning    TEXT NOT NULL DEFAULT '',
+  syllables  INT,
+  added_by   UUID REFERENCES auth.users(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(room_id, name)
+);
 
 -- ── ROW LEVEL SECURITY ───────────────────────────────────────────────────────
 
@@ -73,6 +88,7 @@ ALTER TABLE rooms       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE preferences ENABLE ROW LEVEL SECURITY;
 ALTER TABLE votes       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE shortlist   ENABLE ROW LEVEL SECURITY;
+ALTER TABLE ai_names    ENABLE ROW LEVEL SECURITY;
 
 
 -- profiles: each user owns their own row
@@ -169,6 +185,24 @@ CREATE POLICY "room_members_shortlist"
     )
   );
 
+
+-- ai_names: both room members can read and write
+CREATE POLICY "room_members_ai_names"
+  ON ai_names FOR ALL
+  USING (
+    EXISTS (
+      SELECT 1 FROM rooms r
+      WHERE r.id = ai_names.room_id
+        AND (r.created_by = auth.uid() OR r.partner_id = auth.uid())
+    )
+  )
+  WITH CHECK (
+    EXISTS (
+      SELECT 1 FROM rooms r
+      WHERE r.id = room_id
+        AND (r.created_by = auth.uid() OR r.partner_id = auth.uid())
+    )
+  );
 
 -- ── SECURITY DEFINER FUNCTIONS ───────────────────────────────────────────────
 -- These run with elevated privileges inside the database.

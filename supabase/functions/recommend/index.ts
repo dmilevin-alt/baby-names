@@ -78,7 +78,7 @@ Pick up to ${MAX_PICKS} names in total. Prefer candidates over new names. Priori
 
 Return ONLY a valid JSON array — no explanation, no markdown. Each element:
 {"name":"<name>","source":"candidate" | "maybe" | "new","reason":"<one sentence max 12 words explaining why this fits>"}
-For "new" names also include: "gender":"girl" | "boy" | "either","origin":["<lowercase origin>"],"meaning":"<short meaning>"`;
+For "new" names also include: "gender":"girl" | "boy" | "either","origin":["<lowercase origin>"],"style":["<lowercase style, e.g. classic, modern, nature, vintage, unique>"],"meaning":"<short meaning>","syllables":<number>`;
 
   let aiResp;
   try {
@@ -157,7 +157,9 @@ For "new" names also include: "gender":"girl" | "boy" | "either","origin":["<low
       clean.push({
         name, source: "new", reason, gender: g,
         origin: (Array.isArray(p.origin) ? p.origin : []).map((o) => key(o)).filter(Boolean).slice(0, 3),
+        style: (Array.isArray(p.style) ? p.style : []).map((st) => key(st)).filter(Boolean).slice(0, 3),
         meaning: typeof p.meaning === "string" ? p.meaning.slice(0, 100) : "",
+        syllables: Number.isInteger(p.syllables) && p.syllables > 0 && p.syllables < 8 ? p.syllables : null,
       });
     }
     seen.add(k);

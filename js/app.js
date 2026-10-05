@@ -109,6 +109,14 @@ async function enterMainApp() {
     votes.forEach(v => { STATE.myVotes[v.name] = v.vote; });
   }
 
+  // Add names the AI recommender found for this room to the names list
+  const { data: aiNames, error: aiNamesError } = await STATE.db
+    .from('ai_names')
+    .select('name, gender, origin, style, meaning, syllables')
+    .eq('room_id', STATE.room.id);
+  if (aiNamesError) console.warn('Could not load AI-suggested names:', aiNamesError);
+  else RECOMMEND.addToNamesList(aiNames || []);
+
   // Build deck
   STATE.deck = DECK.build(STATE.myPrefs, STATE.partnerPrefs);
   STATE.deckIndex = STATE.deck.findIndex(name => !STATE.myVotes[name.name]);
