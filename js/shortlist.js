@@ -140,7 +140,7 @@ const SHORTLIST = {
       <div class="shortlist-item" id="sl-${item.id}">
         <div class="shortlist-item-head" onclick="SHORTLIST.toggle('${item.id}')">
           <div>
-            <div class="shortlist-item-name">${item.name}</div>
+            <div class="shortlist-item-name">${escapeHtml(item.name)}</div>
             <div class="shortlist-item-sub">${origin}</div>
           </div>
           <span class="shortlist-item-badge ${isCustom ? 'custom' : ''}">
@@ -153,10 +153,11 @@ const SHORTLIST = {
             Why we love it
           </label>
           <textarea class="shortlist-note-area" id="note-${item.id}"
-            placeholder="Add a note…">${item.note || ''}</textarea>
+            placeholder="Add a note…">${escapeHtml(item.note || '')}</textarea>
           <div class="shortlist-item-actions">
             <button class="btn-save-note" onclick="SHORTLIST.saveNote('${item.id}')">Save note</button>
-            <button class="btn-remove" onclick="SHORTLIST.remove('${item.id}', '${item.name}')">Remove</button>
+            <button class="btn-remove" data-name="${escapeHtml(item.name)}"
+              onclick="SHORTLIST.remove('${item.id}', this.dataset.name)">Remove</button>
           </div>
         </div>
       </div>`;
@@ -211,8 +212,11 @@ const SHORTLIST = {
     const noteInput = document.getElementById('custom-note-input');
     if (!nameInput) return;
 
-    const name = nameInput.value.trim();
-    if (!name) { showToast('Please enter a name'); return; }
+    const typed = nameInput.value.trim();
+    if (!typed) { showToast('Please enter a name'); return; }
+    // Use the app's spelling when it already has this name, so votes line up
+    const known = NAMES.find(n => n.name.toLowerCase() === typed.toLowerCase());
+    const name  = known ? known.name : typed;
 
     // Check for duplicate
     if (STATE.shortlist.some(s => s.name.toLowerCase() === name.toLowerCase())) {
@@ -238,8 +242,54 @@ const SHORTLIST = {
     nameInput.value = '';
     if (noteInput) noteInput.value = '';
     this.toggleAddForm();
+    await this.syncCustomNames();
     this.render();
-    showToast(`"${name}" added to shortlist ✓`);
+    showToast(`"${name}" added ✓ Your partner will see it next in their deck`);
+  },
+
+  // Custom names count as a Love from whoever added them, and go next in
+  // the other partner's swipe deck so they can vote on them
+  async syncCustomNames() {
+    const toLove = [];
+    const toDeck = [];
+    for (const item of STATE.shortlist.filter(s => s.is_custom)) {
+      let base = NAMES.find(n => n.name.toLowerCase() === item.name.toLowerCase());
+      if (!base) {
+        base = { name: item.name, gender: 'either', origin: [], tradition: [], style: [],
+                 meaning: '', syllables: null };
+        NAMES.push(base);
+      }
+      if (STATE.myVotes[base.name]) continue;
+      if (item.added_by === STATE.user.id) toLove.push(base.name);
+      else toDeck.push({ ...base, score: 0, fromPartner: true, partnerNote: item.note || '' });
+    }
+
+    if (toLove.length) {
+      const { error } = await STATE.db.from('votes').upsert(
+        toLove.map(name => ({ room_id: STATE.room.id, user_id: STATE.user.id, name, vote: 'love' })),
+        { onConflict: 'room_id,user_id,name' }
+      );
+      if (error) console.warn('Could not save love for custom names:', error);
+      else {
+        toLove.forEach(name => { STATE.myVotes[name] = 'love'; });
+        await checkForNewMatches();
+      }
+    }
+
+    // Leave a passes-only review deck alone; otherwise put them up next,
+    // behind the card that's already showing
+    if (toDeck.length === 0 || STATE.reviewMode) return;
+    const names = new Set(toDeck.map(n => n.name));
+    const ahead = STATE.deck.slice(STATE.deckIndex).filter(d => !names.has(d.name));
+    const wasDone = ahead.length === 0;
+    STATE.deck = [
+      ...STATE.deck.slice(0, STATE.deckIndex),
+      ...(wasDone ? [] : ahead.slice(0, 1)),
+      ...toDeck,
+      ...ahead.slice(1),
+    ];
+    if (wasDone) SWIPE.render();
+    else SWIPE.updateProgress();
   }
 };
 

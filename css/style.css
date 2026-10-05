@@ -1523,3 +1523,19 @@ a { color: var(--primary); text-decoration: none; }
   padding: 2px 8px;
   margin: 3px 0 2px;
 }
+
+.card-partner-tag {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--primary-dk);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 4px;
+}
+
+.card-partner-note {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--text-muted);
+  margin-top: 4px;
+}

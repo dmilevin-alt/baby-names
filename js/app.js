@@ -122,13 +122,15 @@ async function enterMainApp() {
   STATE.deckIndex = STATE.deck.findIndex(name => !STATE.myVotes[name.name]);
   if (STATE.deckIndex === -1) STATE.deckIndex = STATE.deck.length;
 
-  // Load shortlist
+  // Load shortlist, and put custom names your partner added into your deck
   const { data: sl } = await STATE.db
     .from('shortlist')
     .select('*')
     .eq('room_id', STATE.room.id)
     .order('created_at', { ascending: false });
   STATE.shortlist = sl || [];
+  await SHORTLIST.syncCustomNames();
+  startShortlistPoll();
 
   // Show main app
   document.getElementById('bottom-nav').classList.add('visible');
@@ -202,6 +204,33 @@ function spawnConfetti() {
     document.body.appendChild(div);
     setTimeout(() => div.remove(), 3500);
   }
+}
+
+// ── SHORTLIST POLLING ─────────────────────────────────────────────────────────
+// Picks up custom names and matches your partner adds while you're in the app
+let shortlistPollInterval = null;
+function startShortlistPoll() {
+  clearInterval(shortlistPollInterval);
+  shortlistPollInterval = setInterval(async () => {
+    const { data, error } = await STATE.db
+      .from('shortlist')
+      .select('*')
+      .eq('room_id', STATE.room.id)
+      .order('created_at', { ascending: false });
+    if (error || !data) return;
+
+    const key = list => list.map(s => `${s.id}:${s.is_custom}`).sort().join(',');
+    if (key(data) === key(STATE.shortlist)) return;
+
+    STATE.shortlist = data;
+    await SHORTLIST.syncCustomNames();
+    SWIPE.updateProgress();
+
+    // Don't redraw over an open note editor or re-run the AI picks
+    if (SHORTLIST.view !== 'foryou' && !document.querySelector('.shortlist-item.open')) {
+      SHORTLIST.render();
+    }
+  }, 30000);
 }
 
 // ── PARTNER QUIZ POLLING ──────────────────────────────────────────────────────

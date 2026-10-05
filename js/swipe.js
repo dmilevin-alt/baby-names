@@ -99,7 +99,9 @@ const SWIPE = {
         <div class="card-vote-label love-label"  id="label-love">LOVE</div>
         <div class="card-vote-label pass-label"  id="label-pass">PASS</div>
         <div class="card-vote-label maybe-label" id="label-maybe">MAYBE</div>
-        <div class="card-name">${name.name}</div>
+        ${name.fromPartner ? `<div class="card-partner-tag">💌 Added by your partner</div>` : ''}
+        <div class="card-name">${escapeHtml(name.name)}</div>
+        ${name.partnerNote ? `<div class="card-partner-note">"${escapeHtml(name.partnerNote)}"</div>` : ''}
         ${originText ? `<div class="card-origin">${originText}</div>` : ''}
         <div class="card-trending">
           <div class="card-trending-label">2025 top 100 rankings</div>
@@ -270,7 +272,8 @@ async function checkForNewMatches() {
   if (error || !data) return;
 
   const matchedNames = data.map(r => r.matched_name || r);
-  const knownNames   = new Set(STATE.shortlist.map(s => s.name));
+  // Custom names aren't matches yet; once both like one it becomes a real match
+  const knownNames   = new Set(STATE.shortlist.filter(s => !s.is_custom).map(s => s.name));
   const newMatches   = matchedNames.filter(n => !knownNames.has(n));
 
   if (newMatches.length === 0) return;
