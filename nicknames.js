@@ -134,6 +134,7 @@ const NICKNAMES = {
   Natalia: ["Talia", "Nat", "Natasha"],
   Natalie: ["Nat", "Natty"],
   Natasha: ["Tasha", "Nat"],
+  Nicole: ["Nikki", "Nicky", "Nic"],
   Octavia: ["Tavi", "Via"],
   Olivia: ["Liv", "Livvy", "Ollie"],
   Ophelia: ["Phee", "Lia"],

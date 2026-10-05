@@ -454,6 +454,7 @@ const NAMES = [
 
   // ── FRENCH ───────────────────────────────────────────────────────────────────
   { name:"Colette",   gender:"girl", origin:["french"],             tradition:["christian","secular"],          style:["vintage"],           meaning:"victory of the people",          syllables:2 },
+  { name:"Nicole",    gender:"girl", origin:["french","greek"],     tradition:["christian","secular"],          style:["classic"],           meaning:"victory of the people",          syllables:2 },
   { name:"Margot",    gender:"girl", origin:["french"],             tradition:["secular"],                      style:["modern","vintage"],  meaning:"pearl",                          syllables:2 },
   { name:"Vivienne",  gender:"girl", origin:["french","latin"],     tradition:["secular"],                      style:["vintage"],           meaning:"alive, lively",                  syllables:3 },
   { name:"Celeste",   gender:"girl", origin:["french","latin"],     tradition:["secular"],                      style:["classic","vintage"], meaning:"heavenly",                       syllables:2 },
