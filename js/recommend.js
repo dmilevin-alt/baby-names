@@ -210,7 +210,7 @@ const RECOMMEND = {
     body.innerHTML = `
       <div class="recommend-intro">
         <div class="recommend-intro-label">${isAI ? '✨ AI picks for you' : 'Personalised picks'}</div>
-        <div class="recommend-intro-tags">${genderNote ? genderNote.slice(3) : 'Based on your quiz &amp; votes'}${genderNote}</div>
+        <div class="recommend-intro-tags">Based on your quiz &amp; votes${genderNote}</div>
         ${isAI ? `<div class="recommend-intro-sub">${sub}</div>` : ''}
       </div>
       <div class="shortlist-list" id="recommend-list">
