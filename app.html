@@ -27,19 +27,6 @@
   <!-- content injected by room.js -->
 </div>
 
-<!-- ── WAITING FOR PARTNER TO FINISH QUIZ ─────────────────────────── -->
-<div class="screen" id="waiting-screen">
-  <div style="display:flex;justify-content:flex-end;padding:16px 16px 0">
-    <button class="btn-logout-sm" onclick="PROFILE.logout()">Log out</button>
-  </div>
-  <div class="big-icon">⏳</div>
-  <h2>Almost there!</h2>
-  <p>Waiting for your partner to complete their quiz…</p>
-  <div class="dots-loader">
-    <span></span><span></span><span></span>
-  </div>
-</div>
-
 <!-- ── QUIZ ────────────────────────────────────────────────────────── -->
 <div class="screen" id="quiz-screen">
   <!-- content injected by quiz.js -->
@@ -57,6 +44,8 @@
     </div>
     <div style="text-align:right;font-size:12px;font-weight:700;color:var(--text-muted);margin-top:3px" id="match-count">0 matches ❤️</div>
   </div>
+
+  <div class="invite-banner" id="invite-banner" hidden></div>
 
   <div class="card-stage" id="card-stage">
     <!-- Name card injected by swipe.js -->

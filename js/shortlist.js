@@ -29,7 +29,9 @@ const SHORTLIST = {
         <div class="shortlist-empty">
           <div class="big-icon">⭐</div>
           <h3>No matches yet</h3>
-          <p>Keep swiping! When you both love the same name, it'll appear here.</p>
+          <p>${STATE.room.partner_id
+            ? "Keep swiping! When you both love the same name, it'll appear here."
+            : `Matches appear once your partner joins with code <b>${escapeHtml(STATE.room.invite_code)}</b> and loves the same names. Keep swiping!`}</p>
         </div>`;
       return;
     }

@@ -15,7 +15,6 @@ const STATE = {
   matchQueue:  [],     // new match names to celebrate
 };
 
-let partnerPollInterval = null;
 
 // ── BOOT ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
@@ -64,12 +63,6 @@ async function boot() {
 
   STATE.room = room;
 
-  if (!room.partner_id) {
-    ROOM.renderWaiting(room.invite_code);
-    showScreen('room-screen');
-    return;
-  }
-
   // Load preferences for both users
   const { data: allPrefs } = await STATE.db
     .from('preferences')
@@ -88,11 +81,7 @@ async function boot() {
     return;
   }
 
-  if (!partnerPrefs) {
-    showScreen('waiting-screen');
-    startPartnerQuizPoll();
-    return;
-  }
+  // You can swipe before your partner joins or finishes their quiz
 
   await enterMainApp();
 }
@@ -117,7 +106,7 @@ async function enterMainApp() {
   else RECOMMEND.addToNamesList(aiNames || []);
 
   // Build deck
-  STATE.deck = DECK.build(STATE.myPrefs, STATE.partnerPrefs);
+  STATE.deck = DECK.build(STATE.myPrefs, STATE.partnerPrefs || STATE.myPrefs);
   STATE.deckIndex = STATE.deck.findIndex(name => !STATE.myVotes[name.name]);
   if (STATE.deckIndex === -1) STATE.deckIndex = STATE.deck.length;
 
@@ -130,6 +119,9 @@ async function enterMainApp() {
   STATE.shortlist = sl || [];
   await SHORTLIST.syncCustomNames();
   startShortlistPoll();
+  // Votes you both cast before you were paired can already be matches
+  if (STATE.room.partner_id) await checkForNewMatches();
+  PARTNER.watch();
 
   // Show main app
   document.getElementById('bottom-nav').classList.add('visible');
@@ -234,23 +226,48 @@ function startShortlistPoll() {
   }, 30000);
 }
 
-// ── PARTNER QUIZ POLLING ──────────────────────────────────────────────────────
-function startPartnerQuizPoll() {
-  clearInterval(partnerPollInterval);
-  partnerPollInterval = setInterval(async () => {
-    const { data: allPrefs } = await STATE.db
-      .from('preferences')
-      .select('*')
-      .eq('room_id', STATE.room.id);
+// ── PARTNER STATUS ────────────────────────────────────────────────────────────
+// Until your partner has joined and done their quiz, check in now and then
+let partnerWatchInterval = null;
+const PARTNER = {
+  watch() {
+    clearInterval(partnerWatchInterval);
+    this.renderBanner();
+    if (STATE.room.partner_id && STATE.partnerPrefs) return;
+    partnerWatchInterval = setInterval(() => this.check(), 15000);
+  },
 
-    const partnerPrefs = allPrefs ? allPrefs.find(p => p.user_id !== STATE.user.id) : null;
-    if (partnerPrefs) {
-      clearInterval(partnerPollInterval);
-      STATE.partnerPrefs = partnerPrefs;
-      await enterMainApp();
+  async check() {
+    if (!STATE.room.partner_id) {
+      const { data: room } = await STATE.db.from('rooms').select('*').eq('id', STATE.room.id).single();
+      if (!room?.partner_id) return;
+      STATE.room = room;
+      showToast('🎉 Your partner joined!', 3200);
+      this.renderBanner();
+      await checkForNewMatches();
     }
-  }, 8000);
-}
+    const { data: prefs } = await STATE.db.from('preferences').select('*')
+      .eq('room_id', STATE.room.id).neq('user_id', STATE.user.id).maybeSingle();
+    if (prefs) {
+      STATE.partnerPrefs = prefs;
+      clearInterval(partnerWatchInterval);
+    }
+  },
+
+  renderBanner() {
+    const el = document.getElementById('invite-banner');
+    if (!el) return;
+    el.hidden = Boolean(STATE.room.partner_id);
+    if (el.hidden) return;
+    const code = escapeHtml(STATE.room.invite_code);
+    el.innerHTML = `
+      <div class="invite-banner-text">
+        <b>Swiping solo for now</b>
+        <span>Invite your partner with code <span class="invite-banner-code">${code}</span></span>
+      </div>
+      <button class="invite-banner-btn" onclick="PROFILE.shareCode()">Share</button>`;
+  },
+};
 
 // ── PROFILE OBJECT ───────────────────────────────────────────────────────────
 const PROFILE = {

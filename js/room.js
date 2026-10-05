@@ -31,7 +31,8 @@ const ROOM = {
     `;
   },
 
-  renderWaiting(code) {
+  // Shown once after creating a room; you can start straight away
+  renderCreated(code) {
     const el = document.getElementById('room-screen');
     el.innerHTML = `
       <div style="display:flex;justify-content:flex-end;width:100%;padding:16px 16px 0">
@@ -39,21 +40,19 @@ const ROOM = {
       </div>
       <div class="room-icon">🔗</div>
       <h2>Share this code</h2>
-      <p>Send this code to your partner. The game starts once they join!</p>
+      <p>Send this code to your partner so they can join. You can start now; your matches appear once they join.</p>
       <div class="invite-code-box">
         <div class="label">Invite code</div>
         <div class="code">${code}</div>
-        <div class="hint">Tap to copy</div>
+        <div class="hint">You can also find it later in Profile</div>
       </div>
-      <button class="btn btn-primary" style="max-width:320px;width:100%" onclick="ROOM.copyCode('${code}')">
-        Copy code
+      <button class="btn btn-secondary" style="max-width:320px;width:100%" onclick="ROOM.copyCode('${code}')">
+        Share code
       </button>
-      <div class="waiting-banner">
-        <div class="wait-icon">⏳</div>
-        <p>Waiting for your partner to join…</p>
-      </div>
+      <button class="btn btn-primary" style="max-width:320px;width:100%;margin-top:10px" onclick="boot()">
+        Start my quiz →
+      </button>
     `;
-    ROOM.pollForPartner();
   },
 
   async create() {
@@ -89,7 +88,7 @@ const ROOM = {
     }
 
     STATE.room = room;
-    ROOM.renderWaiting(code);
+    ROOM.renderCreated(code);
     showScreen('room-screen');
   },
 
@@ -117,22 +116,6 @@ const ROOM = {
 
     STATE.room = data;
     await boot(); // re-run the boot flow; room is now set
-  },
-
-  pollForPartner() {
-    const interval = setInterval(async () => {
-      const { data: room } = await STATE.db
-        .from('rooms')
-        .select('*')
-        .eq('id', STATE.room.id)
-        .single();
-
-      if (room && room.partner_id) {
-        clearInterval(interval);
-        STATE.room = room;
-        await boot();
-      }
-    }, 5000);
   },
 
   copyCode(code) {

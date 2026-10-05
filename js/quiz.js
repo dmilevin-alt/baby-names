@@ -269,14 +269,7 @@ const QUIZ = {
       .select('*')
       .eq('room_id', STATE.room.id);
 
-    const partnerPrefs = allPrefs ? allPrefs.find(p => p.user_id !== STATE.user.id) : null;
-
-    if (partnerPrefs) {
-      STATE.partnerPrefs = partnerPrefs;
-      await enterMainApp();
-    } else {
-      showScreen('waiting-screen');
-      startPartnerQuizPoll();
-    }
+    STATE.partnerPrefs = allPrefs ? allPrefs.find(p => p.user_id !== STATE.user.id) || null : null;
+    await enterMainApp();
   }
 };
