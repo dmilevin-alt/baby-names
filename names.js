@@ -441,6 +441,7 @@ const NAMES = [
   { name:"Logan",     gender:"boy",  origin:["scottish"],           tradition:["secular"],                      style:["modern"],            meaning:"little hollow",                  syllables:2 },
   { name:"Wyatt",     gender:"boy",  origin:["english"],            tradition:["secular"],                      style:["modern","vintage"],  meaning:"brave in war",                   syllables:2 },
   { name:"Carter",    gender:"boy",  origin:["english"],            tradition:["secular"],                      style:["modern"],            meaning:"cart driver",                    syllables:2 },
+  { name:"Chase",     gender:"boy",  origin:["english","french"],   tradition:["secular"],                      style:["modern"],            meaning:"hunter",                         syllables:1 },
   { name:"Luke",      gender:"boy",  origin:["greek","latin"],      tradition:["christian","secular"],          style:["classic"],           meaning:"light",                          syllables:1 },
   { name:"Alistair",  gender:"boy",  origin:["scottish","greek"],   tradition:["secular"],                      style:["vintage","unique"],  meaning:"defender of men",                syllables:3 },
   { name:"Dashiell",  gender:"boy",  origin:["english"],            tradition:["secular"],                      style:["unique","vintage"],  meaning:"page boy",                       syllables:2 },
