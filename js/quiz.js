@@ -1,5 +1,5 @@
 // ── QUIZ ───────────────────────────────────────────────────────────────────────
-// 7 steps. Answers stored in quizAnswers then saved to Supabase.
+// 8 steps. Answers stored in quizAnswers then saved to Supabase.
 
 const QUIZ = {
   step: 0,
@@ -11,18 +11,21 @@ const QUIZ = {
     length_pref:     'any',
     include_letters: '',
     avoid_letters:   '',
-    vibe:            ''
+    vibe:            '',
+    full_name:       '',
+    sibling_names:   ''
   },
 
   steps: [
-    'gender', 'tradition', 'backgrounds', 'styles', 'length', 'letters', 'vibe'
+    'family', 'gender', 'tradition', 'backgrounds', 'styles', 'length', 'letters', 'vibe'
   ],
 
   init() {
     this.step = 0;
     this.answers = {
       gender_pref: '', tradition: [], backgrounds: [],
-      styles: [], length_pref: 'any', include_letters: '', avoid_letters: '', vibe: ''
+      styles: [], length_pref: 'any', include_letters: '', avoid_letters: '', vibe: '',
+      full_name: STATE.profile?.display_name || '', sibling_names: ''
     };
     this.render();
   },
@@ -56,6 +59,22 @@ const QUIZ = {
     const stepName = this.steps[this.step];
 
     switch (stepName) {
+      case 'family':
+        body.innerHTML = `
+          <div class="quiz-step active">
+            <h3>First, a little about your family</h3>
+            <p class="hint">Optional. The AI uses this to show how names sound with your surname and next to your other children's names.</p>
+            <label class="family-label" for="quiz-full-name">Your full name</label>
+            <input class="quiz-input" id="quiz-full-name" placeholder="e.g. Dana Levin" maxlength="80"
+              autocomplete="name" value="${escapeHtml(this.answers.full_name)}"
+              oninput="QUIZ.answers.full_name=this.value">
+            <label class="family-label" for="quiz-siblings">Names of your other children</label>
+            <input class="quiz-input" id="quiz-siblings" placeholder="e.g. Mia, Leo (leave blank if none)" maxlength="200"
+              value="${escapeHtml(this.answers.sibling_names)}"
+              oninput="QUIZ.answers.sibling_names=this.value">
+          </div>`;
+        break;
+
       case 'gender':
         body.innerHTML = `
           <div class="quiz-step active">
@@ -224,7 +243,9 @@ const QUIZ = {
       length_pref:     this.answers.length_pref || 'any',
       include_letters: this.answers.include_letters.trim() || null,
       avoid_letters:   this.answers.avoid_letters.trim() || null,
-      vibe:            this.answers.vibe.trim() || null
+      vibe:            this.answers.vibe.trim() || null,
+      full_name:       this.answers.full_name.trim().replace(/\s+/g, ' ') || null,
+      sibling_names:   parseNameList(this.answers.sibling_names)
     };
 
     const { data, error } = await STATE.db

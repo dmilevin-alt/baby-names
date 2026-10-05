@@ -137,6 +137,7 @@ async function enterMainApp() {
   SHORTLIST.render();
   PROFILE.populate();
   showMainScreen('swipe-screen');
+  FAMILY.maybePrompt();
 }
 
 // ── SCREEN HELPERS ────────────────────────────────────────────────────────────
@@ -260,6 +261,7 @@ const PROFILE = {
     document.getElementById('profile-email').textContent = email;
     document.getElementById('profile-code').textContent  =
       STATE.room ? STATE.room.invite_code : '—';
+    document.getElementById('profile-family').textContent = FAMILY.summary();
   },
 
   shareCode() {

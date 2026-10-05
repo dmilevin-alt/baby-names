@@ -38,6 +38,8 @@ CREATE TABLE IF NOT EXISTS preferences (
   include_letters TEXT,
   avoid_letters   TEXT,
   vibe            TEXT,
+  full_name       TEXT,                                  -- for full-name AI tips
+  sibling_names   TEXT[],                                -- NULL = not asked yet
   created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE(room_id, user_id)
 );

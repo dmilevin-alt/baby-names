@@ -163,6 +163,16 @@
       </div>
       <span class="profile-row-arrow">›</span>
     </div>
+    <div class="profile-row" onclick="FAMILY.open()">
+      <div class="profile-row-left">
+        <div class="profile-row-icon">👪</div>
+        <div>
+          <div class="profile-row-label">Family details</div>
+          <div class="profile-row-sub" id="profile-family">Your name and other children</div>
+        </div>
+      </div>
+      <span class="profile-row-arrow">›</span>
+    </div>
     <div class="profile-row" onclick="PROFILE.retakeQuiz()">
       <div class="profile-row-left">
         <div class="profile-row-icon">✏️</div>
@@ -240,6 +250,13 @@
   </div>
 </div>
 
+<!-- ── FAMILY DETAILS SHEET ──────────────────────────────────────── -->
+<div class="sheet-overlay" id="family-sheet">
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="family-sheet-title">
+    <div id="family-sheet-body"></div>
+  </div>
+</div>
+
 <!-- ── TOAST ──────────────────────────────────────────────────────── -->
 <div class="toast" id="toast"></div>
 
@@ -257,6 +274,7 @@
 <script src="./js/shortlist.js"></script>
 <script src="./js/recommend.js"></script>
 <script src="./js/browse.js"></script>
+<script src="./js/family.js"></script>
 
 </body>
 </html>

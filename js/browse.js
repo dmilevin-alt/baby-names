@@ -147,6 +147,8 @@ const BROWSE = {
 
 const NAME_DETAILS = {
   current: null,
+  ai:      null,        // { key, status: 'loading'|'done'|'error', data, error, asking, answer, question }
+  aiCache: new Map(),   // AI insights already fetched this session, by name + family details
 
   open(nameStr) {
     const key = nameStr.toLowerCase();
@@ -154,8 +156,10 @@ const NAME_DETAILS = {
       STATE.deck.find(item => item.name.toLowerCase() === key);
     if (!n) return;
     this.current = n;
+    this.ai = this.aiCache.get(this._aiKey(n)) || null;
     this.render();
     document.getElementById('name-sheet').classList.add('visible');
+    document.querySelector('#name-sheet .sheet').scrollTop = 0;
   },
 
   close() {
@@ -220,11 +224,114 @@ const NAME_DETAILS = {
             onclick="NAME_DETAILS.open(this.dataset.name)">${escapeHtml(s.name)}</button>`).join('')}</div>
       </div>` : ''}
 
+      <div class="sheet-section ai-section">${this._renderAI(n)}</div>
+
       <div class="sheet-votes">
         ${voteBtn('pass', '✕', 'Pass')}
         ${voteBtn('maybe', '🤔', 'Maybe')}
         ${voteBtn('love', '❤️', 'Love')}
       </div>`;
+  },
+
+  // ── Ask AI about this name ──
+  _aiKey(n) {
+    return `${n.name.toLowerCase()}|${JSON.stringify(FAMILY.context())}`;
+  },
+
+  _renderAI(n) {
+    const ai = this.ai;
+    const familyHint = FAMILY.hasDetails() ? '' : `
+      <button class="ai-family-link" onclick="FAMILY.open()">Add your surname and children's names for sibling and full-name tips →</button>`;
+
+    if (!ai) {
+      return `
+        <button class="ai-ask-btn" onclick="NAME_DETAILS.askAI()">
+          <span class="ai-ask-title">✨ Ask AI about ${escapeHtml(n.name)}</span>
+          <span class="ai-ask-sub">Origin, famous namesakes${FAMILY.hasDetails() ? ', and how it fits your family' : ''}</span>
+        </button>${familyHint}`;
+    }
+    if (ai.status === 'loading') {
+      return `<div class="ai-loading" role="status"><div class="spinner dark"></div>Asking AI about ${escapeHtml(n.name)}…</div>`;
+    }
+    if (ai.status === 'error') {
+      return `
+        <div class="ai-error" role="alert">${escapeHtml(ai.error)}</div>
+        <button class="btn btn-secondary ai-retry" onclick="NAME_DETAILS.askAI()">Try again</button>`;
+    }
+
+    const d = ai.data;
+    const block = (label, html) => html ? `<div class="ai-block"><div class="sheet-label">${label}</div>${html}</div>` : '';
+    const list = items => items.length ? `<ul class="ai-list">${items.join('')}</ul>` : '';
+    return `
+      <div class="ai-header">✨ AI insights <span>AI can make mistakes. Check anything important.</span></div>
+      ${block('Origin & history', d.origin ? `<p class="ai-text">${escapeHtml(d.origin)}</p>` : '')}
+      ${block('Famous namesakes', list((d.namesakes || []).map(x =>
+        `<li><b>${escapeHtml(x.name)}</b> · ${escapeHtml(x.knownFor)}</li>`)))}
+      ${block('With your children', list((d.siblingFit || []).map(x =>
+        `<li><b>${escapeHtml(n.name)} &amp; ${escapeHtml(x.sibling)}</b> · ${escapeHtml(x.fit)}</li>`)))}
+      ${block('As a full name', (d.fullName?.examples || []).length || d.fullName?.notes ? `
+        <div class="sheet-chips">${(d.fullName.examples || []).map(e => `<span class="sheet-chip">${escapeHtml(e)}</span>`).join('')}</div>
+        ${d.fullName.notes ? `<p class="ai-text">${escapeHtml(d.fullName.notes)}</p>` : ''}` : '')}
+      ${block('Good to know', list((d.considerations || []).map(x => `<li>${escapeHtml(x)}</li>`)))}
+      ${familyHint}
+      <form class="ai-followup" onsubmit="event.preventDefault(); NAME_DETAILS.askAI(this.question.value)">
+        <label class="sheet-label" for="ai-question">Ask a follow-up</label>
+        <div class="ai-followup-row">
+          <input class="quiz-input" id="ai-question" name="question" maxlength="300"
+            placeholder="e.g. Does it work in Hebrew?" value="${escapeHtml(ai.question || '')}">
+          <button class="btn btn-primary" type="submit" ${ai.asking ? 'disabled' : ''}>${ai.asking ? '<div class="spinner"></div>' : 'Ask'}</button>
+        </div>
+        ${ai.answer ? `<p class="ai-answer" role="status">${escapeHtml(ai.answer)}</p>` : ''}
+      </form>`;
+  },
+
+  async askAI(question = '') {
+    const n = this.current;
+    if (!n) return;
+    question = question.trim();
+    const key = this._aiKey(n);
+    const followUp = Boolean(question && this.ai?.status === 'done');
+
+    if (followUp) {
+      if (this.ai.asking) return;
+      this.ai = { ...this.ai, asking: true, question };
+    } else {
+      this.ai = { key, status: 'loading' };
+    }
+    this.render();
+
+    let result, failure;
+    try {
+      const { data, error } = await STATE.db.functions.invoke('ask-name', {
+        body: {
+          name: n.name,
+          nameInfo: { gender: n.gender, origin: n.origin || [], meaning: n.meaning || '' },
+          family: FAMILY.context(),
+          question,
+        },
+      });
+      if (error) {
+        const detail = await error.context?.json?.().catch(() => null);
+        failure = detail?.error || 'Could not reach the AI. Check your connection and try again.';
+      } else if (!data || data.error) {
+        failure = data?.error || 'The AI returned an empty answer. Try again.';
+      } else {
+        result = data;
+      }
+    } catch (e) {
+      console.error('Ask AI failed:', e);
+      failure = 'Could not reach the AI. Check your connection and try again.';
+    }
+
+    if (this.current !== n) return;   // the sheet moved on to another name
+    if (followUp) {
+      this.ai = { ...this.ai, asking: false, answer: result ? result.answer : failure };
+    } else {
+      this.ai = result ? { key, status: 'done', data: result } : { key, status: 'error', error: failure };
+    }
+    if (this.ai.status === 'done') this.aiCache.set(key, this.ai);
+    this.render();
+    if (followUp) document.getElementById('ai-question')?.focus();
   },
 
   // Same-gender names sharing the most origins and styles
@@ -258,5 +365,7 @@ const NAME_DETAILS = {
 };
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && NAME_DETAILS.current) NAME_DETAILS.close();
+  if (e.key !== 'Escape') return;
+  if (document.getElementById('family-sheet')?.classList.contains('visible')) FAMILY.close();
+  else if (NAME_DETAILS.current) NAME_DETAILS.close();
 });
