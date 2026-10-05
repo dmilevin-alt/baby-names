@@ -5,7 +5,7 @@ function escapeHtml(str) {
 }
 
 const RECOMMEND = {
-  _newNames: new Map(),   // AI-invented names from the latest picks, by name
+  _addedNames: new Set(), // lowercased names the latest picks added to NAMES
 
   // Turn a stored or AI-returned name into the same shape as names.js entries
   // (AI text, so tags are cleaned to plain words and the meaning can't carry HTML)
@@ -39,10 +39,11 @@ const RECOMMEND = {
     return added;
   },
 
-  // Save the AI's new names for everyone and add them to the swipe deck
+  // Add the AI's names that aren't already known to the names list, save them
+  // for everyone and add them to the swipe deck; returns the ones added
   async _saveNewNames(newNames) {
     const added = this.addToNamesList(newNames);
-    if (added.length === 0) return;
+    if (added.length === 0) return added;
 
     const { error } = await STATE.db.from('ai_names').upsert(
       added.map(n => ({
@@ -70,6 +71,7 @@ const RECOMMEND = {
     }
     if (wasDone && STATE.deckIndex < STATE.deck.length) SWIPE.render();
     else SWIPE.updateProgress();
+    return added;
   },
 
   // Hard-filter helpers — identical logic to deck.js
@@ -214,8 +216,8 @@ const RECOMMEND = {
     }
 
     const newNames = picks.filter(p => p.source === 'new').map(p => this._toNameEntry(p));
-    this._newNames = new Map(newNames.map(n => [n.name, n]));
-    await this._saveNewNames(newNames);
+    const added = await this._saveNewNames(newNames);
+    this._addedNames = new Set(added.map(n => n.name.toLowerCase()));
 
     this._renderResults(body, picks, candidates, filters);
   },
@@ -261,9 +263,12 @@ const RECOMMEND = {
       </div>
       <div class="shortlist-list" id="recommend-list">
         ${picks.map(pick => {
-          const nameObj = this._newNames.get(pick.name) ||
-            NAMES.find(n => n.name === pick.name) || { name: pick.name, origin: [], meaning: '' };
-          return this._renderCard(nameObj, pick.reason, pick.source);
+          // Names already in the list keep their existing entry and aren't shown as new
+          const key = pick.name.toLowerCase();
+          const nameObj = NAMES.find(n => n.name.toLowerCase() === key) ||
+            { name: pick.name, origin: [], meaning: '' };
+          const source = pick.source === 'new' && !this._addedNames.has(key) ? null : pick.source;
+          return this._renderCard(nameObj, pick.reason, source);
         }).join('')}
       </div>`;
   },
