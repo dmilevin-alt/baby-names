@@ -39,7 +39,7 @@ const RECOMMEND = {
     return added;
   },
 
-  // Save the AI's new names for this room and add them to the swipe deck
+  // Save the AI's new names for everyone and add them to the swipe deck
   async _saveNewNames(newNames) {
     const added = this.addToNamesList(newNames);
     if (added.length === 0) return;
@@ -55,7 +55,7 @@ const RECOMMEND = {
         syllables: n.syllables,
         added_by:  STATE.user.id,
       })),
-      { onConflict: 'room_id,name', ignoreDuplicates: true }
+      { onConflict: 'name', ignoreDuplicates: true }
     );
     if (error) console.warn('Could not save AI-suggested names:', error);
 
