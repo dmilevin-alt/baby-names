@@ -310,29 +310,7 @@ const RECOMMEND = {
   },
 
   async quickVote(nameStr, voteType) {
-    const previous = STATE.myVotes[nameStr];
-    STATE.myVotes[nameStr] = voteType;
-
-    const { error } = await STATE.db.from('votes').upsert({
-      room_id: STATE.room.id,
-      user_id: STATE.user.id,
-      name:    nameStr,
-      vote:    voteType,
-    }, { onConflict: 'room_id,user_id,name' });
-
-    if (error) {
-      console.error('Recommend vote failed:', error);
-      if (previous === undefined) delete STATE.myVotes[nameStr];
-      else STATE.myVotes[nameStr] = previous;
-      showToast('Could not save. Try again.');
-      return;
-    }
-
-    while (STATE.deckIndex < STATE.deck.length &&
-           STATE.myVotes[STATE.deck[STATE.deckIndex].name]) {
-      STATE.deckIndex++;
-    }
-    if (voteType !== 'pass') await checkForNewMatches();
+    if (!await saveVote(nameStr, voteType)) return;
 
     const label = voteType === 'love' ? '❤️' : voteType === 'maybe' ? '🤔' : '✕';
     showToast(`${nameStr} ${label}`);

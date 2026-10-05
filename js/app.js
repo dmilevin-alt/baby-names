@@ -157,6 +157,7 @@ function showMainScreen(id) {
 
   if (id === 'shortlist-screen') SHORTLIST.render();
   if (id === 'profile-screen')   PROFILE.populate();
+  if (id === 'browse-screen')    BROWSE.render();
 }
 
 // ── TOAST ────────────────────────────────────────────────────────────────────

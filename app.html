@@ -113,6 +113,37 @@
   </div>
 </div>
 
+<!-- ── BROWSE ─────────────────────────────────────────────────────── -->
+<div class="screen" id="browse-screen">
+  <div class="page-header">
+    <h2>Browse names</h2>
+    <button class="btn-logout-sm" onclick="PROFILE.logout()">Log out</button>
+  </div>
+
+  <div class="browse-controls">
+    <input class="quiz-input" id="browse-search" type="search" placeholder="Search names or nicknames"
+      autocomplete="off" aria-label="Search names or nicknames" oninput="BROWSE.onSearch(this.value)">
+    <div class="browse-chips" id="browse-gender" role="group" aria-label="Gender">
+      <button class="browse-chip active" data-value="all"    onclick="BROWSE.setFilter('gender', 'all')">All</button>
+      <button class="browse-chip"        data-value="girl"   onclick="BROWSE.setFilter('gender', 'girl')">Girls</button>
+      <button class="browse-chip"        data-value="boy"    onclick="BROWSE.setFilter('gender', 'boy')">Boys</button>
+      <button class="browse-chip"        data-value="either" onclick="BROWSE.setFilter('gender', 'either')">Unisex</button>
+    </div>
+    <div class="browse-chips" id="browse-vote" role="group" aria-label="My vote">
+      <button class="browse-chip active" data-value="all"     onclick="BROWSE.setFilter('vote', 'all')">Any vote</button>
+      <button class="browse-chip"        data-value="unrated" onclick="BROWSE.setFilter('vote', 'unrated')">Not rated</button>
+      <button class="browse-chip"        data-value="love"    onclick="BROWSE.setFilter('vote', 'love')">❤️</button>
+      <button class="browse-chip"        data-value="maybe"   onclick="BROWSE.setFilter('vote', 'maybe')">🤔</button>
+      <button class="browse-chip"        data-value="pass"    onclick="BROWSE.setFilter('vote', 'pass')">✕</button>
+    </div>
+    <div class="browse-count" id="browse-count" aria-live="polite"></div>
+  </div>
+
+  <div class="browse-list" id="browse-list">
+    <!-- injected by browse.js -->
+  </div>
+</div>
+
 <!-- ── PROFILE ────────────────────────────────────────────────────── -->
 <div class="screen" id="profile-screen">
   <div class="profile-header">
@@ -175,6 +206,10 @@
     <span class="nav-icon">⭐</span>
     <span>Shortlist</span>
   </button>
+  <button class="nav-btn" data-screen="browse-screen" onclick="showMainScreen('browse-screen')">
+    <span class="nav-icon">🔍</span>
+    <span>Browse</span>
+  </button>
   <button class="nav-btn" data-screen="profile-screen" onclick="showMainScreen('profile-screen')">
     <span class="nav-icon">👤</span>
     <span>Profile</span>
@@ -197,6 +232,14 @@
   </div>
 </div>
 
+<!-- ── NAME DETAILS SHEET ────────────────────────────────────────── -->
+<div class="sheet-overlay" id="name-sheet" onclick="if (event.target === this) NAME_DETAILS.close()">
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-name">
+    <button class="sheet-close" onclick="NAME_DETAILS.close()" aria-label="Close">✕</button>
+    <div id="name-sheet-body"></div>
+  </div>
+</div>
+
 <!-- ── TOAST ──────────────────────────────────────────────────────── -->
 <div class="toast" id="toast"></div>
 
@@ -204,6 +247,7 @@
 <script src="./config.js"></script>
 <script src="./names.js"></script>
 <script src="./popular-names.js"></script>
+<script src="./nicknames.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="./js/app.js"></script>
 <script src="./js/room.js"></script>
@@ -212,6 +256,7 @@
 <script src="./js/swipe.js"></script>
 <script src="./js/shortlist.js"></script>
 <script src="./js/recommend.js"></script>
+<script src="./js/browse.js"></script>
 
 </body>
 </html>

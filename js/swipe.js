@@ -86,6 +86,7 @@ const SWIPE = {
 
     const originText  = (name.origin || []).map(capitalize).join(' · ');
     const styleText   = (name.style  || []).map(capitalize).join(', ');
+    const nicknames   = nicknamesFor(name);
     const knownSyllables = Number.isFinite(name.syllables);
     const popularityItems = (name.popularIn || []).map(item =>
       `<span class="card-trending-rank">${item.jurisdiction} #${item.position} · ${item.gender} · ${item.year}</span>`
@@ -103,6 +104,7 @@ const SWIPE = {
         <div class="card-name">${escapeHtml(name.name)}</div>
         ${name.partnerNote ? `<div class="card-partner-note">"${escapeHtml(name.partnerNote)}"</div>` : ''}
         ${originText ? `<div class="card-origin">${originText}</div>` : ''}
+        ${nicknames.length ? `<div class="card-nicknames">Nicknames: ${nicknames.map(escapeHtml).join(', ')}</div>` : ''}
         <div class="card-trending">
           <div class="card-trending-label">2025 top 100 rankings</div>
           <div class="card-trending-list">${popularityItems || '<span class="card-trending-none">Not in tracked top 100s</span>'}</div>
@@ -265,6 +267,40 @@ async function castVote(voteType) {
     SWIPE.updateProgress();
     SWIPE.renderCard();
   }, 350);
+}
+
+// ── SAVE A VOTE CAST OUTSIDE THE SWIPE DECK (For You, Browse, name details) ──
+// Returns true once saved; on failure restores the old vote and shows a toast
+async function saveVote(nameStr, voteType) {
+  const previous = STATE.myVotes[nameStr];
+  STATE.myVotes[nameStr] = voteType;
+
+  const { error } = await STATE.db.from('votes').upsert({
+    room_id: STATE.room.id,
+    user_id: STATE.user.id,
+    name:    nameStr,
+    vote:    voteType,
+  }, { onConflict: 'room_id,user_id,name' });
+
+  if (error) {
+    console.error('Vote save failed:', error);
+    if (previous === undefined) delete STATE.myVotes[nameStr];
+    else STATE.myVotes[nameStr] = previous;
+    showToast('Could not save. Try again.');
+    return false;
+  }
+
+  // Skip past the name if it was the next card in the deck
+  const startIndex = STATE.deckIndex;
+  while (!STATE.reviewMode && STATE.deckIndex < STATE.deck.length &&
+         STATE.myVotes[STATE.deck[STATE.deckIndex].name]) {
+    STATE.deckIndex++;
+  }
+  if (STATE.deckIndex !== startIndex) SWIPE.render();
+  else SWIPE.updateProgress();
+
+  if (voteType !== 'pass') await checkForNewMatches();
+  return true;
 }
 
 async function checkForNewMatches() {
