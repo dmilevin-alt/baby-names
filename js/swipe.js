@@ -101,7 +101,10 @@ const SWIPE = {
         <div class="card-vote-label pass-label"  id="label-pass">PASS</div>
         <div class="card-vote-label maybe-label" id="label-maybe">MAYBE</div>
         ${name.fromPartner ? `<div class="card-partner-tag">💌 Added by your partner</div>` : ''}
-        <div class="card-name">${escapeHtml(name.name)}</div>
+        <div class="card-title">
+          <div class="card-name">${escapeHtml(name.name)}</div>
+          ${NAME_AUDIO.button(name.name)}
+        </div>
         ${name.partnerNote ? `<div class="card-partner-note">"${escapeHtml(name.partnerNote)}"</div>` : ''}
         ${originText ? `<div class="card-origin">${originText}</div>` : ''}
         ${nicknames.length ? `<div class="card-nicknames">Nicknames: ${nicknames.map(escapeHtml).join(', ')}</div>` : ''}

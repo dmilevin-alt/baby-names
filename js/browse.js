@@ -9,6 +9,43 @@ function nicknamesFor(nameObj) {
   return NICKNAMES[nameObj?.name] || [];
 }
 
+// ── HEAR THE NAME ─────────────────────────────────────────────────────────────
+// Uses the browser's built-in speech. Names from these origins use a voice in
+// that language when the device has one; everything else uses the default voice.
+const NAME_AUDIO = {
+  LANGS: { french: 'fr', spanish: 'es', italian: 'it', german: 'de', dutch: 'nl',
+           polish: 'pl', scandinavian: 'sv' },
+
+  supported() {
+    return 'speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined';
+  },
+
+  button(nameStr) {
+    if (!this.supported()) return '';
+    const name = escapeHtml(nameStr);
+    return `<button class="hear-btn" data-name="${name}" onclick="NAME_AUDIO.speak(this.dataset.name, event)"
+      onmousedown="event.stopPropagation()" ontouchstart="event.stopPropagation()"
+      title="Hear the name" aria-label="Hear ${name}">🔊</button>`;
+  },
+
+  speak(nameStr, event) {
+    event?.stopPropagation();
+    if (!this.supported()) return;
+    const key = nameStr.toLowerCase();
+    const n = NAMES.find(item => item.name.toLowerCase() === key);
+    const lang = this.LANGS[(n?.origin || [])[0]];
+    const voice = lang && speechSynthesis.getVoices().find(v => v.lang.toLowerCase().startsWith(lang));
+
+    const utterance = new SpeechSynthesisUtterance(nameStr);
+    if (voice) { utterance.voice = voice; utterance.lang = voice.lang; }
+    utterance.rate = 0.85;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utterance);
+  },
+};
+// Some browsers load their voice list in the background
+if (NAME_AUDIO.supported()) speechSynthesis.getVoices();
+
 const VOTE_LABELS = { love: '❤️ Loved', maybe: '🤔 Maybe', pass: '✕ Passed' };
 const GENDER_LABELS = { girl: 'Girl', boy: 'Boy', either: 'Unisex' };
 
@@ -148,7 +185,10 @@ const NAME_DETAILS = {
       </button>`;
 
     el.innerHTML = `
-      <div class="sheet-name" id="sheet-name">${escapeHtml(n.name)}</div>
+      <div class="sheet-title">
+        <div class="sheet-name" id="sheet-name">${escapeHtml(n.name)}</div>
+        ${NAME_AUDIO.button(n.name)}
+      </div>
       <div class="sheet-facts">${escapeHtml(facts)}${origin ? ` · ${escapeHtml(origin)}` : ''}</div>
       ${n.meaning ? `<div class="sheet-meaning">"${escapeHtml(n.meaning)}"</div>` : ''}
       ${n.aiSuggested ? `<div class="recommend-tag">✨ Suggested by AI</div>` : ''}

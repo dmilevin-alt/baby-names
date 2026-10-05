@@ -1790,3 +1790,35 @@ a { color: var(--primary); text-decoration: none; }
     transform: translateX(-50%);
   }
 }
+
+/* ── HEAR THE NAME ───────────────────────────────────────────────────────── */
+.card-title,
+.sheet-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.card-title { margin-bottom: 8px; }
+.card-title .card-name { margin-bottom: 0; min-width: 0; overflow-wrap: anywhere; }
+.sheet-title { padding-right: 40px; }
+.sheet-title .sheet-name { padding-right: 0; min-width: 0; overflow-wrap: anywhere; }
+
+.hear-btn {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #FFF3EE;
+  border: 1.5px solid var(--border);
+  font-size: 17px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .15s;
+}
+
+.hear-btn:active { transform: scale(.9); }
+.hear-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
