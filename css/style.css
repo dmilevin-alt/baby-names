@@ -1927,6 +1927,8 @@ a { color: var(--primary); text-decoration: none; }
 .family-actions .btn { flex: 1; }
 
 /* ── SOLO INVITE BANNER ──────────────────────────────────────────────────── */
+.invite-banner[hidden] { display: none; }
+
 .invite-banner {
   display: flex;
   align-items: center;
@@ -1968,4 +1970,21 @@ a { color: var(--primary); text-decoration: none; }
   color: #fff;
   font-size: 13px;
   font-weight: 800;
+}
+
+/* ── SHORT SCREENS (e.g. iPhone SE): keep the vote buttons above the nav ── */
+@media (max-height: 720px) {
+  .swipe-header       { padding-top: 12px; }
+  .card-stage         { padding-top: 8px; }
+  .swipe-header       { gap: 4px; }
+  .name-card          { padding: 18px 22px 16px; }
+  .card-title         { margin-bottom: 4px; }
+  .card-name          { font-size: 34px; }
+  .card-origin        { margin-bottom: 10px; }
+  .card-nicknames     { margin: -6px 0 16px; }
+  .card-meaning-section { padding: 8px 12px; margin-bottom: 10px; }
+  .card-tags          { margin-bottom: 12px; }
+  .vote-buttons       { padding: 8px 20px 4px; }
+  .vote-btn .circle   { width: 52px; height: 52px; font-size: 22px; }
+  .invite-banner      { margin-top: 6px; padding: 6px 10px 6px 12px; }
 }

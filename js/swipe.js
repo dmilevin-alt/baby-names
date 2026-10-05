@@ -88,9 +88,12 @@ const SWIPE = {
     const styleText   = (name.style  || []).map(capitalize).join(', ');
     const nicknames   = nicknamesFor(name);
     const knownSyllables = Number.isFinite(name.syllables);
-    const popularityItems = (name.popularIn || []).map(item =>
+    // Best 3 rankings on the card so the vote buttons stay on screen; all of them are in the details sheet
+    const rankings = [...(name.popularIn || [])].sort((a, b) => a.position - b.position);
+    const popularityItems = rankings.slice(0, 3).map(item =>
       `<span class="card-trending-rank">${item.jurisdiction} #${item.position} · ${item.gender} · ${item.year}</span>`
-    ).join('');
+    ).join('') + (rankings.length > 3
+      ? `<span class="card-trending-rank card-trending-more">+${rankings.length - 3} more</span>` : '');
     const sylDots     = Array.from({ length: knownSyllables ? Math.min(name.syllables, 5) : 0 }, () =>
       `<div class="syl-dot filled"></div>`
     ).join('');
