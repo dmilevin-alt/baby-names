@@ -26,7 +26,14 @@ Deno.serve(async (req) => {
     );
   }
 
-  const { candidates = [], loveExamples = [], maybeExamples = [], quizContext = {} } = body;
+  const {
+    candidates = [], loveExamples = [], maybeExamples = [], excludeNames = [], quizContext = {},
+  } = body;
+
+  const MAX_PICKS = 10;
+  const MAX_MAYBE_PICKS = 3;
+  // Only invent names outside the app's list when the list can't fill the picks
+  const newSlots = Math.max(0, MAX_PICKS - candidates.length);
 
   const fmtNames = (arr) =>
     arr.map((n) => {
@@ -37,6 +44,16 @@ Deno.serve(async (req) => {
   const candLines = candidates
     .map((n) => `${n.name} | ${n.gender} | ${(n.origin || []).join("/")} | ${(n.style || []).join("/")} | ${n.meaning || ""}`)
     .join("\n");
+
+  const candidateSection = candidates.length
+    ? `CANDIDATE NAMES they haven't rated yet (name | gender | origin | style | meaning):\n${candLines}`
+    : "CANDIDATE NAMES: none left. They have rated every name in the app that fits their preferences.";
+
+  const newSection = newSlots > 0
+    ? `
+NEW NAMES: There aren't enough candidates, so also suggest up to ${newSlots} real, established given names that are NOT in the candidate list and NOT any of these names they've already rated: ${excludeNames.join(", ") || "none"}.
+New names must fit the gender preference${quizContext.avoidLetters ? ` and must not start with ${quizContext.avoidLetters}` : ""}. Base them on what their loved names and maybe list have in common.`
+    : "";
 
   const prompt = `You are a baby name advisor helping a couple narrow down their shortlist.
 
@@ -50,15 +67,18 @@ THEIR QUIZ PREFERENCES:
 NAMES THEY LOVED: ${fmtNames(loveExamples) || "none yet"}
 NAMES ON THEIR MAYBE LIST: ${fmtNames(maybeExamples) || "none yet"}
 
-The maybe list holds names they're drawn to but haven't committed to. Treat it as a real signal of taste, weaker than loved names but stronger than quiz answers alone. Look for patterns across the maybe list (sounds, origins, styles, meanings, length) and recommend candidates that share what the maybe names have in common, especially where that overlaps with the loved names. A good pick could feel like a stronger version of names on their maybe list.
+The maybe list holds names they're drawn to but haven't committed to. Treat it as a real signal of taste, weaker than loved names but stronger than quiz answers alone. Look for patterns across the maybe list (sounds, origins, styles, meanings, length) and recommend names that share what the maybe names have in common, especially where that overlaps with the loved names.
 
-CANDIDATE NAMES (name | gender | origin | style | meaning):
-${candLines}
+${candidateSection}
 
-Pick the 10 candidates that best match their loved names, maybe list and quiz preferences. Prioritise gender. Give varied picks. When a pick is inspired by maybe-list names, the reason may mention one of them.
+MAYBES WORTH A SECOND LOOK: You may also pick up to ${MAX_MAYBE_PICKS} names from their maybe list that fit their loved names and quiz answers best, to nudge them to decide. Only pick a maybe if it is a genuinely strong fit.
+${newSection}
+
+Pick up to ${MAX_PICKS} names in total. Prefer candidates over new names. Prioritise gender. Give varied picks. When a pick is inspired by maybe-list names, the reason may mention one of them.
 
 Return ONLY a valid JSON array — no explanation, no markdown. Each element:
-{"name":"<name>","reason":"<one sentence max 12 words explaining why this fits>"}`;
+{"name":"<name>","source":"candidate" | "maybe" | "new","reason":"<one sentence max 12 words explaining why this fits>"}
+For "new" names also include: "gender":"girl" | "boy" | "either","origin":["<lowercase origin>"],"meaning":"<short meaning>"`;
 
   let aiResp;
   try {
@@ -71,7 +91,7 @@ Return ONLY a valid JSON array — no explanation, no markdown. Each element:
       },
       body: JSON.stringify({
         model: "claude-haiku-4-5-20251001",
-        max_tokens: 900,
+        max_tokens: 1500,
         messages: [{ role: "user", content: prompt }],
       }),
     });
@@ -103,7 +123,48 @@ Return ONLY a valid JSON array — no explanation, no markdown. Each element:
     );
   }
 
-  return new Response(JSON.stringify(picks), {
+  if (!Array.isArray(picks)) picks = [];
+
+  // Keep only picks that obey the rules: real candidates, real maybes,
+  // or new names the couple hasn't rated and that fit their filters
+  const key = (s) => String(s || "").trim().toLowerCase();
+  const candidateNames = new Set(candidates.map((n) => key(n.name)));
+  const maybeNames = new Set(maybeExamples.map((n) => key(n.name)));
+  const rated = new Set([...excludeNames, ...loveExamples.map((n) => n.name)].map(key));
+  const avoid = new Set(String(quizContext.avoidLetters || "").toUpperCase().split(/[^A-Z]+/).filter(Boolean));
+  const gender = ["girl", "boy"].includes(quizContext.gender) ? quizContext.gender : null;
+
+  const seen = new Set();
+  let maybeCount = 0, newCount = 0;
+  const clean = [];
+  for (const p of picks) {
+    const name = String(p?.name || "").trim();
+    const k = key(name);
+    if (!name || seen.has(k) || !/^\p{L}[\p{L}' -]{0,29}$/u.test(name)) continue;
+    const reason = typeof p.reason === "string" ? p.reason.slice(0, 200) : "";
+
+    if (candidateNames.has(k)) {
+      clean.push({ name, source: "candidate", reason });
+    } else if (maybeNames.has(k)) {
+      if (maybeCount >= MAX_MAYBE_PICKS) continue;
+      maybeCount++;
+      clean.push({ name, source: "maybe", reason });
+    } else {
+      if (newCount >= newSlots || rated.has(k) || avoid.has(name[0].toUpperCase())) continue;
+      const g = ["girl", "boy", "either"].includes(p.gender) ? p.gender : "either";
+      if (gender && g !== gender && g !== "either") continue;
+      newCount++;
+      clean.push({
+        name, source: "new", reason, gender: g,
+        origin: (Array.isArray(p.origin) ? p.origin : []).map((o) => key(o)).filter(Boolean).slice(0, 3),
+        meaning: typeof p.meaning === "string" ? p.meaning.slice(0, 100) : "",
+      });
+    }
+    seen.add(k);
+    if (clean.length >= MAX_PICKS) break;
+  }
+
+  return new Response(JSON.stringify(clean), {
     headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
   });
 });

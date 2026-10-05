@@ -1,5 +1,21 @@
 // ── RECOMMENDATION ENGINE ─────────────────────────────────────────────────────
+const AI_NAMES_KEY = 'aiSuggestedNames';
+
+// Names the AI invented (not in names.js) that this person loved or maybe'd,
+// so their origin and meaning still show up in other tabs after a reload
+try {
+  const saved = JSON.parse(localStorage.getItem(AI_NAMES_KEY) || '[]');
+  const known = new Set(NAMES.map(n => n.name));
+  saved.forEach(n => { if (n && n.name && !known.has(n.name)) NAMES.push(n); });
+} catch (e) { /* storage unavailable: those names just show without details */ }
+
+function escapeHtml(str) {
+  return String(str ?? '').replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+}
+
 const RECOMMEND = {
+  _newNames: new Map(),   // AI-invented names from the latest picks, by name
 
   // Hard-filter helpers — identical logic to deck.js
   _buildFilters() {
@@ -96,16 +112,6 @@ const RECOMMEND = {
     const filters = this._buildFilters();
     const candidates = this._candidates(filters);
 
-    if (candidates.length === 0) {
-      body.innerHTML = `
-        <div class="shortlist-empty">
-          <div class="big-icon">✨</div>
-          <h3>Nothing new to suggest</h3>
-          <p>You've rated most names that match your preferences. Try the Maybes tab to revisit names you were unsure about.</p>
-        </div>`;
-      return;
-    }
-
     const p1 = STATE.myPrefs      || {};
     const p2 = STATE.partnerPrefs || {};
     const quizContext = {
@@ -118,13 +124,17 @@ const RECOMMEND = {
       avoidLetters:   [...filters.avoidSet].join(', ') || null,
     };
 
+    // Everything already rated or matched, so the AI doesn't suggest it as new
+    const excludeNames = union(Object.keys(STATE.myVotes), STATE.shortlist.map(s => s.name));
+
     let picks = null;
     try {
       const { data, error } = await STATE.db.functions.invoke('recommend', {
         body: {
           candidates:   candidates.map(({ name, gender, origin, style, meaning }) => ({ name, gender, origin, style, meaning })),
           loveExamples: this._voteExamples('love', 30),
-          maybeExamples:this._voteExamples('maybe', 50),
+          maybeExamples:this._voteExamples('maybe', 60),
+          excludeNames,
           quizContext,
         },
       });
@@ -133,10 +143,33 @@ const RECOMMEND = {
       console.warn('AI recommend failed, using algorithm:', e);
     }
 
-    // Fallback: algorithm-based picks
-    if (!picks) {
+    // Fallback: algorithm-based picks (only possible from names in the app)
+    if (!picks && candidates.length > 0) {
       picks = this._algorithmicPicks(candidates, filters);
     }
+
+    if (!picks) {
+      body.innerHTML = `
+        <div class="shortlist-empty">
+          <div class="big-icon">✨</div>
+          <h3>Nothing new to suggest</h3>
+          <p>You've rated every name that matches your preferences, and AI picks couldn't load right now. Try again later, or revisit names in the Maybes tab.</p>
+        </div>`;
+      return;
+    }
+
+    this._newNames = new Map(
+      picks.filter(p => p.source === 'new').map(p => [p.name, {
+        name: p.name,
+        gender: p.gender || 'either',
+        origin: p.origin || [],
+        tradition: [],
+        style: [],
+        meaning: p.meaning || '',
+        syllables: null,
+        aiSuggested: true,
+      }])
+    );
 
     this._renderResults(body, picks, candidates, filters);
   },
@@ -170,71 +203,119 @@ const RECOMMEND = {
                      : genderFilter === 'boy'  ? ' · Boys only' : '';
 
     const isAI = picks[0]?.reason !== null && picks[0]?.reason !== undefined;
+    const sub = candidates.length === 0
+      ? "You've rated every name in the app, so Claude suggested new ones"
+      : 'Claude analysed your quiz answers, loves and maybes';
 
     body.innerHTML = `
       <div class="recommend-intro">
         <div class="recommend-intro-label">${isAI ? '✨ AI picks for you' : 'Personalised picks'}</div>
         <div class="recommend-intro-tags">${genderNote ? genderNote.slice(3) : 'Based on your quiz &amp; votes'}${genderNote}</div>
-        ${isAI ? '<div class="recommend-intro-sub">Claude analysed your quiz answers and vote history</div>' : ''}
+        ${isAI ? `<div class="recommend-intro-sub">${sub}</div>` : ''}
       </div>
-      <div class="shortlist-list">
+      <div class="shortlist-list" id="recommend-list">
         ${picks.map(pick => {
-          const nameObj = NAMES.find(n => n.name === pick.name) || { name: pick.name, origin: [], meaning: '' };
-          return this._renderCard(nameObj, pick.reason);
+          const nameObj = this._newNames.get(pick.name) ||
+            NAMES.find(n => n.name === pick.name) || { name: pick.name, origin: [], meaning: '' };
+          return this._renderCard(nameObj, pick.reason, pick.source);
         }).join('')}
       </div>`;
   },
 
-  _renderCard(n, reason) {
+  _cardId(name) {
+    return 'rec-' + name.replace(/\W/g, '_');
+  },
+
+  _renderCard(n, reason, source) {
     const origin = (n.origin || []).map(o => o.charAt(0).toUpperCase() + o.slice(1)).join(' · ');
     const ranks  = (n.popularIn || []).map(r => `${r.jurisdiction} #${r.position}`).join(' · ');
     const sub    = [origin, ranks].filter(Boolean).join(' · ');
+    const name   = escapeHtml(n.name);
+    const tag    = source === 'maybe' ? '🤔 From your Maybes'
+                 : source === 'new'   ? '✨ New name, not in the app' : '';
+    const isMaybe = source === 'maybe';
 
     return `
-      <div class="shortlist-item recommend-item" id="rec-${n.name.replace(/\s/g,'_')}">
+      <div class="shortlist-item recommend-item" id="${this._cardId(n.name)}">
         <div class="shortlist-item-head">
           <div style="flex:1;min-width:0">
-            <div class="shortlist-item-name">${n.name}</div>
-            ${sub    ? `<div class="shortlist-item-sub">${sub}</div>` : ''}
-            ${reason ? `<div class="shortlist-item-sub recommend-reason">✨ ${reason}</div>` : ''}
-            ${!reason && n.meaning ? `<div class="shortlist-item-sub recommend-meaning">"${n.meaning}"</div>` : ''}
+            <div class="shortlist-item-name">${name}</div>
+            ${tag    ? `<div class="recommend-tag">${tag}</div>` : ''}
+            ${sub    ? `<div class="shortlist-item-sub">${escapeHtml(sub)}</div>` : ''}
+            ${reason ? `<div class="shortlist-item-sub recommend-reason">✨ ${escapeHtml(reason)}</div>` : ''}
+            ${(isMaybe || source === 'new' || !reason) && n.meaning
+              ? `<div class="shortlist-item-sub recommend-meaning">"${escapeHtml(n.meaning)}"</div>` : ''}
           </div>
           <div class="recommend-actions">
-            <button class="rec-btn rec-love"  onclick="RECOMMEND.quickVote('${n.name}','love')"  title="Love">❤️</button>
-            <button class="rec-btn rec-maybe" onclick="RECOMMEND.quickVote('${n.name}','maybe')" title="Maybe">🤔</button>
-            <button class="rec-btn rec-pass"  onclick="RECOMMEND.quickVote('${n.name}','pass')"  title="Pass">✕</button>
+            <button class="rec-btn rec-love" data-name="${name}" onclick="RECOMMEND.quickVote(this.dataset.name,'love')"
+              title="Love" aria-label="Love ${name}">❤️</button>
+            ${isMaybe ? '' : `<button class="rec-btn rec-maybe" data-name="${name}" onclick="RECOMMEND.quickVote(this.dataset.name,'maybe')"
+              title="Maybe" aria-label="Maybe ${name}">🤔</button>`}
+            <button class="rec-btn rec-pass" data-name="${name}" onclick="RECOMMEND.quickVote(this.dataset.name,'pass')"
+              title="${isMaybe ? 'Dismiss' : 'Pass'}" aria-label="${isMaybe ? 'Dismiss' : 'Pass'} ${name}">✕</button>
           </div>
         </div>
       </div>`;
   },
 
+  // Keep an AI-invented name's details once they've loved or maybe'd it
+  _rememberNewName(nameStr) {
+    const info = this._newNames.get(nameStr);
+    if (!info || NAMES.some(n => n.name === nameStr)) return;
+    NAMES.push(info);
+    try {
+      const saved = JSON.parse(localStorage.getItem(AI_NAMES_KEY) || '[]');
+      saved.push(info);
+      localStorage.setItem(AI_NAMES_KEY, JSON.stringify(saved));
+    } catch (e) { /* storage unavailable */ }
+  },
+
   async quickVote(nameStr, voteType) {
+    const previous = STATE.myVotes[nameStr];
     STATE.myVotes[nameStr] = voteType;
+
+    const { error } = await STATE.db.from('votes').upsert({
+      room_id: STATE.room.id,
+      user_id: STATE.user.id,
+      name:    nameStr,
+      vote:    voteType,
+    }, { onConflict: 'room_id,user_id,name' });
+
+    if (error) {
+      console.error('Recommend vote failed:', error);
+      if (previous === undefined) delete STATE.myVotes[nameStr];
+      else STATE.myVotes[nameStr] = previous;
+      showToast('Could not save. Try again.');
+      return;
+    }
+
     while (STATE.deckIndex < STATE.deck.length &&
            STATE.myVotes[STATE.deck[STATE.deckIndex].name]) {
       STATE.deckIndex++;
     }
-    try {
-      await STATE.db.from('votes').upsert({
-        room_id: STATE.room.id,
-        user_id: STATE.user.id,
-        name:    nameStr,
-        vote:    voteType,
-      }, { onConflict: 'room_id,user_id,name' });
-      if (voteType !== 'pass') await checkForNewMatches();
-    } catch(e) {
-      console.error('Recommend vote failed:', e);
+    if (voteType !== 'pass') {
+      this._rememberNewName(nameStr);
+      await checkForNewMatches();
     }
+
     const label = voteType === 'love' ? '❤️' : voteType === 'maybe' ? '🤔' : '✕';
     showToast(`${nameStr} ${label}`);
 
-    const el = document.getElementById('rec-' + nameStr.replace(/\s/g,'_'));
-    if (el) {
-      el.style.transition = 'opacity .25s';
-      el.style.opacity    = '0';
-      setTimeout(() => this.render(), 280);
-    } else {
-      this.render();
+    const maybesTab = document.getElementById('maybes-tab');
+    if (maybesTab) {
+      const maybeCount = Object.values(STATE.myVotes).filter(v => v === 'maybe').length;
+      maybesTab.textContent = `🤔 Maybes (${maybeCount})`;
     }
+
+    // Remove just this card; fetch a fresh set of picks once they're all done
+    const el = document.getElementById(this._cardId(nameStr));
+    if (!el) { this.render(); return; }
+    el.style.transition = 'opacity .25s';
+    el.style.opacity    = '0';
+    setTimeout(() => {
+      el.remove();
+      const list = document.getElementById('recommend-list');
+      if (!list || list.children.length === 0) this.render();
+    }, 280);
   },
 };
