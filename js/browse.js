@@ -53,6 +53,7 @@ const BROWSE = {
   query:   '',
   gender:  'all',   // all | girl | boy | either
   vote:    'all',   // all | unrated | love | maybe | pass
+  sort:    'popular', // popular (most US babies first) | az
   limit:   60,
   PAGE:    60,
 
@@ -64,6 +65,8 @@ const BROWSE = {
       chip.classList.toggle('active', chip.dataset.value === this.gender));
     document.querySelectorAll('#browse-vote .browse-chip').forEach(chip =>
       chip.classList.toggle('active', chip.dataset.value === this.vote));
+    document.querySelectorAll('#browse-sort .browse-chip').forEach(chip =>
+      chip.classList.toggle('active', chip.dataset.value === this.sort));
 
     const results = this._results();
     const shown   = results.slice(0, this.limit);
@@ -100,7 +103,7 @@ const BROWSE = {
       if (this.vote === 'unrated' ? vote : this.vote !== 'all' && vote !== this.vote) continue;
 
       if (!q) { out.push({ n, rank: 0 }); continue; }
-      const folded = foldName(n.name);
+      const folded = n._folded || (n._folded = foldName(n.name));
       if (folded.startsWith(q))      out.push({ n, rank: 0 });
       else if (folded.includes(q))   out.push({ n, rank: 1 });
       else {
@@ -108,13 +111,19 @@ const BROWSE = {
         if (nick) out.push({ n, rank: 2, nick });
       }
     }
-    return out.sort((a, b) => a.rank - b.rank || a.n.name.localeCompare(b.n.name));
+    const byPopularity = this.sort === 'popular';
+    return out.sort((a, b) => a.rank - b.rank ||
+      (byPopularity ? usBirths(b.n) - usBirths(a.n) : 0) ||
+      a.n.name.localeCompare(b.n.name));
   },
 
   _renderRow({ n, nick }) {
     const vote   = STATE.myVotes[n.name];
     const origin = (n.origin || []).map(capitalize).join(' · ');
-    const sub    = [GENDER_LABELS[n.gender], origin].filter(Boolean).join(' · ');
+    const us     = usStat(n);
+    const sub    = [GENDER_LABELS[n.gender], origin,
+      us ? `US #${us.rank.toLocaleString()}${n.gender === 'either' ? ` ${us.gender}` : ''}` : '']
+      .filter(Boolean).join(' · ');
     return `
       <button class="browse-row" data-name="${escapeHtml(n.name)}"
         onclick="NAME_DETAILS.open(this.dataset.name)">
@@ -179,7 +188,10 @@ const NAME_DETAILS = {
       Number.isFinite(n.syllables) ? `${n.syllables} syllable${n.syllables === 1 ? '' : 's'}` : '']
       .filter(Boolean).join(' · ');
     const tags      = [...(n.style || []), ...(n.tradition || [])];
-    const ranks     = n.popularIn || [];
+    const ranks     = popularityList(n);
+    const us        = n.us;
+    const usLine    = us ? ['girls', 'boys'].filter(s => us[s])
+      .map(s => `${us[s].births.toLocaleString()} ${s} (#${us[s].rank.toLocaleString()})`).join(' and ') : '';
     const similar   = this._similar(n);
     const chip      = s => `<span class="sheet-chip">${escapeHtml(s)}</span>`;
     const voteBtn   = (type, icon, label) => `
@@ -204,10 +216,11 @@ const NAME_DETAILS = {
       </div>
 
       <div class="sheet-section">
-        <div class="sheet-label">2025 top 100 rankings</div>
+        <div class="sheet-label">Popularity rankings</div>
         <div class="sheet-chips">${ranks.length
-          ? ranks.map(r => chip(`${r.jurisdiction} #${r.position}${n.gender === 'either' ? ` · ${r.gender}` : ''}`)).join('')
-          : '<span class="sheet-none">Not in tracked top 100s</span>'}</div>
+          ? ranks.map(r => chip(`${r.jurisdiction} #${r.position.toLocaleString()}${n.gender === 'either' ? ` · ${r.gender}` : ''}`)).join('')
+          : '<span class="sheet-none">Not in tracked rankings</span>'}</div>
+        ${usLine ? `<div class="sheet-us">Babies given this name in the US in ${us.year}: ${escapeHtml(usLine)}</div>` : ''}
       </div>
 
       ${tags.length ? `

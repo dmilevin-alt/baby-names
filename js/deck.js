@@ -70,14 +70,21 @@ const DECK = {
     });
 
     // ── 5. Sort by score, then shuffle names with equal scores ───────────────
-    pool.sort((a, b) => b.score - a.score);
+    // Within a score, the app's own names come first (shuffled), then names that
+    // are only in the US Social Security list, most common first
+    pool.sort((a, b) => b.score - a.score || (a.usOnly ? 1 : 0) - (b.usOnly ? 1 : 0));
     for (let start = 0; start < pool.length;) {
       let end = start + 1;
-      while (end < pool.length && pool[end].score === pool[start].score) end++;
+      while (end < pool.length && pool[end].score === pool[start].score && !pool[end].usOnly === !pool[start].usOnly) end++;
 
-      for (let i = end - 1; i > start; i--) {
-        const j = start + Math.floor(Math.random() * (i - start + 1));
-        [pool[i], pool[j]] = [pool[j], pool[i]];
+      if (pool[start].usOnly) {
+        const group = pool.slice(start, end).sort((a, b) => usBirths(b) - usBirths(a));
+        pool.splice(start, group.length, ...group);
+      } else {
+        for (let i = end - 1; i > start; i--) {
+          const j = start + Math.floor(Math.random() * (i - start + 1));
+          [pool[i], pool[j]] = [pool[j], pool[i]];
+        }
       }
       start = end;
     }

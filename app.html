@@ -125,6 +125,10 @@
       <button class="browse-chip"        data-value="maybe"   onclick="BROWSE.setFilter('vote', 'maybe')">🤔</button>
       <button class="browse-chip"        data-value="pass"    onclick="BROWSE.setFilter('vote', 'pass')">✕</button>
     </div>
+    <div class="browse-chips" id="browse-sort" role="group" aria-label="Sort">
+      <button class="browse-chip active" data-value="popular" onclick="BROWSE.setFilter('sort', 'popular')">Most popular in US</button>
+      <button class="browse-chip"        data-value="az"      onclick="BROWSE.setFilter('sort', 'az')">A–Z</button>
+    </div>
     <div class="browse-count" id="browse-count" aria-live="polite"></div>
   </div>
 
@@ -253,6 +257,8 @@
 <script src="./config.js"></script>
 <script src="./names.js"></script>
 <script src="./popular-names.js"></script>
+<script src="./us-names.js"></script>
+<script src="./us-names-merge.js"></script>
 <script src="./nicknames.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="./js/app.js"></script>

@@ -89,9 +89,9 @@ const SWIPE = {
     const nicknames   = nicknamesFor(name);
     const knownSyllables = Number.isFinite(name.syllables);
     // Best 3 rankings on the card so the vote buttons stay on screen; all of them are in the details sheet
-    const rankings = [...(name.popularIn || [])].sort((a, b) => a.position - b.position);
+    const rankings = popularityList(name);
     const popularityItems = rankings.slice(0, 3).map(item =>
-      `<span class="card-trending-rank">${item.jurisdiction} #${item.position} · ${item.gender} · ${item.year}</span>`
+      `<span class="card-trending-rank">${item.jurisdiction} #${item.position.toLocaleString()} · ${item.gender} · ${item.year}</span>`
     ).join('') + (rankings.length > 3
       ? `<span class="card-trending-rank card-trending-more">+${rankings.length - 3} more</span>` : '');
     const sylDots     = Array.from({ length: knownSyllables ? Math.min(name.syllables, 5) : 0 }, () =>
@@ -112,8 +112,8 @@ const SWIPE = {
         ${originText ? `<div class="card-origin">${originText}</div>` : ''}
         ${nicknames.length ? `<div class="card-nicknames">Nicknames: ${nicknames.map(escapeHtml).join(', ')}</div>` : ''}
         <div class="card-trending">
-          <div class="card-trending-label">2025 top 100 rankings</div>
-          <div class="card-trending-list">${popularityItems || '<span class="card-trending-none">Not in tracked top 100s</span>'}</div>
+          <div class="card-trending-label">Popularity rankings</div>
+          <div class="card-trending-list">${popularityItems || '<span class="card-trending-none">Not in tracked rankings</span>'}</div>
         </div>
         ${name.meaning ? `
         <div class="card-meaning-section">

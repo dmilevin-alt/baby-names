@@ -74,10 +74,10 @@ const SHORTLIST = {
     const nameObj = STATE.deck.find(item => item.name === name) ||
       NAMES.find(item => item.name === name);
     const origin = nameObj ? (nameObj.origin || []).map(capitalize).join(' · ') : '';
-    const rankings = nameObj?.popularIn || [];
+    const rankings = nameObj ? popularityList(nameObj) : [];
     const rankingText = rankings.length
       ? rankings.map(item => `${item.jurisdiction} #${item.position}`).join(' · ')
-      : 'Not in tracked top 100s';
+      : 'Not in tracked rankings';
 
     return `
       <div class="shortlist-item maybe-item" id="maybe-${name.replace(/\W/g, '_')}">

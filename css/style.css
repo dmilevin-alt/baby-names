@@ -1988,3 +1988,9 @@ a { color: var(--primary); text-decoration: none; }
   .vote-btn .circle   { width: 52px; height: 52px; font-size: 22px; }
   .invite-banner      { margin-top: 6px; padding: 6px 10px 6px 12px; }
 }
+
+.sheet-us {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
