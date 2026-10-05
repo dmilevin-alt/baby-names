@@ -26,14 +26,15 @@ const RECOMMEND = {
 
   // Add names to NAMES (skipping ones already there); returns the ones added
   addToNamesList(names) {
-    const known = new Set(NAMES.map(n => n.name.toLowerCase()));
+    // Known names ignoring case and accents, so "Lea" isn't added next to "Léa"
+    const known = new Set(NAMES.map(n => foldName(n.name)));
     const added = [];
     for (const n of names) {
       if (!n?.name || !/^\p{L}[\p{L}' -]{0,29}$/u.test(n.name) ||
-          known.has(n.name.toLowerCase())) continue;
+          known.has(foldName(n.name))) continue;
       const entry = this._toNameEntry(n);
       NAMES.push(entry);
-      known.add(entry.name.toLowerCase());
+      known.add(foldName(entry.name));
       added.push(entry);
     }
     return added;

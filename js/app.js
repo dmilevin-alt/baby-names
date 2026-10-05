@@ -96,6 +96,11 @@ async function enterMainApp() {
 
   if (votes) {
     votes.forEach(v => { STATE.myVotes[v.name] = v.vote; });
+    // A vote on a spelling that was merged into another counts for the kept spelling
+    votes.forEach(v => {
+      const kept = MERGED_SPELLINGS[v.name];
+      if (kept && !STATE.myVotes[kept]) STATE.myVotes[kept] = v.vote;
+    });
   }
 
   // Add names the AI recommender found (for anyone) to the names list
