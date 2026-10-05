@@ -1994,3 +1994,8 @@ a { color: var(--primary); text-decoration: none; }
   color: var(--text-muted);
   margin-top: 6px;
 }
+
+.card-tag-unisex {
+  color: var(--primary-dk);
+  background: #FFF3EE;
+}

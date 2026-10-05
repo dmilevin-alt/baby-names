@@ -97,8 +97,7 @@ const BROWSE = {
     const q = foldName(this.query.trim());
     const out = [];
     for (const n of NAMES) {
-      if (this.gender !== 'all' && n.gender !== this.gender &&
-          !(this.gender !== 'either' && n.gender === 'either')) continue;
+      if (this.gender === 'either' ? n.gender !== 'either' : !fitsGender(n, this.gender)) continue;
       const vote = STATE.myVotes[n.name];
       if (this.vote === 'unrated' ? vote : this.vote !== 'all' && vote !== this.vote) continue;
 

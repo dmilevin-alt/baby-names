@@ -121,6 +121,7 @@ const SWIPE = {
           <div class="card-meaning">${name.meaning}</div>
         </div>` : ''}
         <div class="card-tags">
+          ${name.gender === 'either' ? `<span class="card-tag card-tag-unisex">Unisex</span>` : ''}
           ${styleText ? `<span class="card-tag">${styleText}</span>` : ''}
           ${(name.tradition || []).map(t => `<span class="card-tag">${capitalize(t)}</span>`).join('')}
         </div>

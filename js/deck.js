@@ -25,8 +25,7 @@ const DECK = {
 
     // ── 3. Filter ────────────────────────────────────────────────────────────
     let pool = NAMES.filter(n => {
-      if (genderFilter !== 'all' && genderFilter !== 'either' &&
-          n.gender !== 'either' && n.gender !== genderFilter) return false;
+      if (!fitsGender(n, genderFilter)) return false;
       if (avoidSet.size > 0 && avoidSet.has(n.name[0].toUpperCase())) return false;
       return true;
     });

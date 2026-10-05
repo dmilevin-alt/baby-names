@@ -67,6 +67,18 @@ function popularityList(n) {
   return list.sort((a, b) => a.position - b.position);
 }
 
+// Does a name belong in a girls' or boys' list? Unisex names count only when at least
+// 20% of US babies with the name are that sex, so mostly-boy names such as Kai or Ryan
+// stay out of girls' lists. Names with little US data (under 20 babies) keep counting.
+function fitsGender(n, gender) {
+  if (gender !== 'girl' && gender !== 'boy') return true;
+  if (n.gender === gender) return true;
+  if (n.gender !== 'either') return false;
+  const g = n.us?.girls?.births || 0, b = n.us?.boys?.births || 0;
+  if (g + b < 20) return true;
+  return (gender === 'girl' ? g : b) / (g + b) >= 0.2;
+}
+
 function usBirths(n) {
   return Math.max(n?.us?.girls?.births || 0, n?.us?.boys?.births || 0);
 }

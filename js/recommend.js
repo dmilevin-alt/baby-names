@@ -114,8 +114,7 @@ const RECOMMEND = {
     return NAMES
       .filter(n => {
         if (voted.has(n.name) || shortlisted.has(n.name)) return false;
-        if (genderFilter !== 'all' && genderFilter !== 'either' &&
-            n.gender !== 'either' && n.gender !== genderFilter) return false;
+        if (!fitsGender(n, genderFilter)) return false;
         if (avoidSet.size > 0 && avoidSet.has(n.name[0].toUpperCase())) return false;
         return true;
       })
