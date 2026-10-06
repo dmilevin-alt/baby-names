@@ -169,23 +169,10 @@ const SHORTLIST = {
   },
 
   async resolveMaybe(name, voteType) {
-    const previous = STATE.myVotes[name];
     STATE.myVotes[name] = voteType;
+    const saved = await persistVote(name, voteType);
 
-    const { error } = await STATE.db.from('votes').upsert({
-      room_id: STATE.room.id,
-      user_id: STATE.user.id,
-      name:    name,
-      vote:    voteType
-    }, { onConflict: 'room_id,user_id,name' });
-
-    if (error) {
-      STATE.myVotes[name] = previous;
-      showToast('Could not save. Try again.');
-      return;
-    }
-
-    if (voteType === 'love') await checkForNewMatches();
+    if (saved && voteType === 'love') await checkForNewMatches();
     showToast(voteType === 'love' ? `${name} ❤️ Loved`
       : voteType === 'maybe' ? `${name} moved to Maybes` : `${name} dismissed`);
 
@@ -324,7 +311,7 @@ const SHORTLIST = {
     const toLove = [];
     const toDeck = [];
     for (const item of STATE.shortlist.filter(s => s.is_custom)) {
-      let base = NAMES.find(n => n.name.toLowerCase() === item.name.toLowerCase());
+      let base = findName(item.name);   // also matches a spelling merged into another
       if (!base) {
         base = { name: item.name, gender: 'either', origin: [], tradition: [], style: [],
                  meaning: '', syllables: null };

@@ -86,22 +86,50 @@ async function boot() {
   await enterMainApp();
 }
 
-async function enterMainApp() {
-  // Load votes I've already cast
-  const { data: votes } = await STATE.db
-    .from('votes')
-    .select('name, vote')
-    .eq('room_id', STATE.room.id)
-    .eq('user_id', STATE.user.id);
-
-  if (votes) {
-    votes.forEach(v => { STATE.myVotes[v.name] = v.vote; });
-    // A vote on a spelling that was merged into another counts for the kept spelling
-    votes.forEach(v => {
-      const kept = MERGED_SPELLINGS[v.name];
-      if (kept && !STATE.myVotes[kept]) STATE.myVotes[kept] = v.vote;
-    });
+// Every vote I've cast. The API returns at most 1,000 rows per request, so page
+// through them; otherwise votes past the first 1,000 are dropped and those names
+// come back in the deck.
+async function loadAllVotes() {
+  const PAGE = 1000;
+  const votes = [];
+  for (let from = 0; ; from += PAGE) {
+    const { data, error } = await STATE.db
+      .from('votes')
+      .select('name, vote')
+      .eq('room_id', STATE.room.id)
+      .eq('user_id', STATE.user.id)
+      .order('name')
+      .range(from, from + PAGE - 1);
+    if (error) throw error;
+    votes.push(...(data || []));
+    if (!data || data.length < PAGE) return votes;
   }
+}
+
+async function enterMainApp() {
+  // Votes that couldn't be saved last time go first, so nothing rated comes back
+  await VOTE_QUEUE.flush();
+
+  let votes;
+  try {
+    votes = await loadAllVotes();
+  } catch (err) {
+    // Never build a deck without the votes: every rated name would come back
+    console.error('Could not load votes:', err);
+    showScreen('loading-screen');
+    document.querySelector('#loading-screen p').innerHTML =
+      'Could not load your votes. <a href="#" onclick="location.reload(); return false;">Try again</a>';
+    return;
+  }
+
+  votes.forEach(v => { STATE.myVotes[v.name] = v.vote; });
+  // A vote on a spelling that was merged into another counts for the kept spelling
+  votes.forEach(v => {
+    const kept = MERGED_SPELLINGS[v.name];
+    if (kept && !STATE.myVotes[kept]) STATE.myVotes[kept] = v.vote;
+  });
+  // Votes still waiting to be saved count too
+  for (const v of VOTE_QUEUE.pending()) STATE.myVotes[v.name] = v.vote;
 
   // Add names the AI recommender found (for anyone) to the names list
   const { data: aiNames, error: aiNamesError } = await STATE.db
@@ -135,6 +163,59 @@ async function enterMainApp() {
   PROFILE.populate();
   showMainScreen('swipe-screen');
   FAMILY.maybePrompt();
+}
+
+// ── SAVING VOTES ─────────────────────────────────────────────────────────────
+// Save a vote, retrying on failure. A vote that still can't be saved is kept on
+// this device and sent next time, so a name you rated never comes back.
+const VOTE_QUEUE = {
+  key() { return `pendingVotes:${STATE.room?.id}:${STATE.user?.id}`; },
+
+  pending() {
+    try { return JSON.parse(localStorage.getItem(this.key()) || '[]'); } catch { return []; }
+  },
+
+  _write(list) {
+    try { localStorage.setItem(this.key(), JSON.stringify(list)); } catch { /* storage unavailable */ }
+  },
+
+  add(name, vote) {
+    const list = this.pending().filter(v => v.name !== name);
+    list.push({ name, vote });
+    this._write(list);
+  },
+
+  // Returns true once every queued vote is saved
+  async flush() {
+    const list = this.pending();
+    if (list.length === 0) return true;
+    const { error } = await STATE.db.from('votes').upsert(
+      list.map(v => ({ room_id: STATE.room.id, user_id: STATE.user.id, name: v.name, vote: v.vote })),
+      { onConflict: 'room_id,user_id,name' });
+    if (error) { console.warn('Queued votes still not saved:', error); return false; }
+    this._write([]);
+    return true;
+  },
+};
+
+async function persistVote(name, vote) {
+  const row = { room_id: STATE.room.id, user_id: STATE.user.id, name, vote };
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const { error } = await STATE.db.from('votes').upsert(row, { onConflict: 'room_id,user_id,name' });
+      if (!error) {
+        if (VOTE_QUEUE.pending().length) VOTE_QUEUE.flush();   // catch up on earlier failures
+        return true;
+      }
+      console.warn(`Vote save failed (attempt ${attempt + 1}):`, error);
+    } catch (err) {
+      console.warn(`Vote save failed (attempt ${attempt + 1}):`, err);
+    }
+    await new Promise(r => setTimeout(r, 400 * (attempt + 1)));
+  }
+  VOTE_QUEUE.add(name, vote);
+  showToast('Couldn\u2019t reach the server. Your vote is saved on this phone and will sync.', 3500);
+  return false;
 }
 
 // ── SCREEN HELPERS ────────────────────────────────────────────────────────────

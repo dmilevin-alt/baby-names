@@ -253,21 +253,12 @@ async function castVote(voteType) {
     STATE.deckIndex++;
   }
 
-  // Save to DB
-  try {
-    await STATE.db.from('votes').upsert({
-      room_id: STATE.room.id,
-      user_id: STATE.user.id,
-      name:    name.name,
-      vote:    voteType
-    }, { onConflict: 'room_id,user_id,name' });
+  // Save to DB (retries, and queues the vote on this device if it still fails)
+  const saved = await persistVote(name.name, voteType);
 
-    // Check for new matches (only on love/maybe — pass can't produce a match)
-    if (voteType !== 'pass') {
-      await checkForNewMatches();
-    }
-  } catch (err) {
-    console.error('Vote save failed:', err);
+  // Check for new matches (only on love/maybe — pass can't produce a match)
+  if (saved && voteType !== 'pass') {
+    try { await checkForNewMatches(); } catch (err) { console.error('Match check failed:', err); }
   }
 
   // Wait for fly-out animation then show next card
@@ -281,23 +272,10 @@ async function castVote(voteType) {
 // ── SAVE A VOTE CAST OUTSIDE THE SWIPE DECK (For You, Browse, name details) ──
 // Returns true once saved; on failure restores the old vote and shows a toast
 async function saveVote(nameStr, voteType) {
-  const previous = STATE.myVotes[nameStr];
   STATE.myVotes[nameStr] = voteType;
 
-  const { error } = await STATE.db.from('votes').upsert({
-    room_id: STATE.room.id,
-    user_id: STATE.user.id,
-    name:    nameStr,
-    vote:    voteType,
-  }, { onConflict: 'room_id,user_id,name' });
-
-  if (error) {
-    console.error('Vote save failed:', error);
-    if (previous === undefined) delete STATE.myVotes[nameStr];
-    else STATE.myVotes[nameStr] = previous;
-    showToast('Could not save. Try again.');
-    return false;
-  }
+  // Retries, and keeps the vote on this device if the server can't be reached
+  const saved = await persistVote(nameStr, voteType);
 
   // Skip past the name if it was the next card in the deck
   const startIndex = STATE.deckIndex;
@@ -308,7 +286,7 @@ async function saveVote(nameStr, voteType) {
   if (STATE.deckIndex !== startIndex) SWIPE.render();
   else SWIPE.updateProgress();
 
-  if (voteType !== 'pass') await checkForNewMatches();
+  if (saved && voteType !== 'pass') await checkForNewMatches();
   return true;
 }
 
