@@ -2021,3 +2021,28 @@ a { color: var(--primary); text-decoration: none; }
   .card-famous { margin: -6px 0 16px; }
   .card-nicknames + .card-famous { margin-top: -12px; }
 }
+
+/* ── LOVED (NOT MATCHED YET) ─────────────────────────────────────────────── */
+.loved-intro {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  padding: 14px 20px 0;
+}
+
+.loved-name {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  padding: 0;
+  text-align: left;
+  color: var(--text);
+}
+
+@media (max-width: 440px) {
+  .shortlist-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .shortlist-tab { padding: 9px 8px; font-size: 13px; }
+}

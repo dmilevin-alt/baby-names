@@ -395,6 +395,9 @@ const NAME_DETAILS = {
     showToast(`${n.name} ${voteType === 'love' ? '❤️' : voteType === 'maybe' ? '🤔' : '✕'}`);
     if (this.current === n) this.render();
     BROWSE.render();
+    if (document.getElementById('shortlist-screen')?.classList.contains('active') && SHORTLIST.view !== 'foryou') {
+      SHORTLIST.render();
+    }
   },
 };
 

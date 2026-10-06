@@ -7,12 +7,14 @@ const SHORTLIST = {
     if (!body) return;
 
     const matchesTab = document.getElementById('matches-tab');
+    const lovedTab   = document.getElementById('loved-tab');
     const maybesTab  = document.getElementById('maybes-tab');
     const foryouTab  = document.getElementById('foryou-tab');
     const maybeCount = Object.values(STATE.myVotes).filter(vote => vote === 'maybe').length;
     if (matchesTab) matchesTab.textContent = `❤️ Matches (${STATE.shortlist.length})`;
+    if (lovedTab)   lovedTab.textContent   = `💗 Loved (${this.lovedNames().length})`;
     if (maybesTab)  maybesTab.textContent  = `🤔 Maybes (${maybeCount})`;
-    [matchesTab, maybesTab, foryouTab].forEach(tab => {
+    [matchesTab, lovedTab, maybesTab, foryouTab].forEach(tab => {
       if (!tab) return;
       const v = tab.id.replace('-tab', '');
       tab.classList.toggle('active', this.view === v);
@@ -20,6 +22,7 @@ const SHORTLIST = {
     });
 
     if (this.view === 'maybes') { this.renderMaybes(body); return; }
+    if (this.view === 'loved')  { this.renderLoved(body);  return; }
     if (this.view === 'foryou') { RECOMMEND.render(body);  return; }
 
     const items = STATE.shortlist;
@@ -67,6 +70,70 @@ const SHORTLIST = {
     body.innerHTML = `
       <div class="shortlist-list">
         ${names.map(name => this.renderMaybeItem(name)).join('')}
+      </div>`;
+  },
+
+  // Names you loved that aren't a match yet, newest first. Only your own votes are
+  // used, so this never reveals how your partner voted.
+  lovedNames() {
+    const matched = new Set(STATE.shortlist.map(s => s.name.toLowerCase()));
+    const seen = new Set();
+    return Object.entries(STATE.myVotes)
+      .filter(([, vote]) => vote === 'love')
+      .map(([name]) => findName(name)?.name || name)   // merged spellings show once
+      .filter(name => {
+        const key = name.toLowerCase();
+        if (matched.has(key) || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      })
+      .reverse();
+  },
+
+  renderLoved(body) {
+    const names = this.lovedNames();
+    const anyLoved = Object.values(STATE.myVotes).includes('love');
+    if (names.length === 0) {
+      body.innerHTML = `
+        <div class="shortlist-empty">
+          <div class="big-icon">💗</div>
+          <h3>${anyLoved ? 'Every name you loved is a match' : 'No loved names yet'}</h3>
+          <p>${anyLoved ? 'Keep swiping to find more.'
+            : "Names you ❤️ while swiping appear here until your partner loves them too."}</p>
+        </div>`;
+      return;
+    }
+    body.innerHTML = `
+      <p class="loved-intro">Names you loved that aren't a match yet. Your partner may not have reached them in their deck.</p>
+      <div class="shortlist-list">
+        ${names.map(name => this.renderLovedItem(name)).join('')}
+      </div>`;
+  },
+
+  renderLovedItem(name) {
+    const nameObj = findName(name);
+    const safe = escapeHtml(name);
+    const origin = nameObj ? (nameObj.origin || []).map(capitalize).join(' · ') : '';
+    const us = nameObj ? usStat(nameObj) : null;
+    const sub = [nameObj ? GENDER_LABELS[nameObj.gender] : '', origin, us ? `US #${us.rank.toLocaleString()}` : '']
+      .filter(Boolean).join(' · ');
+    return `
+      <div class="shortlist-item maybe-item" id="loved-${name.replace(/\W/g, '_')}">
+        <div class="shortlist-item-head">
+          <button class="loved-name" data-name="${safe}" onclick="NAME_DETAILS.open(this.dataset.name)">
+            <div class="shortlist-item-name">${safe}</div>
+            ${sub ? `<div class="shortlist-item-sub">${escapeHtml(sub)}</div>` : ''}
+            ${nameObj?.meaning ? `<div class="shortlist-item-sub recommend-meaning">"${escapeHtml(nameObj.meaning)}"</div>` : ''}
+          </button>
+          <div class="recommend-actions">
+            <button class="rec-btn rec-maybe" data-name="${safe}"
+              onclick="SHORTLIST.resolveMaybe(this.dataset.name, 'maybe')"
+              title="Move to Maybes" aria-label="Move ${safe} to Maybes">🤔</button>
+            <button class="rec-btn rec-pass" data-name="${safe}"
+              onclick="SHORTLIST.resolveMaybe(this.dataset.name, 'pass')"
+              title="Remove" aria-label="Remove ${safe} from loved names">✕</button>
+          </div>
+        </div>
       </div>`;
   },
 
@@ -119,9 +186,11 @@ const SHORTLIST = {
     }
 
     if (voteType === 'love') await checkForNewMatches();
-    showToast(voteType === 'love' ? `${name} ❤️ Loved` : `${name} dismissed`);
+    showToast(voteType === 'love' ? `${name} ❤️ Loved`
+      : voteType === 'maybe' ? `${name} moved to Maybes` : `${name} dismissed`);
 
-    const el = document.getElementById('maybe-' + name.replace(/\W/g, '_'));
+    const id = name.replace(/\W/g, '_');
+    const el = document.getElementById('maybe-' + id) || document.getElementById('loved-' + id);
     if (el) {
       el.style.transition = 'opacity .25s';
       el.style.opacity    = '0';
