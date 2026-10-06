@@ -131,7 +131,8 @@ const QUIZ = {
             <p class="hint">Pick as many as you like.</p>
             <div class="choice-grid">
               ${[['classic','Classic'],['modern','Modern'],['unique','Unique / uncommon'],
-                 ['nature','Nature-inspired'],['vintage','Vintage']]
+                 ['nature','Nature-inspired'],['vintage','Vintage'],
+                 ['famous','Inspired by athletes & celebrities']]
                 .map(([v,l]) =>
                   `<button class="choice-pill ${this.answers.styles.includes(v)?'selected':''}"
                     onclick="QUIZ.toggleMulti('styles','${v}',this)">${l}</button>`

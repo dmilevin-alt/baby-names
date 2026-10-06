@@ -54,6 +54,7 @@ const BROWSE = {
   gender:  'all',   // all | girl | boy | either
   vote:    'all',   // all | unrated | love | maybe | pass
   sort:    'popular', // popular (most US babies first) | az
+  famous:  'all',   // all | athlete | celebrity
   limit:   60,
   PAGE:    60,
 
@@ -67,6 +68,8 @@ const BROWSE = {
       chip.classList.toggle('active', chip.dataset.value === this.vote));
     document.querySelectorAll('#browse-sort .browse-chip').forEach(chip =>
       chip.classList.toggle('active', chip.dataset.value === this.sort));
+    document.querySelectorAll('#browse-famous .browse-chip').forEach(chip =>
+      chip.classList.toggle('active', chip.dataset.value === this.famous));
 
     const results = this._results();
     const shown   = results.slice(0, this.limit);
@@ -98,6 +101,7 @@ const BROWSE = {
     const out = [];
     for (const n of NAMES) {
       if (this.gender === 'either' ? n.gender !== 'either' : !fitsGender(n, this.gender)) continue;
+      if (this.famous !== 'all' && !famousTypes(n).has(this.famous)) continue;
       const vote = STATE.myVotes[n.name];
       if (this.vote === 'unrated' ? vote : this.vote !== 'all' && vote !== this.vote) continue;
 
@@ -129,6 +133,8 @@ const BROWSE = {
         <div class="browse-row-main">
           <div class="browse-row-name">${escapeHtml(n.name)}</div>
           <div class="browse-row-sub">${escapeHtml(sub)}${nick ? ` · nickname <b>${escapeHtml(nick)}</b>` : ''}</div>
+          ${(n.famous || []).length ? `<div class="browse-row-famous">${n.famous.slice(0, 2).map(f =>
+            `${f.type === 'athlete' ? '🏅' : '🌟'} ${escapeHtml(f.who)}`).join(' · ')}</div>` : ''}
         </div>
         ${vote ? `<span class="browse-row-vote vote-${vote}">${VOTE_LABELS[vote]}</span>` : ''}
         <span class="profile-row-arrow">›</span>
@@ -207,6 +213,13 @@ const NAME_DETAILS = {
       <div class="sheet-facts">${escapeHtml(facts)}${origin ? ` · ${escapeHtml(origin)}` : ''}</div>
       ${n.meaning ? `<div class="sheet-meaning">"${escapeHtml(n.meaning)}"</div>` : ''}
       ${n.aiSuggested ? `<div class="recommend-tag">✨ Suggested by AI</div>` : ''}
+
+      ${(n.famous || []).length ? `
+      <div class="sheet-section">
+        <div class="sheet-label">Famous namesakes</div>
+        <div class="sheet-chips">${n.famous.map(f =>
+          chip(`${f.type === 'athlete' ? '🏅' : '🌟'} ${f.who} · ${f.knownFor}`)).join('')}</div>
+      </div>` : ''}
 
       <div class="sheet-section">
         <div class="sheet-label">Common nicknames</div>

@@ -1999,3 +1999,25 @@ a { color: var(--primary); text-decoration: none; }
   color: var(--primary-dk);
   background: #FFF3EE;
 }
+
+/* ── FAMOUS NAMESAKES ────────────────────────────────────────────────────── */
+.card-famous {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  margin: -8px 0 20px;
+}
+
+.card-nicknames + .card-famous { margin-top: -14px; }
+
+.browse-row-famous {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  margin-top: 2px;
+}
+
+@media (max-height: 720px) {
+  .card-famous { margin: -6px 0 16px; }
+  .card-nicknames + .card-famous { margin-top: -12px; }
+}

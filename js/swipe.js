@@ -111,6 +111,8 @@ const SWIPE = {
         ${name.partnerNote ? `<div class="card-partner-note">"${escapeHtml(name.partnerNote)}"</div>` : ''}
         ${originText ? `<div class="card-origin">${originText}</div>` : ''}
         ${nicknames.length ? `<div class="card-nicknames">Nicknames: ${nicknames.map(escapeHtml).join(', ')}</div>` : ''}
+        ${(name.famous || []).length ? `<div class="card-famous">${name.famous.slice(0, 2).map(f =>
+          `${f.type === 'athlete' ? '🏅' : '🌟'} ${escapeHtml(f.who)}`).join(' · ')}</div>` : ''}
         <div class="card-trending">
           <div class="card-trending-label">Popularity rankings</div>
           <div class="card-trending-list">${popularityItems || '<span class="card-trending-none">Not in tracked rankings</span>'}</div>
