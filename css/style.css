@@ -2046,3 +2046,10 @@ a { color: var(--primary); text-decoration: none; }
   }
   .shortlist-tab { padding: 9px 8px; font-size: 13px; }
 }
+
+.profile-version {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 14px;
+}

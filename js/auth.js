@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Already logged in? go straight to app
   const { data: { session } } = await db.auth.getSession();
   if (session) {
-    window.location.href = './app.html';
+    window.location.href = './app.html?v=' + Date.now();
   }
 });
 
@@ -41,7 +41,7 @@ async function handleLogin(e) {
     return;
   }
 
-  window.location.href = './app.html';
+  window.location.href = './app.html?v=' + Date.now();
 }
 
 // ── SIGN UP ──────────────────────────────────────────────────────────────────
@@ -77,7 +77,7 @@ async function handleSignup(e) {
   if (data.session) {
     // Update profile display_name (trigger creates it with email prefix; override with real name)
     await db.from('profiles').upsert({ id: data.user.id, display_name: name });
-    window.location.href = './app.html';
+    window.location.href = './app.html?v=' + Date.now();
     return;
   }
 

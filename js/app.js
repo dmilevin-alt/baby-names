@@ -16,8 +16,32 @@ const STATE = {
 };
 
 
+// ── APP VERSION ──────────────────────────────────────────────────────────────
+// Must match version.txt and the ?v= on every file in app.html and index.html
+// (tools/bump-version.sh updates all of them).
+const APP_VERSION = '2026-10-06.2';
+
+// Phones, and especially home-screen apps, can keep running cached old files after an
+// update. Check the live version (never cached) and reload onto it if this copy is old.
+async function ensureLatestVersion() {
+  try {
+    const res = await fetch('./version.txt?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) return false;
+    const live = (await res.text()).trim();
+    if (!live || live === APP_VERSION) return false;
+    const tried = sessionStorage.getItem('reloadedFor');
+    if (tried === live) return false;          // already reloaded once for this version
+    sessionStorage.setItem('reloadedFor', live);
+    location.replace('./app.html?v=' + encodeURIComponent(live));
+    return true;
+  } catch {
+    return false;                               // offline: carry on with this copy
+  }
+}
+
 // ── BOOT ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
+  if (await ensureLatestVersion()) return;
   STATE.db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const { data: { session } } = await STATE.db.auth.getSession();
@@ -365,6 +389,7 @@ const PROFILE = {
     document.getElementById('profile-code').textContent  =
       STATE.room ? STATE.room.invite_code : '—';
     document.getElementById('profile-family').textContent = FAMILY.summary();
+    document.getElementById('profile-version').textContent = `App version ${APP_VERSION}`;
   },
 
   shareCode() {
