@@ -27,7 +27,7 @@ const RECOMMEND = {
   // Add names to NAMES (skipping ones already there); returns the ones added
   addToNamesList(names) {
     // Known names ignoring case and accents, so "Lea" isn't added next to "Léa"
-    const known = new Set(NAMES.map(n => foldName(n.name)));
+    const known = new Set([...NAMES.map(n => n.name), ...Object.keys(MERGED_SPELLINGS)].map(foldName));
     const added = [];
     for (const n of names) {
       if (!n?.name || !/^\p{L}[\p{L}' -]{0,29}$/u.test(n.name) ||
@@ -137,7 +137,7 @@ const RECOMMEND = {
       .filter(([, v]) => v === voteType)
       .slice(0, limit)
       .map(([name]) => {
-        const obj = NAMES.find(n => n.name === name) || {};
+        const obj = findName(name) || {};
         return { name, origin: obj.origin || [], style: obj.style || [], meaning: obj.meaning || '' };
       });
   },
@@ -229,7 +229,7 @@ const RECOMMEND = {
     for (const [name, v] of Object.entries(votes)) {
       if (v !== 'love' && v !== 'maybe') continue;
       const w = v === 'love' ? 2 : 1;
-      const obj = NAMES.find(n => n.name === name);
+      const obj = findName(name);
       if (!obj) continue;
       (obj.origin || []).forEach(o => originFreq.set(o, (originFreq.get(o) || 0) + w));
       (obj.style  || []).forEach(s => styleFreq.set(s,  (styleFreq.get(s)  || 0) + w));
@@ -265,7 +265,7 @@ const RECOMMEND = {
         ${picks.map(pick => {
           // Names already in the list keep their existing entry and aren't shown as new
           const key = pick.name.toLowerCase();
-          const nameObj = NAMES.find(n => n.name.toLowerCase() === key) ||
+          const nameObj = findName(key) ||
             { name: pick.name, origin: [], meaning: '' };
           const source = pick.source === 'new' && !this._addedNames.has(key) ? null : pick.source;
           return this._renderCard(nameObj, pick.reason, source);

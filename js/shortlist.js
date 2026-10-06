@@ -72,7 +72,7 @@ const SHORTLIST = {
 
   renderMaybeItem(name) {
     const nameObj = STATE.deck.find(item => item.name === name) ||
-      NAMES.find(item => item.name === name);
+      findName(name);
     const origin = nameObj ? (nameObj.origin || []).map(capitalize).join(' · ') : '';
     const rankings = nameObj ? popularityList(nameObj) : [];
     const rankingText = rankings.length
@@ -310,7 +310,7 @@ function emailMyList() {
   }
 
   const nameInfo = n => {
-    const obj = NAMES.find(x => x.name === n);
+    const obj = findName(n);
     const origin = obj ? (obj.origin || []).map(capitalize).join('/') : '';
     const meaning = obj ? obj.meaning : '';
     let line = n;

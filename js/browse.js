@@ -31,8 +31,7 @@ const NAME_AUDIO = {
   speak(nameStr, event) {
     event?.stopPropagation();
     if (!this.supported()) return;
-    const key = nameStr.toLowerCase();
-    const n = NAMES.find(item => item.name.toLowerCase() === key);
+    const n = findName(nameStr);
     const lang = this.LANGS[(n?.origin || [])[0]];
     const voice = lang && speechSynthesis.getVoices().find(v => v.lang.toLowerCase().startsWith(lang));
 
@@ -94,8 +93,8 @@ const BROWSE = {
         : '');
   },
 
-  // Matching names, best matches first: name starts with the query, then
-  // name contains it, then a nickname matches it
+  // Matching names, best matches first: the name or one of its spellings is the query,
+  // then the name starts with it, contains it or another spelling does, then a nickname
   _results() {
     const q = foldName(this.query.trim());
     const out = [];
@@ -107,11 +106,16 @@ const BROWSE = {
 
       if (!q) { out.push({ n, rank: 0 }); continue; }
       const folded = n._folded || (n._folded = foldName(n.name));
-      if (folded.startsWith(q))      out.push({ n, rank: 0 });
+      const exactSpelling = (n.spellings || []).find(sp => foldName(sp) === q);
+      if (folded === q)              out.push({ n, rank: -1 });
+      else if (exactSpelling)        out.push({ n, rank: -1, spelled: exactSpelling });
+      else if (folded.startsWith(q)) out.push({ n, rank: 0 });
       else if (folded.includes(q))   out.push({ n, rank: 1 });
       else {
-        const nick = nicknamesFor(n).find(k => foldName(k).startsWith(q));
-        if (nick) out.push({ n, rank: 2, nick });
+        const spelled = (n.spellings || []).find(s => foldName(s).startsWith(q));
+        const nick = !spelled && nicknamesFor(n).find(k => foldName(k).startsWith(q));
+        if (spelled) out.push({ n, rank: 1, spelled });
+        else if (nick) out.push({ n, rank: 2, nick });
       }
     }
     const byPopularity = this.sort === 'popular';
@@ -120,7 +124,7 @@ const BROWSE = {
       a.n.name.localeCompare(b.n.name));
   },
 
-  _renderRow({ n, nick }) {
+  _renderRow({ n, nick, spelled }) {
     const vote   = STATE.myVotes[n.name];
     const origin = (n.origin || []).map(capitalize).join(' · ');
     const us     = usStat(n);
@@ -132,7 +136,7 @@ const BROWSE = {
         onclick="NAME_DETAILS.open(this.dataset.name)">
         <div class="browse-row-main">
           <div class="browse-row-name">${escapeHtml(n.name)}</div>
-          <div class="browse-row-sub">${escapeHtml(sub)}${nick ? ` · nickname <b>${escapeHtml(nick)}</b>` : ''}</div>
+          <div class="browse-row-sub">${escapeHtml(sub)}${nick ? ` · nickname <b>${escapeHtml(nick)}</b>` : ''}${spelled ? ` · also spelled <b>${escapeHtml(spelled)}</b>` : ''}</div>
           ${(n.famous || []).length ? `<div class="browse-row-famous">${n.famous.slice(0, 2).map(f =>
             `${f.type === 'athlete' ? '🏅' : '🌟'} ${escapeHtml(f.who)}`).join(' · ')}</div>` : ''}
         </div>
@@ -165,9 +169,8 @@ const NAME_DETAILS = {
   aiCache: new Map(),   // AI insights already fetched this session, by name + family details
 
   open(nameStr) {
-    const key = nameStr.toLowerCase();
-    const n = NAMES.find(item => item.name.toLowerCase() === key) ||
-      STATE.deck.find(item => item.name.toLowerCase() === key);
+    const n = findName(nameStr) ||
+      STATE.deck.find(item => item.name.toLowerCase() === nameStr.toLowerCase());
     if (!n) return;
     this.current = n;
     this.ai = this.aiCache.get(this._aiKey(n)) || null;
@@ -219,6 +222,12 @@ const NAME_DETAILS = {
         <div class="sheet-label">Famous namesakes</div>
         <div class="sheet-chips">${n.famous.map(f =>
           chip(`${f.type === 'athlete' ? '🏅' : '🌟'} ${f.who} · ${f.knownFor}`)).join('')}</div>
+      </div>` : ''}
+
+      ${(n.spellings || []).length ? `
+      <div class="sheet-section">
+        <div class="sheet-label">Also spelled</div>
+        <div class="sheet-chips">${n.spellings.map(chip).join('')}</div>
       </div>` : ''}
 
       <div class="sheet-section">
