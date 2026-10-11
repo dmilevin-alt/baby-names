@@ -20,14 +20,27 @@ const QUIZ = {
     'family', 'gender', 'tradition', 'backgrounds', 'styles', 'length', 'letters', 'vibe'
   ],
 
-  init() {
+  // Pass your saved answers to edit them; without them the quiz starts blank
+  init(saved = null) {
     this.step = 0;
+    this.editing = Boolean(saved);
     this.answers = {
-      gender_pref: '', tradition: [], backgrounds: [],
-      styles: [], length_pref: 'any', include_letters: '', avoid_letters: '', vibe: '',
-      full_name: STATE.profile?.display_name || '', sibling_names: ''
+      gender_pref:     saved?.gender_pref || '',
+      tradition:       [...(saved?.tradition || [])],
+      backgrounds:     [...(saved?.backgrounds || [])],
+      styles:          [...(saved?.styles || [])],
+      length_pref:     saved?.length_pref || 'any',
+      include_letters: saved?.include_letters || '',
+      avoid_letters:   saved?.avoid_letters || '',
+      vibe:            saved?.vibe || '',
+      full_name:       saved?.full_name ?? (STATE.profile?.display_name || ''),
+      sibling_names:   (saved?.sibling_names || []).join(', '),
     };
     this.render();
+  },
+
+  cancel() {
+    showMainScreen('profile-screen');
   },
 
   render() {
@@ -35,10 +48,14 @@ const QUIZ = {
     screen.innerHTML = `
       <div class="quiz-header">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2px">
-          <h2>Your Preferences</h2>
-          <button class="btn-logout-sm" onclick="PROFILE.logout()">Log out</button>
+          <h2>${this.editing ? 'Update your answers' : 'Your Preferences'}</h2>
+          ${this.editing
+            ? `<button class="btn-logout-sm" onclick="QUIZ.cancel()">Cancel</button>`
+            : `<button class="btn-logout-sm" onclick="PROFILE.logout()">Log out</button>`}
         </div>
-        <p>Just for you — your partner answers separately.</p>
+        <p>${this.editing
+          ? 'Your names update as soon as you save. Names you already rated stay rated.'
+          : 'Just for you — your partner answers separately.'}</p>
         <div class="quiz-progress-bar">
           <div class="quiz-progress-fill" id="quiz-progress-fill" style="width:${(this.step / this.steps.length) * 100}%"></div>
         </div>
@@ -47,7 +64,7 @@ const QUIZ = {
       <div class="quiz-footer">
         ${this.step > 0 ? `<button class="btn btn-secondary" style="flex:1" onclick="QUIZ.back()">Back</button>` : ''}
         <button class="btn btn-primary" style="flex:2" id="quiz-next-btn" onclick="QUIZ.next()">
-          ${this.step === this.steps.length - 1 ? 'See my names ❤️' : 'Next'}
+          ${this.step === this.steps.length - 1 ? (this.editing ? 'Save and update my names' : 'See my names ❤️') : 'Next'}
         </button>
       </div>
     `;
@@ -258,11 +275,19 @@ const QUIZ = {
     if (error) {
       showToast('Could not save. Please try again.');
       btn.disabled = false;
-      btn.textContent = 'See my names ❤️';
+      btn.textContent = this.editing ? 'Save and update my names' : 'See my names ❤️';
       return;
     }
 
     STATE.myPrefs = data;
+
+    // Already in the app: refresh the names in place and keep everything else
+    if (this.editing && document.getElementById('bottom-nav').classList.contains('visible')) {
+      this.editing = false;
+      showMainScreen('swipe-screen');
+      await refreshDeck('Your names are updated for your new answers');
+      return;
+    }
 
     // Check if partner has also done the quiz
     const { data: allPrefs } = await STATE.db

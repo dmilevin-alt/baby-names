@@ -2053,3 +2053,6 @@ a { color: var(--primary); text-decoration: none; }
   color: var(--text-muted);
   margin-top: 14px;
 }
+
+/* Changing quiz answers from inside the app: the nav would cover the quiz buttons */
+body.quiz-open .bottom-nav { display: none; }

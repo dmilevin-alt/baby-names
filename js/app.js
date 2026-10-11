@@ -19,7 +19,7 @@ const STATE = {
 // ── APP VERSION ──────────────────────────────────────────────────────────────
 // Must match version.txt and the ?v= on every file in app.html and index.html
 // (tools/bump-version.sh updates all of them).
-const APP_VERSION = '2026-10-06.2';
+const APP_VERSION = '2026-10-11.1';
 
 // Phones, and especially home-screen apps, can keep running cached old files after an
 // update. Check the live version (never cached) and reload onto it if this copy is old.
@@ -250,6 +250,7 @@ function showScreen(id) {
 }
 
 function showMainScreen(id) {
+  document.body.classList.remove('quiz-open');
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const el = document.getElementById(id);
   if (el) el.classList.add('active');
@@ -315,6 +316,8 @@ let shortlistPollInterval = null;
 function startShortlistPoll() {
   clearInterval(shortlistPollInterval);
   shortlistPollInterval = setInterval(async () => {
+    try { await checkPartnerPrefs(); } catch (err) { console.warn('Partner answers check failed:', err); }
+
     const { data, error } = await STATE.db
       .from('shortlist')
       .select('*')
@@ -334,6 +337,50 @@ function startShortlistPoll() {
       SHORTLIST.render();
     }
   }, 30000);
+}
+
+// ── REFRESH THE DECK WHEN QUIZ ANSWERS CHANGE ────────────────────────────────
+// The deck blends both partners' answers. When either set changes, rebuild it so the
+// names shown match the latest answers. Votes are kept, so rated names never come back,
+// and the card on screen stays where it is.
+const PREF_FIELDS = ['gender_pref', 'tradition', 'backgrounds', 'styles', 'length_pref',
+                     'include_letters', 'avoid_letters'];
+function prefsKey(p) {
+  return p ? JSON.stringify(PREF_FIELDS.map(f => p[f] ?? null)) : '';
+}
+
+let deckRefreshPending = false;
+async function refreshDeck(message) {
+  // Don't pull a passes-only review out from under the user; refresh when it ends
+  if (STATE.reviewMode) { deckRefreshPending = true; return; }
+  deckRefreshPending = false;
+
+  const current = STATE.deck[STATE.deckIndex];
+  const keepCurrent = current && !STATE.myVotes[current.name] && !current.fromPartner ? current : null;
+
+  STATE.deck = DECK.build(STATE.myPrefs, STATE.partnerPrefs || STATE.myPrefs);
+  // Keep the card on screen only if it still fits the new answers
+  if (keepCurrent && STATE.deck.some(n => n.name === keepCurrent.name)) {
+    STATE.deck = [STATE.deck.find(n => n.name === keepCurrent.name),
+                  ...STATE.deck.filter(n => n.name !== keepCurrent.name)];
+  }
+  STATE.deckIndex = STATE.deck.findIndex(n => !STATE.myVotes[n.name]);
+  if (STATE.deckIndex === -1) STATE.deckIndex = STATE.deck.length;
+
+  await SHORTLIST.syncCustomNames();   // partner's custom names go back in, next up
+  SWIPE.render();
+  if (message) showToast(message, 3200);
+}
+
+// Has your partner changed their answers? Checked with the shortlist poll.
+async function checkPartnerPrefs() {
+  if (!STATE.room?.partner_id || !STATE.partnerPrefs) return;
+  const { data: prefs, error } = await STATE.db.from('preferences').select('*')
+    .eq('room_id', STATE.room.id).neq('user_id', STATE.user.id).maybeSingle();
+  if (error || !prefs) return;   // no row means they're mid-quiz: keep the answers we have
+  const changed = prefsKey(prefs) !== prefsKey(STATE.partnerPrefs);
+  STATE.partnerPrefs = prefs;
+  if (changed) await refreshDeck('Your partner updated their answers, so your names were refreshed');
 }
 
 // ── PARTNER STATUS ────────────────────────────────────────────────────────────
@@ -359,8 +406,10 @@ const PARTNER = {
     const { data: prefs } = await STATE.db.from('preferences').select('*')
       .eq('room_id', STATE.room.id).neq('user_id', STATE.user.id).maybeSingle();
     if (prefs) {
+      const changed = prefsKey(prefs) !== prefsKey(STATE.partnerPrefs || STATE.myPrefs);
       STATE.partnerPrefs = prefs;
       clearInterval(partnerWatchInterval);
+      if (changed) await refreshDeck('Your partner finished their quiz, so your names now blend both of your answers');
     }
   },
 
@@ -403,15 +452,11 @@ const PROFILE = {
     }
   },
 
-  async retakeQuiz() {
-    if (!confirm('Redo your quiz? Your previous answers will be replaced.')) return;
-    await STATE.db
-      .from('preferences')
-      .delete()
-      .eq('room_id', STATE.room.id)
-      .eq('user_id', STATE.user.id);
-    STATE.myPrefs = null;
-    QUIZ.init();
+  // Change your answers: the quiz opens with your current answers filled in, and saving
+  // refreshes your names straight away. Cancel leaves everything as it was.
+  retakeQuiz() {
+    QUIZ.init(STATE.myPrefs);
+    document.body.classList.add('quiz-open');   // the bottom nav would cover the quiz buttons
     showScreen('quiz-screen');
   },
 

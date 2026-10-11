@@ -79,6 +79,8 @@ const SWIPE = {
         </div>`;
       STATE.reviewMode = false;
       this.updateProgress();
+      // Answers changed during a pass review: refresh now that it's over
+      if (deckRefreshPending) refreshDeck('Your names were refreshed for the latest answers');
       return;
     }
 
