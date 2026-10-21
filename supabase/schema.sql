@@ -40,6 +40,8 @@ CREATE TABLE IF NOT EXISTS preferences (
   vibe            TEXT,
   full_name       TEXT,                                  -- for full-name AI tips
   sibling_names   TEXT[],                                -- NULL = not asked yet
+  backgrounds_strict BOOLEAN,                            -- only names from the chosen backgrounds
+  popular_in      TEXT[],                                -- focus on top names in these countries
   created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE(room_id, user_id)
 );

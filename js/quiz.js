@@ -1,5 +1,5 @@
 // ── QUIZ ───────────────────────────────────────────────────────────────────────
-// 8 steps. Answers stored in quizAnswers then saved to Supabase.
+// 9 steps. Answers stored in quizAnswers then saved to Supabase.
 
 const QUIZ = {
   step: 0,
@@ -17,7 +17,7 @@ const QUIZ = {
   },
 
   steps: [
-    'family', 'gender', 'tradition', 'backgrounds', 'styles', 'length', 'letters', 'vibe'
+    'family', 'gender', 'tradition', 'backgrounds', 'popular', 'styles', 'length', 'letters', 'vibe'
   ],
 
   // Pass your saved answers to edit them; without them the quiz starts blank
@@ -35,6 +35,10 @@ const QUIZ = {
       vibe:            saved?.vibe || '',
       full_name:       saved?.full_name ?? (STATE.profile?.display_name || ''),
       sibling_names:   (saved?.sibling_names || []).join(', '),
+      // New answers default to "only these backgrounds"; older saved answers ranked them first
+      backgrounds_strict: saved ? Boolean(saved.backgrounds_strict) : true,
+      popular_in:      [...(saved?.popular_in || [])],
+      popular_mode:    (saved?.popular_in || []).length ? 'top' : 'all',
     };
     this.render();
   },
@@ -125,7 +129,7 @@ const QUIZ = {
         body.innerHTML = `
           <div class="quiz-step active">
             <h3>Cultural backgrounds to draw from?</h3>
-            <p class="hint">Pick any that feel meaningful to you.</p>
+            <p class="hint">Pick any that feel meaningful to you, or skip to see names from everywhere.</p>
             <div class="choice-grid">
               ${[['hebrew','Hebrew / Israeli'],['ukrainian','Ukrainian'],['russian','Russian'],
                  ['persian','Persian / Iranian'],['english','English'],['french','French'],
@@ -138,6 +142,35 @@ const QUIZ = {
                     onclick="QUIZ.toggleMulti('backgrounds','${v}',this)">${l}</button>`
                 ).join('')}
             </div>
+            <p class="hint quiz-subq">If you pick backgrounds, which names should you see?</p>
+            <div class="choice-grid" id="bg-mode-grid">
+              <button class="choice-pill ${this.answers.backgrounds_strict ? 'selected' : ''}"
+                onclick="QUIZ.setStrict(true, this)">Only names from these backgrounds</button>
+              <button class="choice-pill ${!this.answers.backgrounds_strict ? 'selected' : ''}"
+                onclick="QUIZ.setStrict(false, this)">These first, then names from everywhere</button>
+            </div>
+          </div>`;
+        break;
+
+      case 'popular':
+        body.innerHTML = `
+          <div class="quiz-step active">
+            <h3>Focus on the most popular names?</h3>
+            <p class="hint">Choose countries to only see their most popular names: the top 200 in the United States, the top 100 elsewhere.</p>
+            <div class="choice-grid">
+              <button class="choice-pill ${this.answers.popular_mode === 'all' ? 'selected' : ''}"
+                onclick="QUIZ.setPopularMode('all')">Show me all names</button>
+              <button class="choice-pill ${this.answers.popular_mode === 'top' ? 'selected' : ''}"
+                onclick="QUIZ.setPopularMode('top')">Only the most popular names</button>
+            </div>
+            ${this.answers.popular_mode === 'top' ? `
+            <p class="hint quiz-subq">Most popular in…</p>
+            <div class="choice-grid">
+              ${Object.entries(POPULAR_LISTS).map(([v, list]) =>
+                `<button class="choice-pill ${this.answers.popular_in.includes(v) ? 'selected' : ''}"
+                  onclick="QUIZ.toggleMulti('popular_in','${v}',this)">${list.label} · top ${list.top || 100}</button>`
+              ).join('')}
+            </div>` : ''}
           </div>`;
         break;
 
@@ -206,6 +239,17 @@ const QUIZ = {
     }
   },
 
+  setStrict(strict, el) {
+    this.answers.backgrounds_strict = strict;
+    el.closest('.choice-grid').querySelectorAll('.choice-pill').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+  },
+
+  setPopularMode(mode) {
+    this.answers.popular_mode = mode;
+    this.renderStep();
+  },
+
   pickOne(field, value, el) {
     this.answers[field] = value;
     el.closest('.choice-grid').querySelectorAll('.choice-pill').forEach(b => b.classList.remove('selected'));
@@ -224,6 +268,10 @@ const QUIZ = {
     const stepName = this.steps[this.step];
     if (stepName === 'gender' && !this.answers.gender_pref) {
       showToast('Please pick a gender preference');
+      return false;
+    }
+    if (stepName === 'popular' && this.answers.popular_mode === 'top' && !this.answers.popular_in.length) {
+      showToast('Pick at least one country, or choose "Show me all names"');
       return false;
     }
     return true;
@@ -263,7 +311,9 @@ const QUIZ = {
       avoid_letters:   this.answers.avoid_letters.trim() || null,
       vibe:            this.answers.vibe.trim() || null,
       full_name:       this.answers.full_name.trim().replace(/\s+/g, ' ') || null,
-      sibling_names:   parseNameList(this.answers.sibling_names)
+      sibling_names:   parseNameList(this.answers.sibling_names),
+      backgrounds_strict: this.answers.backgrounds.length ? this.answers.backgrounds_strict : null,
+      popular_in:      this.answers.popular_mode === 'top' && this.answers.popular_in.length ? this.answers.popular_in : null
     };
 
     const { data, error } = await STATE.db

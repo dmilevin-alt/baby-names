@@ -19,7 +19,7 @@ const STATE = {
 // ── APP VERSION ──────────────────────────────────────────────────────────────
 // Must match version.txt and the ?v= on every file in app.html and index.html
 // (tools/bump-version.sh updates all of them).
-const APP_VERSION = '2026-10-11.1';
+const APP_VERSION = '2026-10-21.1';
 
 // Phones, and especially home-screen apps, can keep running cached old files after an
 // update. Check the live version (never cached) and reload onto it if this copy is old.
@@ -344,7 +344,7 @@ function startShortlistPoll() {
 // names shown match the latest answers. Votes are kept, so rated names never come back,
 // and the card on screen stays where it is.
 const PREF_FIELDS = ['gender_pref', 'tradition', 'backgrounds', 'styles', 'length_pref',
-                     'include_letters', 'avoid_letters'];
+                     'include_letters', 'avoid_letters', 'backgrounds_strict', 'popular_in'];
 function prefsKey(p) {
   return p ? JSON.stringify(PREF_FIELDS.map(f => p[f] ?? null)) : '';
 }

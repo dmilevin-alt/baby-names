@@ -65,7 +65,9 @@ const RECOMMEND = {
     if (STATE.reviewMode) return;
     const wasDone = STATE.deckIndex >= STATE.deck.length;
     const inDeck  = new Set(STATE.deck.map(d => d.name));
-    STATE.deck.push(...added.filter(n => !inDeck.has(n.name)).map(n => ({ ...n, score: 0 })));
+    const { strictOrigins, popular } = this._buildFilters();
+    STATE.deck.push(...added.filter(n => !inDeck.has(n.name) && fitsBackgrounds(n, strictOrigins) && fitsPopular(n, popular))
+      .map(n => ({ ...n, score: 0 })));
     while (STATE.deckIndex < STATE.deck.length &&
            STATE.myVotes[STATE.deck[STATE.deckIndex].name]) {
       STATE.deckIndex++;
@@ -95,6 +97,8 @@ const RECOMMEND = {
 
     return {
       genderFilter, avoidSet,
+      strictOrigins:   strictBackgrounds(p1, p2),
+      popular:         popularFilter(p1, p2),
       quizOrigins:     union(p1.backgrounds || [], p2.backgrounds || []),
       quizStyles:      union(p1.styles       || [], p2.styles       || []),
       quizTrad:        union(p1.tradition    || [], p2.tradition    || []),
@@ -115,6 +119,8 @@ const RECOMMEND = {
       .filter(n => {
         if (voted.has(n.name) || shortlisted.has(n.name)) return false;
         if (!fitsGender(n, genderFilter)) return false;
+        if (!fitsBackgrounds(n, filters.strictOrigins)) return false;
+        if (!fitsPopular(n, filters.popular)) return false;
         if (avoidSet.size > 0 && avoidSet.has(n.name[0].toUpperCase())) return false;
         return true;
       })
