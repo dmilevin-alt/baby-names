@@ -17,6 +17,11 @@ CREATE TABLE IF NOT EXISTS ai_names (
   UNIQUE(name)
 );
 
+-- Data API access (Supabase no longer grants it to new tables automatically)
+GRANT SELECT ON public.ai_names TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.ai_names TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.ai_names TO service_role;
+
 ALTER TABLE ai_names ENABLE ROW LEVEL SECURITY;
 
 DROP POLICY IF EXISTS "ai_names_read_all" ON ai_names;

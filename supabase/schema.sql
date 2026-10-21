@@ -84,6 +84,36 @@ CREATE TABLE IF NOT EXISTS ai_names (
   UNIQUE(name)
 );
 
+-- ── DATA API ACCESS ──────────────────────────────────────────────────────────
+-- Since Oct 30 2026 Supabase no longer grants API access to new tables in "public"
+-- automatically, so the app (supabase-js) can only reach these tables with explicit
+-- grants. Row level security below still decides which rows each user can see.
+
+GRANT SELECT ON public.profiles TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.profiles TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.profiles TO service_role;
+
+GRANT SELECT ON public.rooms TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.rooms TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.rooms TO service_role;
+
+GRANT SELECT ON public.preferences TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.preferences TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.preferences TO service_role;
+
+GRANT SELECT ON public.votes TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.votes TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.votes TO service_role;
+
+GRANT SELECT ON public.shortlist TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.shortlist TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.shortlist TO service_role;
+
+GRANT SELECT ON public.ai_names TO anon;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.ai_names TO authenticated;
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.ai_names TO service_role;
+
+
 -- ── ROW LEVEL SECURITY ───────────────────────────────────────────────────────
 
 ALTER TABLE profiles    ENABLE ROW LEVEL SECURITY;
