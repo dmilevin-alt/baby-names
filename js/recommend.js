@@ -97,8 +97,8 @@ const RECOMMEND = {
 
     return {
       genderFilter, avoidSet,
-      strictOrigins:   strictBackgrounds(p1, p2),
-      popular:         popularFilter(p1, p2),
+      strictOrigins:   strictBackgrounds(p1),
+      popular:         popularFilter(p1),
       quizOrigins:     union(p1.backgrounds || [], p2.backgrounds || []),
       quizStyles:      union(p1.styles       || [], p2.styles       || []),
       quizTrad:        union(p1.tradition    || [], p2.tradition    || []),
@@ -126,7 +126,7 @@ const RECOMMEND = {
       })
       .map(n => {
         let score = 0;
-        if (quizOrigins.length  && (n.origin    || []).some(o => quizOrigins.includes(o)))  score += 2;
+        if (quizOrigins.length  && fitsBackgrounds(n, allowedOrigins(quizOrigins)))         score += 2;
         if (quizStyles.length   && (n.style     || []).some(s => quizStyles.includes(s)))   score += 2;
         if (quizTrad.length === 0 || (n.tradition || []).some(t => quizTrad.includes(t)))    score += 1;
         if (checkNameLength(lengthPref1, n.syllables) || checkNameLength(lengthPref2, n.syllables)) score += 1;
@@ -180,6 +180,7 @@ const RECOMMEND = {
     const quizContext = {
       gender:       filters.genderFilter !== 'all' ? filters.genderFilter : 'no preference',
       backgrounds:  union(p1.backgrounds || [], p2.backgrounds || []),
+      onlyBackgrounds: p1.backgrounds_strict ? (p1.backgrounds || []) : [],
       styles:       union(p1.styles       || [], p2.styles       || []),
       tradition:    union(p1.tradition    || [], p2.tradition    || []),
       length:       p1.length_pref || p2.length_pref || 'any',

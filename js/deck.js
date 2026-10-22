@@ -24,11 +24,11 @@ const DECK = {
     parseLetters(p2.avoid_letters).forEach(l => avoidSet.add(l.toUpperCase()));
 
     // ── 3. Filter ────────────────────────────────────────────────────────────
-    // Cultural backgrounds from either partner rank names first; with "Only these
-    // backgrounds" other names are left out. "Most popular" keeps only top names.
+    // Cultural backgrounds from either partner rank names first. My own "Only these
+    // backgrounds" and "Most popular" answers leave other names out of my deck.
     const allowed = allowedOrigins(union(p1.backgrounds || [], p2.backgrounds || []));
-    const strict  = strictBackgrounds(p1, p2);
-    const popular = popularFilter(p1, p2);
+    const strict  = strictBackgrounds(p1);
+    const popular = popularFilter(p1);
     let pool = NAMES.filter(n => {
       if (!fitsGender(n, genderFilter)) return false;
       if (!fitsBackgrounds(n, strict)) return false;
@@ -49,7 +49,7 @@ const DECK = {
       let score = 0;
 
       // Origin / cultural background (+2)
-      if (allowed && n.origin.some(o => allowed.has(o))) score += 2;
+      if (allowed && fitsBackgrounds(n, allowed)) score += 2;
 
       // Style (+2)
       if (allStyles.length > 0 && n.style.some(s => allStyles.includes(s))) score += 2;
@@ -99,13 +99,23 @@ const DECK = {
 };
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
+// "English" also covers names in common use in English-speaking countries (Olivia,
+// Sophia, Nora), not only names whose word origin is English
+const ENGLISH_USE = 'in use in English-speaking countries';
+const ENGLISH_SPEAKING = ['United States', 'England and Wales', 'Scotland', 'Ireland', 'Northern Ireland',
+                          'Canada', 'Australia', 'New Zealand'];
+function usedInEnglish(n) {
+  return (usStat(n)?.rank || Infinity) <= 1000 ||
+    (n.popularIn || []).some(p => ENGLISH_SPEAKING.some(j => p.jurisdiction.startsWith(j)));
+}
+
 // The origins each quiz background covers
 const BACKGROUND_ORIGINS = {
   hebrew:       ['hebrew'],
   ukrainian:    ['ukrainian'],
   russian:      ['russian'],
   persian:      ['persian'],
-  english:      ['english', 'old english'],
+  english:      ['english', 'old english', ENGLISH_USE],
   french:       ['french'],
   arabic:       ['arabic'],
   slavic:       ['slavic', 'polish'],
@@ -127,14 +137,13 @@ function allowedOrigins(backgrounds) {
 
 // Does a name come from one of the allowed origins? (null allows everything)
 function fitsBackgrounds(n, allowed) {
-  return !allowed || (n.origin || []).some(o => allowed.has(o));
+  return !allowed || (n.origin || []).some(o => allowed.has(o)) || (allowed.has(ENGLISH_USE) && usedInEnglish(n));
 }
 
-// Origins a name must come from: only when a partner chose "Only these backgrounds".
-// Both partners' backgrounds count. null = no background filter.
-function strictBackgrounds(p1, p2) {
-  const strict = Boolean(p1?.backgrounds_strict || p2?.backgrounds_strict);
-  return strict ? allowedOrigins(union(p1?.backgrounds || [], p2?.backgrounds || [])) : null;
+// Origins a name must come from: only when this person chose "Only these backgrounds",
+// so it narrows their own deck, not their partner's. null = no background filter.
+function strictBackgrounds(prefs) {
+  return prefs?.backgrounds_strict ? allowedOrigins(prefs.backgrounds) : null;
 }
 
 // Countries whose most popular names the quiz can focus on. The US list is the full SSA
@@ -151,9 +160,9 @@ const POPULAR_LISTS = {
   france:      { label: 'France', jurisdiction: 'France' },
 };
 
-// Countries chosen by either partner; null = all names
-function popularFilter(p1, p2) {
-  const chosen = union(p1?.popular_in || [], p2?.popular_in || []).filter(c => POPULAR_LISTS[c]);
+// Countries this person chose (it narrows only their own deck); null = all names
+function popularFilter(prefs) {
+  const chosen = (prefs?.popular_in || []).filter(c => POPULAR_LISTS[c]);
   return chosen.length ? chosen : null;
 }
 

@@ -19,7 +19,7 @@ const STATE = {
 // ── APP VERSION ──────────────────────────────────────────────────────────────
 // Must match version.txt and the ?v= on every file in app.html and index.html
 // (tools/bump-version.sh updates all of them).
-const APP_VERSION = '2026-10-21.1';
+const APP_VERSION = '2026-10-22.1';
 
 // Phones, and especially home-screen apps, can keep running cached old files after an
 // update. Check the live version (never cached) and reload onto it if this copy is old.

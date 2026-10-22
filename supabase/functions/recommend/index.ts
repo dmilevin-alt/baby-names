@@ -52,7 +52,7 @@ Deno.serve(async (req) => {
   const newSection = newSlots > 0
     ? `
 NEW NAMES: There aren't enough candidates, so also suggest up to ${newSlots} real, established given names that are NOT in the candidate list and NOT any of these names they've already rated: ${excludeNames.join(", ") || "none"}.
-New names must fit the gender preference${quizContext.avoidLetters ? ` and must not start with ${quizContext.avoidLetters}` : ""}${(quizContext.backgrounds || []).length ? `, and must come from one of these cultural backgrounds: ${quizContext.backgrounds.join(", ")} (set "origin" accordingly)` : ""}. Base them on what their loved names and maybe list have in common.`
+New names must fit the gender preference${quizContext.avoidLetters ? ` and must not start with ${quizContext.avoidLetters}` : ""}${(quizContext.onlyBackgrounds || []).length ? `, and must come from one of these cultural backgrounds: ${quizContext.onlyBackgrounds.join(", ")} (set "origin" accordingly; "english" includes any name in common use in English-speaking countries)` : ""}. Base them on what their loved names and maybe list have in common.`
     : "";
 
   const prompt = `You are a baby name advisor helping a couple narrow down their shortlist.

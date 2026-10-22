@@ -132,7 +132,7 @@ const QUIZ = {
             <p class="hint">Pick any that feel meaningful to you, or skip to see names from everywhere.</p>
             <div class="choice-grid">
               ${[['hebrew','Hebrew / Israeli'],['ukrainian','Ukrainian'],['russian','Russian'],
-                 ['persian','Persian / Iranian'],['english','English'],['french','French'],
+                 ['persian','Persian / Iranian'],['english','English / English-speaking'],['french','French'],
                  ['arabic','Arabic'],['slavic','Slavic'],['greek','Greek'],
                  ['latin','Latin / Italian'],['spanish','Spanish'],['scandinavian','Scandinavian'],
                  ['irish','Irish / Celtic'],['german','German'],['hindi','Indian / Hindi'],
